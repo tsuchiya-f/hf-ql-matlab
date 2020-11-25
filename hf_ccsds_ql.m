@@ -6,9 +6,10 @@ ql = 1;
 %-----------------------------------
 
 %-----------------------------------
-% OPEN Device or File
+% OPEN Device (QL) or CCSDS File (DL)
 %-----------------------------------
 if ql == 1
+    % --- for QL ---
     % Open TCPIP port to receive HF science temeletry via TSC
     if ~exist('r','var')
         r = tcpip('localhost',7902);
@@ -19,6 +20,7 @@ if ql == 1
     % Empty RX buffer
     while r.BytesAvailable>0; fread(r,r.BytesAvailable); pause(0.05); end
 else
+    % --- for DL ---
     % Open ccsds data file
     [file,fdir] = uigetfile('C:\share\Linux\doc\*.*');
     fileInfo =  dir(fullfile(fdir,file));
@@ -33,6 +35,7 @@ totalSize = 0;
 tlm_cnt = 0;
 while true
 
+    % --- for QL ---
     if ql == 1
         % Wait until the data is received
         if r.BytesAvailable == 0; continue; end
@@ -52,10 +55,12 @@ while true
     ret = hf_plot_data(ver, st_rpw, st_aux, st_hfa, rdata);
     
     if ql == 0
+        % --- for DL ---
         pause(1);
         if feof(r) == 1; break; end
         if totalSize + data_sz > fileSize; break; end
     else
+        % --- for QL ---
         pause(0.1);
     end
     
