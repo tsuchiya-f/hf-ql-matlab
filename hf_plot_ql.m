@@ -1,3 +1,12 @@
+% How to use
+% (1) Run HF software and set condigration 0
+%     this script assume HF FPGA WREG settings as follows
+%     - num_sampl = 32; %number of samples at each frequency step
+%     - num_steps = 512;  %number of frequency steps
+% (2) Run forward_hf_to_7902.tcl on TSC
+%     This script freadfers HF sciece telemetry without CCSDS header to port 7902. 
+% (3) Run this program
+
 STARTF = 0.08e6;    % start frequency
 STOPF = 45.0e6;     % stop frequency
 FS = 90e6;  %sample frequency

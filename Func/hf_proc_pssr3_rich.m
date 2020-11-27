@@ -1,8 +1,10 @@
 function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
 
+    % NOTE : This is SW Ver.1 only
+
     ret = 0;
 
-    % for rich data
+    % for rich data ( NOTE : below parameters should be included in HF packet header )
     fs = 296e3; % sampling rate of decimated waveform [Hz] (fixed for EM)
     ns = 128;   % number of data sample in one frame (fixed)
     feed = 26;  % number of feed frames in one block (fixed for EM)

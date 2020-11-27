@@ -9,7 +9,7 @@ function ret = hf_plot_data(ver, st_rpw, st_aux, st_hfa, raw_data)
             [~, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data);
             ret = hf_plot_power(spec);
         
-        case 0x43   % Radio full (Norminal sweep mode)
+        case 0x43   % Radio full (Nominal sweep mode)
             fprintf('SID:%02x Radio full\n', st_rpw.sid);
             [~, spec] = hf_proc_radio_full(ver, st_aux, st_hfa, raw_data);
             ret = hf_plot_power(spec);
