@@ -1,13 +1,13 @@
 function f = hf_get_freq_table(ver, st_aux, st_hfa)
 
-     % Bandwidth [Hz]
+     % Bandwidth [kHz]
      switch st_hfa.decimation
-        case 0;  bw = 296e3;
-        case 1;  bw = 148e3;
-        case 2;  bw = 74e3;
-        case 3;  bw = 37e3;
+        case 0;  bw = 296.0;
+        case 1;  bw = 148.0;
+        case 2;  bw = 74.0;
+        case 3;  bw = 37.0;
      end
-    % Effective bandwidth (75%) [Hz]
+    % Effective bandwidth (75%) [kHz]
     bw_eff = bw * 0.75; 
 
     f = [];

@@ -9,6 +9,7 @@ function ret = hf_plot_waveform(wave)
     zq = wave.zq;
     
     ret = 0;
+    figure(st_ctl.hf)
     
     % set display layout
     tiledlayout(3,1)

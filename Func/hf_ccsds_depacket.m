@@ -9,11 +9,9 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         %----------------------------------------
         % packet primary header
         hdr_pre = fread(st_ctl.r, 6, 'uint8');
-        if st_ctl.ql == 1; fwrite(st_ctl.w, hdr_pre, 'uint8'); end
 
         % packet secondary header (data field header)
         hdr_sec = fread(st_ctl.r,10,'uint8');
-        if st_ctl.ql == 1; fwrite(st_ctl.w, hdr_sec, 'uint8'); end
 
         st_pre = hf_get_hdr_pre(hdr_pre);
         st_sec = hf_get_hdr_sec(hdr_sec);
@@ -22,7 +20,6 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         % Read RPWI header (8 Bytes)
         %----------------------------------------
         hdr_rpw = fread(st_ctl.r,8,'uint8');
-        if st_ctl.ql == 1; fwrite(st_ctl.w, hdr_rpw, 'uint8'); end
         st_rpw = hf_get_hdr_rpw(hdr_rpw);
         
         % size of HF tlm (20B = sec header(10B) + rpwi header(8B) + crc(2B))
@@ -33,7 +30,6 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         %----------------------------------------
         if st_rpw.aux_len ~= 0 
             aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');
-            if st_ctl.ql == 1; fwrite(st_ctl.w, aux, 'uint8'); end
             st_aux = hf_get_aux(aux, st_rpw.sid);
             sz = sz - st_rpw.aux_len;
         end
@@ -52,7 +48,6 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
             end
             if hf_hdr_len ~= 0
                 hdr_hf = fread(st_ctl.r,hf_hdr_len,'uint8');
-                if st_ctl.ql == 1; fwrite(st_ctl.w, hdr_hf, 'uint8'); end
                 st_hfa = hf_get_hdr_hf(hdr_hf, hf_hdr_len, st_ctl.ver);
                 sz = sz - double(hf_hdr_len);
             else
@@ -70,7 +65,6 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         % Read HF data
         %----------------------------------------
         buff = fread(st_ctl.r,sz);
-        if st_ctl.ql == 1; fwrite(st_ctl.w, buff, 'uint8'); end
         rdata = vertcat(rdata, buff);
         data_sz = data_sz + sz;
 
@@ -78,9 +72,25 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         % Read CRC
         %----------------------------------------
         crc = fread(st_ctl.r,2);
-        if st_ctl.ql == 1; fwrite(st_ctl.w, crc, 'uint8'); end
         
-        %fprintf('sid: 0x%02x  pri_err: %d  sec_err: %d  seq_flag: %d pkt len: %d\n', st_rpw.sid, st_pre.err, st_sec.err, st_pre.seq_flag, sz);
+        %----------------------------------------
+        % Write CCSDS packet to a local file
+        %----------------------------------------
+        if st_ctl.ql == 1
+            fwrite(st_ctl.w, hdr_pre, 'uint8');
+            fwrite(st_ctl.w, hdr_sec, 'uint8');
+            fwrite(st_ctl.w, hdr_rpw, 'uint8');
+            if st_rpw.aux_len ~= 0 
+            	fwrite(st_ctl.w, aux, 'uint8');
+            end
+            if st_pre.seq_flag == 1 || st_pre.seq_flag == 3
+                if hf_hdr_len ~= 0
+                    fwrite(st_ctl.w, hdr_hf, 'uint8');
+                end
+            end
+            fwrite(st_ctl.w, buff, 'uint8');
+            fwrite(st_ctl.w, crc, 'uint8');
+        end
         
         %----------------------------------------
         % Exit if end of sequence is detected
@@ -92,4 +102,3 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
     end
 
 end
-

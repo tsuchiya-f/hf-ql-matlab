@@ -11,7 +11,7 @@ function  [ret, spec] = hf_proc_radio_full(ver, st_aux, st_hfa, raw_data)
     % conversion factor from ADC value to enginnering value
     cf = -104.1;    % mean power of ADC value to dBm (for rms data)
 
-    data = swapbytes(typecast(int8(raw_data),'single'));
+    data = swapbytes(typecast(uint8(raw_data),'single'));
     data = 10*log10(reshape(data, nf, nk, [])) + cf;  % [dBm @ ADC input]
     spec.x = data(:,1);
     spec.y = data(:,2);

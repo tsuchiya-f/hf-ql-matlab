@@ -88,19 +88,25 @@ while true
     if data_sz ~= cast(nf*nk*4,'int32')
         error('Invalid TLM size');
     end
+    fprintf('Data size : %d\n', data_sz);
+
     
     % Plot HF data
     fdata = 10*log10(reshape(rdata, nf, nk)) + cf;  % [dB]
     freq = linspace(0.08, 45.0, nf);      % [MHz]
-    ylabels = {'XX [dBm]','YY [dBm]','ZZ [dBm]'};
-    t=stackedplot(freq,fdata(:,1:3),'Title',['RPWI HF spectra: ',ver_str],'DisplayLabels',ylabels);
+    plot(freq, fdata(:,1),'r', freq, fdata(:,2),'g', freq, fdata(:,3),'b')
     xlabel ('Frequency [MHz]');
-    t.AxesProperties(1).YLimits = [-90 0];
-    t.AxesProperties(2).YLimits = [-90 0];
-    t.AxesProperties(3).YLimits = [-90 0];
-    t.LineProperties(1).Color = 'r';
-    t.LineProperties(2).Color = 'g';
-    t.LineProperties(3).Color = 'b';
+    ylabel ('Power [dBm]');
+
+%    ylabels = {'XX [dBm]','YY [dBm]','ZZ [dBm]'};
+%    t=stackedplot(freq,fdata(:,1:3),'Title',['RPWI HF spectra: ',ver_str],'DisplayLabels',ylabels);
+%    xlabel ('Frequency [MHz]');
+%    t.AxesProperties(1).YLimits = [-90 0];
+%    t.AxesProperties(2).YLimits = [-90 0];
+%    t.AxesProperties(3).YLimits = [-90 0];
+%    t.LineProperties(1).Color = 'r';
+%    t.LineProperties(2).Color = 'g';
+%    t.LineProperties(3).Color = 'b';
 
     disp('Hit any key to continue');
     pause

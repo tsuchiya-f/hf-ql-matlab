@@ -1,4 +1,4 @@
-function ret = hf_plot_waveform_power(wave, spec)
+function ret = hf_plot_waveform_power(st_ctl, wave, spec)
 
     tm = wave.t;
     xi = wave.xi;
@@ -14,6 +14,7 @@ function ret = hf_plot_waveform_power(wave, spec)
     z = spec.z;
     
     ret = 0;
+    figure(st_ctl.hf)
     
     % set display layout
     tiledlayout(4,1)
