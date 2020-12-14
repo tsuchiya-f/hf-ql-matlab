@@ -22,12 +22,14 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         hdr_rpw = fread(st_ctl.r,8,'uint8');
         st_rpw = hf_get_hdr_rpw(hdr_rpw);
         
-        % size of HF tlm (20B = sec header(10B) + rpwi header(8B) + crc(2B))
+        % size of HF tlm
         sz = st_pre.pkt_len + 1 - 20;
+        % (20Byte = sec header(10Byte) + rpwi header(8Byte) + crc(2Byte))
 
         %----------------------------------------
         % Read Auxilary data
         %----------------------------------------
+%        fprintf("Aux len : %d\n",st_rpw.aux_len);
         if st_rpw.aux_len ~= 0 
             aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');
             st_aux = hf_get_aux(aux, st_rpw.sid);
@@ -39,6 +41,8 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         %----------------------------------------
         hf_hdr_len = 0;
         if st_pre.seq_flag == 1 || st_pre.seq_flag == 3
+
+            % set HF header length
             if st_ctl.ver == 1.0 
                 hf_hdr_len = 24;
             else
@@ -46,9 +50,12 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
                     hf_hdr_len = st_aux.hf_hdr_len;
                 end
             end
+            
+            % read HF header
             if hf_hdr_len ~= 0
                 hdr_hf = fread(st_ctl.r,hf_hdr_len,'uint8');
                 st_hfa = hf_get_hdr_hf(hdr_hf, hf_hdr_len, st_ctl.ver);
+%                fprintf("mode : %02x\n",st_hfa.mode);
                 sz = sz - double(hf_hdr_len);
             else
                 st_hfa.exist = 0;
@@ -56,7 +63,10 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
             
             if st_ctl.ver == 1.0 
                 % add fixed AUX field & HF header for Ver1 SW 
-                [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw.sid);
+                [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw, st_ctl);
+            else
+                % add suuplemental infromation on tlm format 
+                [st_aux, st_hfa] = hf_add_supl_info(st_aux, st_hfa, st_rpw, st_ctl);
             end
 
         end

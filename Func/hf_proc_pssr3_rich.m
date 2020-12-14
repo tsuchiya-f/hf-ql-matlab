@@ -1,20 +1,18 @@
 function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
 
-    % NOTE : This is SW Ver.1 only
-
     ret = 0;
 
     % for rich data ( NOTE : below parameters should be included in HF packet header )
-    fs = 296e3; % sampling rate of decimated waveform [Hz] (fixed for EM)
-    ns = 128;   % number of data sample in one frame (fixed)
-    feed = 26;  % number of feed frames in one block (fixed for EM)
-    skip = 154;  % number of skip frames in one block (fixed for EM)
-    nb = 10;    % number of block in one packet (fixed for EM)
+    fs   = st_hfa.sample_rate;  % sampling rate of decimated waveform [Hz]
+    feed = st_hfa.feed;         % number of feed frames in one block
+    skip = st_hfa.skip;         % number of skip frames in one block
+    nb   = st_hfa.block_num;    % number of block in one packet
 
-    num_sampl = feed * ns;  % number of data sample in one block
+    ns   = 128;                 % number of data sample in one frame (fixed)
+    num_sampl = feed * ns;      % number of data sample in one block
 
     % conversion factor from ADC value to enginnering value
-    cw = 1.46/2^20;  % ADC value to Volt
+    cw = 1.46/2^20;             % ADC value to Volt
 
     % -------------------------------------------
     % rich data (waveform)

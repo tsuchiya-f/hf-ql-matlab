@@ -39,9 +39,9 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
     %-----------------------------------
     [st_ctl] = hf_init_device(st_ctl);
     if ql == 1
-        fprintf('--- Output CCSDS file name : %s\n', st_ctl.w);
+        fprintf('--- Output CCSDS file name : %s\n', st_ctl.wfile);
     else
-        fprintf('--- Input CCSDS file name : %s\n', st_ctl.r);
+        fprintf('--- Input CCSDS file name : %s\n', st_ctl.rfile);
     end
 
     %-----------------------------------
@@ -85,7 +85,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
 
         if ql == 0
             % --- for DL ---
-            pause(0.1);
+            pause(0.01);
             if feof(st_ctl.r) == 1; break; end
             if sumSize + data_sz > st_ctl.fileSize; break; end
         else
