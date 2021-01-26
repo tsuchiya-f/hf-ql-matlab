@@ -9,7 +9,7 @@
 %
 % ex)
 % >> hf_ccsds_ql(1.0, 1)                                QL for Ver.1 SW
-% >> hf_ccsds_ql(1.0, 0, 'C:\share\Linux\RESULTS\')     QL for Ver.1 SW, HF CCSDS packets are saved in C:\share\Linux\RESULTS\HF_YYYYMMDD-HHNN.ccs 
+% >> hf_ccsds_ql(1.0, 1, 'C:\share\Linux\RESULTS\')     QL for Ver.1 SW, HF CCSDS packets are saved in C:\share\Linux\RESULTS\HF_YYYYMMDD-HHNN.ccs 
 % >> hf_ccsds_ql(1.0, 0, 'C:\share\Linux\RESULTS\')     DL for Ver.1 SW, Default path to a CCSDS file is set to C:\share\Linux\RESULTS\
 % >> hf_ccsds_ql(2.0, 1)                                QL for Ver.2 SW
 % >> hf_ccsds_ql(2.0, 0, 'C:\share\Linux\doc\')         DL for Ver.2 SW
@@ -64,10 +64,22 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
     tlm_cnt = 0;
     while true
 
+        %-----------------------------------
+        % Check elapsed time since last data received
+        %-----------------------------------
+        wait_time = 30; %[sec]
         if ql == 1
             % Wait until the data is received
             % --- only for QL ---
-            if st_ctl.r.BytesAvailable == 0; continue; end
+            if st_ctl.r.BytesAvailable == 0
+                elapse_time = toc;
+                if tlm_cnt > 1
+                    if elapse_time > wait_time; break; end
+                end
+                continue;
+            else
+                tic;
+            end
         end
 
         %-----------------------------------
@@ -99,7 +111,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
             close(hf)
             break
         end
-
+        
     end
 
     %-----------------------------------

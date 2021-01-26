@@ -4,6 +4,7 @@ function  [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data)
     
     % freqneucy table
     spec.f = hf_get_freq_table(ver, st_aux, st_hfa);
+    fprintf('freq[1]: %f / freq[%d]: %f / %d\n', spec.f(1), numel(spec.f), spec.f(numel(spec.f)), st_hfa.step + 1);
 
     num_sampl = st_hfa.snum + 1;  % number of samples at each frequency step
     num_steps = st_hfa.step + 1;  % number of frequency steps
@@ -32,5 +33,6 @@ function  [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data)
     spec.z = 20 * ( log10( Zabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
 
     spec.log = 0;
+    spec.matrix = 0;
 
 end

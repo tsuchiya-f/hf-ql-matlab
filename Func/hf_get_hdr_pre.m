@@ -23,6 +23,9 @@ function [st] = hf_get_hdr_pre(hdr)
     % packet length
     st.pkt_len      = bitshift(hdr(5),8) + hdr(6);
     
+%    fprintf('CCSDS sequence flag: %1d / sequence flag: %1d / packet size : %d\n', st.seq_flag, st.seq_cnt, st.pkt_len);
+
+    
     st.err = err;
 
 end

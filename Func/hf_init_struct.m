@@ -12,7 +12,7 @@ function    [st_ctl] = hf_init_struct(ver, ql, dir_ccs)
     st_ctl.dir    = dir_ccs;
     % CCSDS file name to write
     st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.ccs'];
-    
+
     % Definition of SID
     st_ctl.sid_raw     = 0x42;
     st_ctl.sid_full    = 0x43;

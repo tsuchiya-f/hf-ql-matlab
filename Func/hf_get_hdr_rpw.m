@@ -12,5 +12,7 @@ function [st] = hf_get_hdr_rpw(hdr)
                   + bitshift(hdr(7),0);
     % AUX length
     st.aux_len    = hdr(8);
+    
+%    fprintf('RPWI sequence cnt: %1d\n',st.seq_cnt);
 
 end

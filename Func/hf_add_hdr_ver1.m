@@ -2,7 +2,8 @@ function [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw, st_ctl)
 
     switch st_rpw.sid
         case st_ctl.sid_raw   % Raw data (sweep data for test purpose)
-            st_hfa.snum = 31;
+%            st_hfa.snum = 31;
+            st_hfa.snum = 49;
             st_hfa.step = 511;
             st_hfa.decimation = 1;
             st_hfa.sample_rate = 148e3;        
