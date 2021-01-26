@@ -13,6 +13,13 @@
 % >> hf_ccsds_ql(1.0, 0, 'C:\share\Linux\RESULTS\')     DL for Ver.1 SW, Default path to a CCSDS file is set to C:\share\Linux\RESULTS\
 % >> hf_ccsds_ql(2.0, 1)                                QL for Ver.2 SW
 % >> hf_ccsds_ql(2.0, 0, 'C:\share\Linux\doc\')         DL for Ver.2 SW
+%
+% ex TSC DL)
+% $ cat TMIDX_?????.bin > TMIDX_99999.bin
+% >> hf_ccsds_ql(1.0, 1)                                QL for Ver.1 SW
+% replay [file join /home/tsuchiya/RESULTS/RPWI_HF_FFT_2021_01_26_12_13_00 ARC TMIDX_99999.bin] -rate 100
+% replay [file join /home/tsuchiya/RESULTS/RPWI_HF_RFT_2021_01_26_12_10_12 ARC TMIDX_99999.bin] -rate 100
+%
 %-----------------------------------
 
 function [] = hf_ccsds_ql(ver, ql, dir_ccs)
@@ -62,6 +69,8 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
     %-----------------------------------
     sumSize = 0;
     tlm_cnt = 0;
+    tic;
+
     while true
 
         %-----------------------------------
