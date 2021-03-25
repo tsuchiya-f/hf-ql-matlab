@@ -3,7 +3,7 @@ function [st] = hf_get_hdr_sec(hdr)
     err = 0;
 
     % PUS version (1)
-    st.pus_ver      = bitshift(bitand(hdr(1),0x30),-4);
+    st.pus_ver      = bitshift(bitand(hdr(1),0x70),-4);
     if st.pus_ver ~= 1; err = err + 1; end
     % Service type (204 = 0xCC)
     st.ser_type     = hdr(2);

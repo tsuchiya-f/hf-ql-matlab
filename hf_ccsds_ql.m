@@ -16,13 +16,13 @@
 %
 % ex TSC DL)
 % $ cat TMIDX_?????.bin > TMIDX_99999.bin
-% >> hf_ccsds_ql(1.0, 1)                                QL for Ver.1 SW
+% >> hf_ccsds_ql(1.0, 1, '', 'RPWI_HF_RFT_2021_01_26_12_10_12', 120)                                QL for Ver.1 SW
 % replay [file join /home/tsuchiya/RESULTS/RPWI_HF_FFT_2021_01_26_12_13_00 ARC TMIDX_99999.bin] -rate 100
 % replay [file join /home/tsuchiya/RESULTS/RPWI_HF_RFT_2021_01_26_12_10_12 ARC TMIDX_99999.bin] -rate 100
 %
 %-----------------------------------
 
-function [] = hf_ccsds_ql(ver, ql, dir_ccs)
+function [] = hf_ccsds_ql(ver, ql, dir_ccs, out_name, timeout)
 
     %-----------------------------------
     % Default parameters, they are used if arguments are not set.
@@ -32,13 +32,18 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
     % QL/DL switch (1: QL, 0:DL)
     if ~exist('ql', 'var'); ql = 1; end
     % Default directory of CCSDS file to read/write
-    if ~exist('dir', 'var'); dir_ccs = 'C:\share\Linux\juice_test\'; end
+    if ~exist('dir_ccs', 'var'); dir_ccs = 'C:\share\Linux\juice_test\'; end
+    if strlength(dir_ccs) == 0; dir_ccs = 'C:\share\Linux\juice_test\'; end
+    % Default output name (ccsds and report)
+    if ~exist('out_name', 'var'); out_name = ''; end
+    % Default timeout [sec]
+    if ~exist('timeout', 'var'); timeout = 90; end
     %-----------------------------------
     
     %-----------------------------------
     % Initialize structure which controls data processing
     %-----------------------------------
-    [st_ctl] = hf_init_struct(ver, ql, dir_ccs);
+    [st_ctl] = hf_init_struct(ver, ql, dir_ccs, out_name);
     
     %-----------------------------------
     % OPEN Device (QL) or CCSDS File (DL)
@@ -76,7 +81,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs)
         %-----------------------------------
         % Check elapsed time since last data received
         %-----------------------------------
-        wait_time = 30; %[sec]
+        wait_time = timeout; %[sec]
         if ql == 1
             % Wait until the data is received
             % --- only for QL ---

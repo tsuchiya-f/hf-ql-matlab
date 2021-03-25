@@ -22,6 +22,11 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         hdr_rpw = fread(st_ctl.r,8,'uint8');
         st_rpw = hf_get_hdr_rpw(hdr_rpw);
         
+        %----------------------------------------
+        % Get time information (added to hdr_rpw)
+        %----------------------------------------
+        [st_rpw] = hf_get_time_info(st_ctl, st_sec, st_rpw);
+        
         % size of HF tlm
         sz = st_pre.pkt_len + 1 - 20;
         % (20Byte = sec header(10Byte) + rpwi header(8Byte) + crc(2Byte))

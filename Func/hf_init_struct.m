@@ -1,7 +1,7 @@
 %-----------------------------------
 % Initialize structure which controls data processing
 %-----------------------------------
-function    [st_ctl] = hf_init_struct(ver, ql, dir_ccs)
+function    [st_ctl] = hf_init_struct(ver, ql, dir_ccs, out_name)
     % currrent date and time (they are used to determine file names)
     ds = datestr(now, 'yyyymmdd-HHMM');
     % DPU software version number (user input)
@@ -11,7 +11,11 @@ function    [st_ctl] = hf_init_struct(ver, ql, dir_ccs)
     % Default directory of CCSDS file to read/write (user input)
     st_ctl.dir    = dir_ccs;
     % CCSDS file name to write
-    st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.ccs'];
+    if strlength(out_name) > 0
+        st_ctl.wfile  = [st_ctl.dir 'HF_' out_name '.ccs'];        
+    else
+        st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.ccs'];        
+    end
 
     % Definition of SID
     st_ctl.sid_raw     = 0x42;
@@ -24,5 +28,8 @@ function    [st_ctl] = hf_init_struct(ver, ql, dir_ccs)
     st_ctl.sid_pssr1_r = 0x65;
     st_ctl.sid_pssr2_r = 0x66;
     st_ctl.sid_pssr3_r = 0x67;
+    
+    % CUC time control
+    st_ctl.first_packet = 1;
 
 end
