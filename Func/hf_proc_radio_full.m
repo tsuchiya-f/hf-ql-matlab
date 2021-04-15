@@ -5,7 +5,7 @@ function  [ret, spec] = hf_proc_radio_full(ver, st_aux, st_hfa, raw_data)
     % frequency
     spec.f = hf_get_freq_table(ver, st_aux, st_hfa);
 
-    nf = st_hfa.band0_step;  % number of frequeucy bins 
+    nf = st_hfa.total_step;  % number of frequeucy bins 
     nk = st_hfa.meas_num;    % number of data set
 
     % conversion factor from ADC value to enginnering value

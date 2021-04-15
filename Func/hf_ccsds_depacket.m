@@ -1,4 +1,4 @@
-function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
+function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
 
     rdata = [];
     data_sz = 0;
@@ -22,39 +22,42 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
         hdr_rpw = fread(st_ctl.r,8,'uint8');
         st_rpw = hf_get_hdr_rpw(hdr_rpw);
         
-        %----------------------------------------
-        % Get time information (added to hdr_rpw)
-        %----------------------------------------
-        [st_rpw] = hf_get_time_info(st_ctl, st_sec, st_rpw);
-        
         % size of HF tlm
         sz = st_pre.pkt_len + 1 - 20;
         % (20Byte = sec header(10Byte) + rpwi header(8Byte) + crc(2Byte))
 
-        %----------------------------------------
-        % Read Auxilary data
-        %----------------------------------------
-%        fprintf("Aux len : %d\n",st_rpw.aux_len);
-        if st_rpw.aux_len ~= 0 
-            aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');
-            st_aux = hf_get_aux(aux, st_rpw.sid);
-            sz = sz - st_rpw.aux_len;
-        end
-
-        %----------------------------------------
-        % Read HF header
-        %----------------------------------------
         hf_hdr_len = 0;
         if st_pre.seq_flag == 1 || st_pre.seq_flag == 3
 
+            %----------------------------------------
+            % Read Auxilary data
+            %----------------------------------------
+            % SW version
+%            if st_rpw.aux_len == 4
+%                st_ctl.ver = 1.0;
+%            else
+                st_ctl.ver = 2.0;
+%            end
+            fprintf("SW ver  : %d\n",st_ctl.ver);
+            fprintf("Aux len : %d\n",st_rpw.aux_len);
+
+            % read AUX field
+            aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');
+            st_aux = hf_get_aux(aux, st_rpw.sid, st_ctl);
+            sz = sz - st_rpw.aux_len;
+
+            %----------------------------------------
+            % Read HF header
+            %----------------------------------------
             % set HF header length
             if st_ctl.ver == 1.0 
                 hf_hdr_len = 24;
             else
-                if st_aux.sweep_table_id == 255
+                if st_aux.sweep_table_id == 0xFF || st_aux.sweep_table_id == 0x1F
                     hf_hdr_len = st_aux.hf_hdr_len;
                 end
             end
+            fprintf("HF header len : %d\n",hf_hdr_len);
             
             % read HF header
             if hf_hdr_len ~= 0
@@ -74,8 +77,13 @@ function [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl)
                 [st_aux, st_hfa] = hf_add_supl_info(st_aux, st_hfa, st_rpw, st_ctl);
             end
 
+            %----------------------------------------
+            % Get time information (added to hdr_rpw)
+            %----------------------------------------
+            [st_time] = hf_get_time_info(st_ctl, st_sec, st_rpw);
+
         end
-        
+                
         %----------------------------------------
         % Read HF data
         %----------------------------------------

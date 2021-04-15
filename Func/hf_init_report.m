@@ -11,9 +11,9 @@ function [st_ctl] = hf_init_report(st_ctl)
     append(rpt, mlreportgen.report.TableOfContents)
 
     ch = mlreportgen.report.Chapter('Title','Test configuration');
-    txt = append('DPU softare version : ', string(st_ctl.ver));
-    append(ch, mlreportgen.dom.Text(txt));
-    append(rpt, ch)
+%    txt = append('DPU softare version : ', string(st_ctl.ver));
+%    append(ch, mlreportgen.dom.Text(txt));
+%    append(rpt, ch)
 
     % add report file 
     st_ctl.rpt = rpt;

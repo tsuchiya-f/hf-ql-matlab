@@ -3,32 +3,28 @@
 %
 % Press 'q', if you want to termiante this program
 %
-% 1st argument : DPU software version number ... 1.0 or other
-% 2nd argument : QL(1) or DL(0)
-% 3rd argument : path to a CCSDS file to write(QL)/read(DL)
+% 1st argument : QL(1) or DL(0)
+% 2nd argument : path to a CCSDS file to write(QL)/read(DL)
 %
 % ex)
-% >> hf_ccsds_ql(1.0, 1)                                QL for Ver.1 SW
-% >> hf_ccsds_ql(1.0, 1, 'C:\share\Linux\RESULTS\')     QL for Ver.1 SW, HF CCSDS packets are saved in C:\share\Linux\RESULTS\HF_YYYYMMDD-HHNN.ccs 
-% >> hf_ccsds_ql(1.0, 0, 'C:\share\Linux\RESULTS\')     DL for Ver.1 SW, Default path to a CCSDS file is set to C:\share\Linux\RESULTS\
-% >> hf_ccsds_ql(2.0, 1)                                QL for Ver.2 SW
-% >> hf_ccsds_ql(2.0, 0, 'C:\share\Linux\doc\')         DL for Ver.2 SW
+% >> hf_ccsds_ql(1)                                QL
+% >> hf_ccsds_ql(0, 'C:\share\Linux\doc\')         DL
+% >> hf_ccsds_ql(1, 'C:\share\Linux\RESULTS\')     QL, HF CCSDS packets are saved in C:\share\Linux\RESULTS\HF_YYYYMMDD-HHNN.ccs 
+% >> hf_ccsds_ql(0, 'C:\share\Linux\RESULTS\')     DL, Default path to a CCSDS file is set to C:\share\Linux\RESULTS\
 %
 % ex TSC DL)
 % $ cat TMIDX_?????.bin > TMIDX_99999.bin
-% >> hf_ccsds_ql(1.0, 1, '', 'RPWI_HF_RFT_2021_01_26_12_10_12', 120)                                QL for Ver.1 SW
+% >> hf_ccsds_ql(1, '', 'RPWI_HF_RFT_2021_01_26_12_10_12', 120)                                QL
 % replay [file join /home/tsuchiya/RESULTS/RPWI_HF_FFT_2021_01_26_12_13_00 ARC TMIDX_99999.bin] -rate 100
 % replay [file join /home/tsuchiya/RESULTS/RPWI_HF_RFT_2021_01_26_12_10_12 ARC TMIDX_99999.bin] -rate 100
 %
 %-----------------------------------
 
-function [] = hf_ccsds_ql(ver, ql, dir_ccs, out_name, timeout)
+function [] = hf_ccsds_ql(ql, dir_ccs, out_name, timeout)
 
     %-----------------------------------
     % Default parameters, they are used if arguments are not set.
     %-----------------------------------
-    % HF TLM version switch (1.0 or later) 
-    if ~exist('ver', 'var'); ver = 1.0; end
     % QL/DL switch (1: QL, 0:DL)
     if ~exist('ql', 'var'); ql = 1; end
     % Default directory of CCSDS file to read/write
@@ -43,7 +39,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs, out_name, timeout)
     %-----------------------------------
     % Initialize structure which controls data processing
     %-----------------------------------
-    [st_ctl] = hf_init_struct(ver, ql, dir_ccs, out_name);
+    [st_ctl] = hf_init_struct(ql, dir_ccs, out_name);
     
     %-----------------------------------
     % OPEN Device (QL) or CCSDS File (DL)
@@ -61,7 +57,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs, out_name, timeout)
     % (need to do after hf_init_device)
     %-----------------------------------
     [st_ctl] = hf_init_report(st_ctl);
-     fprintf('--- Output resport file name : %s.pdf\n', st_ctl.file_rep);
+     fprintf('--- Output report file name : %s.pdf\n', st_ctl.file_rep);
     
     %-----------------------------------
     % Initialize figure
@@ -99,7 +95,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs, out_name, timeout)
         %-----------------------------------
         % Get HF telemetry data
         %-----------------------------------
-        [st_rpw, st_aux, st_hfa, rdata, data_sz] = hf_ccsds_depacket(st_ctl);
+        [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz] = hf_ccsds_depacket(st_ctl);
         sumSize = sumSize + data_sz;
         tlm_cnt = tlm_cnt + 1;
         fprintf('SID: %02x / TLM count: %d / Data size : %d [Bytes]\n', st_rpw.sid, tlm_cnt, data_sz);
@@ -107,7 +103,7 @@ function [] = hf_ccsds_ql(ver, ql, dir_ccs, out_name, timeout)
         %-----------------------------------
         % Processing & Plotting data
         %-----------------------------------
-        hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, rdata);
+        hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata);
 
         if ql == 0
             % --- for DL ---

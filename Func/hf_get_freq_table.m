@@ -12,7 +12,7 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa)
 
     f = [];
     switch st_aux.sweep_table_id
-        case 0xff
+        case {0x1f, 0xff}
             % band 0
             f_band = hf_get_band(st_hfa.band0_startf, st_hfa.band0_stopf, st_hfa.band0_step, st_hfa.band0_sdiv, bw_eff);
             f = [f, f_band];
