@@ -115,8 +115,12 @@ function [] = hf_ccsds_ql(ql, dir_ccs, file_ccs, title, timeout)
         %-----------------------------------
         % Processing & Plotting data
         %-----------------------------------
-        hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata);
-
+        ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata);
+        if ret == -1
+            fprintf("***** CAUTION : permanet error is detected in hf_plot_data *****\n");
+            break; 
+        end
+        
         if ql == 0
             % --- for DL ---
             pause(0.01);

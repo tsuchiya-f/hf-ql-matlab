@@ -8,14 +8,22 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_raw
             fprintf('SID:%02x Sweep cycle\n', st_rpw.sid);
             st_ctl.label = ['HF Config 0: Sweep cycle / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data);
-            if ret == 0
+%             [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data);
+%             if ret == 0
+%                 ret = hf_plot_power(st_ctl, spec);
+%                 ret = hf_rpt_add_figure(st_ctl);
+%             else
+%                 fprintf('   ERROR in hf_proc_raw / error ID = %d\n', ret);
+%             end
+            [ret_proc, spec] = hf_proc_raw_ver1_corrected(ver, st_aux, st_hfa, raw_data);
+            if ret_proc == 0
                 ret = hf_plot_power(st_ctl, spec);
                 ret = hf_rpt_add_figure(st_ctl);
-            else
-                fprintf('   ERROR in hf_proc_raw / error ID = %d\n', ret);
+            elseif ret_proc < -1
+                ret = -1;
+                return;
             end
-        
+            
         % Radio full (Nominal sweep mode)
         case st_ctl.sid_full
             fprintf('SID:%02x Radio full\n', st_rpw.sid);

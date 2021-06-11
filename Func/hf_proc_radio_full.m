@@ -52,7 +52,8 @@ function  [ret, spec] = hf_proc_radio_full(ver, st_aux, st_hfa, raw_data)
             spec.im_xy = data(:,7);
             spec.im_yz = data(:,8);
             spec.im_zx = data(:,9);
-            spec.matrix = 1;
+%            spec.matrix = 1;
+            spec.matrix = 0;
          case 2
             data = reshape(data(1:nf*nk), nf, nk, []);
             % no-pol
@@ -90,7 +91,7 @@ function  [ret, spec] = hf_proc_radio_full(ver, st_aux, st_hfa, raw_data)
 %        case 3
     end            
 
-    spec.xlog = 1;
+    spec.xlog = 0;
     spec.ylog = 0;
 
 end
