@@ -14,13 +14,13 @@
 %
 % ex TSC DL)
 % $ cat TMIDX_?????.bin > TMIDX_99999.bin
-% >> hf_ccsds_ql(1, '', 'RPWI_HF_RFT_2021_01_26_12_10_12', 120)                                QL
+% >> hf_ccsds_ql(1, '', 'RPWI_HF_RFT_2021_01_26_12_10_12', '', 120)                                QL
 % replay [file join /home/tsuchiya/RESULTS/RPWI_HF_FFT_2021_01_26_12_13_00 ARC TMIDX_99999.bin] -rate 100
 % replay [file join /home/tsuchiya/RESULTS/RPWI_HF_RFT_2021_01_26_12_10_12 ARC TMIDX_99999.bin] -rate 100
 %
 %-----------------------------------
 
-function [] = hf_ccsds_ql(ql, dir_ccs, out_name, timeout)
+function [] = hf_ccsds_ql(ql, dir_ccs, file_ccs, title, timeout)
 
     %-----------------------------------
     % Default parameters, they are used if arguments are not set.
@@ -30,8 +30,10 @@ function [] = hf_ccsds_ql(ql, dir_ccs, out_name, timeout)
     % Default directory of CCSDS file to read/write
     if ~exist('dir_ccs', 'var'); dir_ccs = 'C:\share\Linux\juice_test\'; end
     if strlength(dir_ccs) == 0; dir_ccs = 'C:\share\Linux\juice_test\'; end
-    % Default output name (ccsds and report)
-    if ~exist('out_name', 'var'); out_name = ''; end
+    % Default file name (ccsds and report)
+    if ~exist('file_ccs', 'var'); file_ccs = ''; end
+    % Default title
+    if ~exist('title', 'var'); title = 'HF test'; end
     % Default timeout [sec]
     if ~exist('timeout', 'var'); timeout = 90; end
     %-----------------------------------
@@ -39,7 +41,7 @@ function [] = hf_ccsds_ql(ql, dir_ccs, out_name, timeout)
     %-----------------------------------
     % Initialize structure which controls data processing
     %-----------------------------------
-    [st_ctl] = hf_init_struct(ql, dir_ccs, out_name);
+    [st_ctl] = hf_init_struct(ql, dir_ccs, file_ccs, title);
     
     %-----------------------------------
     % OPEN Device (QL) or CCSDS File (DL)
@@ -95,7 +97,17 @@ function [] = hf_ccsds_ql(ql, dir_ccs, out_name, timeout)
         %-----------------------------------
         % Get HF telemetry data
         %-----------------------------------
-        [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz] = hf_ccsds_depacket(st_ctl);
+        [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccsds_depacket(st_ctl);
+
+        % check error
+        if err == 1
+            % --- for DL ---
+            if ql == 0
+                if feof(st_ctl.r) == 1; break; end
+                continue;
+            end
+        end
+
         sumSize = sumSize + data_sz;
         tlm_cnt = tlm_cnt + 1;
         fprintf('SID: %02x / TLM count: %d / Data size : %d [Bytes]\n', st_rpw.sid, tlm_cnt, data_sz);

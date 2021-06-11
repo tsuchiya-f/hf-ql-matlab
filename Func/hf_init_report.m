@@ -10,10 +10,12 @@ function [st_ctl] = hf_init_report(st_ctl)
     append(rpt, mlreportgen.report.TitlePage('Title',name))
     append(rpt, mlreportgen.report.TableOfContents)
 
-    ch = mlreportgen.report.Chapter('Title','Test configuration');
-%    txt = append('DPU softare version : ', string(st_ctl.ver));
-%    append(ch, mlreportgen.dom.Text(txt));
-%    append(rpt, ch)
+    ch = mlreportgen.report.Chapter('Test information');
+    txt = append('Test title : ', st_ctl.title);
+    append(ch, mlreportgen.dom.Text(txt));
+    txt = append('Location of CCSDS file  : ', st_ctl.dir);
+    append(ch, mlreportgen.dom.Text(txt));
+    append(rpt, ch)
 
     % add report file 
     st_ctl.rpt = rpt;

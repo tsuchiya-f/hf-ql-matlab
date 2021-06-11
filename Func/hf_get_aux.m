@@ -1,9 +1,12 @@
 function [st] = hf_get_aux(aux, sid, st_ctl)
 
+%-----------------------------------
+%   SID for SW ver.2 & later
+%-----------------------------------
 %    st_ctl.sid_raw     = 0x42;
 %    st_ctl.sid_full    = 0x43;
 %    st_ctl.sid_burst_s = 0x44;
-%    st_ctl.sid_pssr1_s = 0x45;
+%    st_ctl.sid_pssr1_s = 0x45 (69);
 %    st_ctl.sid_pssr2_s = 0x46;
 %    st_ctl.sid_pssr3_s = 0x47;
 %    st_ctl.sid_burst_r = 0x64;
@@ -11,9 +14,24 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
 %    st_ctl.sid_pssr2_r = 0x66;
 %    st_ctl.sid_pssr3_r = 0x67;
 % 
+
+    if st_ctl.ver == 1.0
+        
+        % there is no valid Aux file for Ver.1 SW
+        
+        % HF header size
+        st.hf_hdr_len = 24;
+        % Channel select
+        st.xch_sel     = 1;
+        st.ych_sel     = 1;
+        st.zch_sel     = 1;
+
+        return;
+    end
+    
     switch sid
         
-        case {st_ctl.sid_raw, st_ctl.sid_full, st_ctl.sid_full}
+        case {st_ctl.sid_raw, st_ctl.sid_full}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
             % Channel select
@@ -39,6 +57,21 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.rfi_param1  = aux(6);
             st.rfi_param2  = aux(7);
             st.rfi_param3  = aux(8);
+
+        case {st_ctl.sid_pssr1_s}
+            % HF header size
+            st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
+            % Channel select
+            st.xch_sel    = bitshift(bitand(aux(1),0x08),-3);
+            st.ych_sel    = bitshift(bitand(aux(1),0x04),-2);
+            st.zch_sel    = bitshift(bitand(aux(1),0x02),-1);
+            st.cal_ena    = bitand(aux(1),0x01);
+            % Sweep table ID
+            st.sweep_table_id  = bitshift(bitand(aux(2),0xf8),-3);
+            % TLM format
+            st.start_freq = uint32(aux(5))*256 + uint32(aux(6));
+            st.stop_freq  = uint32(aux(7))*256 + uint32(aux(8));
+            st.sweep_step = uint32(aux(9))*256 + uint32(aux(10));
     end
 
 %    % Sweep table ID

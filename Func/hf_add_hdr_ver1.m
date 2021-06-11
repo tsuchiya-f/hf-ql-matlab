@@ -31,12 +31,14 @@ function [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw, st_ctl)
             st_hfa.band0_sdiv   = 1;
 
             st_hfa.meas_num = 9;            % number of measurements
+            st_hfa.total_step = 255;        % number of frequeucy bins 
 
             st_aux.sweep_table_id  = 0xFF;
             st_aux.xch_sel     = 1;
             st_aux.ych_sel     = 1;
             st_aux.zch_sel     = 1;
-
+            st_aux.complex_sel = 1;
+             
         case {st_ctl.sid_pssr3_s, st_ctl.sid_pssr3_r}   % PSSR3
             st_hfa.feed = 26;
             st_hfa.skip = 154;

@@ -8,9 +8,13 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_raw
             fprintf('SID:%02x Sweep cycle\n', st_rpw.sid);
             st_ctl.label = ['HF Config 0: Sweep cycle / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            [~, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data);
-            ret = hf_plot_power(st_ctl, spec);
-            ret = hf_rpt_add_figure(st_ctl);
+            [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data);
+            if ret == 0
+                ret = hf_plot_power(st_ctl, spec);
+                ret = hf_rpt_add_figure(st_ctl);
+            else
+                fprintf('   ERROR in hf_proc_raw / error ID = %d\n', ret);
+            end
         
         % Radio full (Nominal sweep mode)
         case st_ctl.sid_full
@@ -27,6 +31,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_pssr1_s   % PSSR1, survey data
             fprintf('SID:%02x PSSR1 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 8: PSSR1 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
+            [~, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data);
+            ret = hf_plot_power_2ch(st_ctl, spec);
+            ret = hf_rpt_add_figure(st_ctl);
         
         case st_ctl.sid_pssr2_s   % PSSR2, survey data
             fprintf('SID:%02x PSSR2 (survey data)\n', st_rpw.sid);

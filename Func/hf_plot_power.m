@@ -16,10 +16,18 @@ function ret = hf_plot_power(st_ctl, spec)
 
     % Plot Power spectrum (x, y, and z) 
     nexttile(1)
-    if spec.log == 0
-       plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+    if spec.xlog == 0
+        if spec.ylog == 0
+           plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+        else
+           semilogy(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+        end
     else
-       semilogy(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+        if spec.ylog == 0
+           semilogx(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+        else
+           loglog(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+        end
     end
             
     [xmax,ix] = max(spec.x);
@@ -37,30 +45,54 @@ function ret = hf_plot_power(st_ctl, spec)
 
     % Plot cross spectrum (xy) 
     nexttile(2)
-    if spec.log == 0
-       plot(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
+    if spec.xlog == 0
+        if spec.ylog == 0
+            plot(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
+        else
+            semilogy(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
+        end
     else
-       semilogy(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
+        if spec.ylog == 0
+            semilogx(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
+        else
+            loglog(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
+        end
     end
     xlabel ('Frequency [MHz]');
     ylabel ('XY');
 
     % Plot cross spectrum (yz) 
     nexttile(3)
-    if spec.log == 0
-       plot(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
+    if spec.xlog == 0
+        if spec.ylog == 0
+            plot(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
+        else
+            semilogy(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
+        end
     else
-       semilogy(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
+        if spec.ylog == 0
+            semilogx(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
+        else
+            loglog(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
+        end
     end
     xlabel ('Frequency [MHz]');
     ylabel ('YX');
 
     % Plot cross spectrum (zx) 
     nexttile(4)
-    if spec.log == 0
-       plot(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+    if spec.xlog == 0
+        if spec.ylog == 0
+            plot(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        else
+            semilogy(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        end
     else
-       semilogy(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        if spec.ylog == 0
+            semilogx(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        else
+            loglog(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        end
     end
     xlabel ('Frequency [MHz]');
     ylabel ('ZX');

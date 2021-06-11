@@ -8,6 +8,13 @@ function  [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data)
 
     num_sampl = st_hfa.snum + 1;  % number of samples at each frequency step
     num_steps = st_hfa.step + 1;  % number of frequency steps
+    
+    % expected data size
+    n_exp = num_sampl * num_steps * 16;
+    if n_exp ~= size(raw_data)
+        ret = -1;
+        return;
+    end
 
     rawData = swapbytes(typecast(uint8(raw_data),'int16'));
     rawData = reshape(typecast(int32(rawData),'uint32'), 8, []);
@@ -32,7 +39,8 @@ function  [ret, spec] = hf_proc_raw(ver, st_aux, st_hfa, raw_data)
     spec.y = 20 * ( log10( Yabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
     spec.z = 20 * ( log10( Zabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
 
-    spec.log = 0;
     spec.matrix = 0;
+    spec.xlog = 0;
+    spec.ylog = 0;
 
 end

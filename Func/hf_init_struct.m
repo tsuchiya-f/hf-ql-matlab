@@ -1,18 +1,32 @@
 %-----------------------------------
 % Initialize structure which controls data processing
 %-----------------------------------
-function    [st_ctl] = hf_init_struct(ql, dir_ccs, out_name)
+function    [st_ctl] = hf_init_struct(ql, dir_ccs, file_ccs, title)
+
+    % title of test
+    st_ctl.title  = title;
     % currrent date and time (they are used to determine file names)
     ds = datestr(now, 'yyyymmdd-HHMM');
     % QL(1) or DL(0) (user input)
     st_ctl.ql     = ql;
-    % Default directory of CCSDS file to read/write (user input)
+    % Default directory and file of CCSDS file to read/write (user input)
     st_ctl.dir    = dir_ccs;
+    st_ctl.file   = file_ccs;
     % CCSDS file name to write
-    if strlength(out_name) > 0
-        st_ctl.wfile  = [st_ctl.dir 'HF_' out_name '.ccs'];        
+    if ql == 1 
+        % QL
+        if strlength(file_ccs) > 0
+            st_ctl.wfile  = [st_ctl.dir 'HF_' file_ccs '.ccs'];        
+        else
+            st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.ccs'];        
+        end
     else
-        st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.ccs'];        
+        % DL
+%        if strlength(file_ccs) > 0
+%            st_ctl.wfile  = [st_ctl.dir file_ccs];
+%        else
+%            st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.temp'];        
+%        end
     end
 
     % Definition of SID
