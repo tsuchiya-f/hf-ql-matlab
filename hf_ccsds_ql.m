@@ -20,28 +20,31 @@
 %
 %-----------------------------------
 
-function [] = hf_ccsds_ql(ql, dir_ccs, file_ccs, title, timeout)
+function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
 
     %-----------------------------------
     % Default parameters, they are used if arguments are not set.
     %-----------------------------------
     % QL/DL switch (1: QL, 0:DL)
-    if ~exist('ql', 'var'); ql = 1; end
+    if ~exist('ql', 'var'); ql = 1; else; ql = 0; end
+    st_ctl.ql = ql;
     % Default directory of CCSDS file to read/write
-    if ~exist('dir_ccs', 'var'); dir_ccs = 'C:\share\Linux\juice_test\'; end
-    if strlength(dir_ccs) == 0; dir_ccs = 'C:\share\Linux\juice_test\'; end
+    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = 'C:\share\Linux\juice_test\'; end
+    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = 'C:\share\Linux\juice_test\'; end
+    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = 'C:\share\Linux\juice_test\'; end
+    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = 'C:\share\Linux\juice_test\'; end
     % Default file name (ccsds and report)
-    if ~exist('file_ccs', 'var'); file_ccs = ''; end
+    if ~isfield(st_ctl, 'file_out'); st_ctl.file_out = ''; end
     % Default title
-    if ~exist('title', 'var'); title = 'HF test'; end
+    if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
-    if ~exist('timeout', 'var'); timeout = 90; end
+    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
     %-----------------------------------
     
     %-----------------------------------
     % Initialize structure which controls data processing
     %-----------------------------------
-    [st_ctl] = hf_init_struct(ql, dir_ccs, file_ccs, title);
+    [st_ctl] = hf_init_struct(st_ctl);
     
     %-----------------------------------
     % OPEN Device (QL) or CCSDS File (DL)
@@ -79,7 +82,7 @@ function [] = hf_ccsds_ql(ql, dir_ccs, file_ccs, title, timeout)
         %-----------------------------------
         % Check elapsed time since last data received
         %-----------------------------------
-        wait_time = timeout; %[sec]
+        wait_time = st_ctl.timeout; %[sec]
         if ql == 1
             % Wait until the data is received
             % --- only for QL ---

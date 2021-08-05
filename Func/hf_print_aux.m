@@ -31,7 +31,7 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
             fprintf('Power select      %d\n', st_aux.power_sel);
             fprintf('Complex select    %d\n', st_aux.complex_sel);
             fprintf('BG subtract       %d\n', st_aux.bg_subtract);
-            fprintf('Raw select        %d\n', st_aux.raw_select);
+            fprintf('BG select         %d\n', st_aux.bg_select);
             fprintf('FFT window        %d\n', st_aux.fft_win);
             fprintf('RFI rejection     %d\n', st_aux.rfi_rej_sw);
             fprintf('Pol sep threshold %d\n', st_aux.pol_sep_th);

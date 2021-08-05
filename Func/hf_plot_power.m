@@ -8,93 +8,79 @@ function ret = hf_plot_power(st_ctl, spec)
     fig.Position = [1.0 1.0 20.0 25.0];     %　[left bottom width height]
 
     % set display layout
-    if spec.matrix == 1
-        tiledlayout(4,1)
-    else
-        tiledlayout(1,1)
-    end
+    tiledlayout(4,1)
 
     % Plot Power spectrum (x, y, and z) 
     nexttile(1)
-    if spec.xlog == 0
-        if spec.ylog == 0
-           plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
-        else
-           semilogy(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
-        end
-    else
-        if spec.ylog == 0
-           semilogx(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
-        else
-           loglog(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
-        end
-    end
-            
-    [xmax,ix] = max(spec.x);
-    [ymax,iy] = max(spec.y);
-    [zmax,iz] = max(spec.z);
-    dmax      = [xmax,ymax,zmax];
-    imax      = [ix,iy,iz];
-    [~,im]   = max(dmax);
-    p_freq = spec.f(imax(im)) / 1e3;
-    title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(X)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Y)[' num2str(spec.y(imax(im)),'%0.1f') '] Blue(Z)[' num2str(spec.z(imax(im)),'%0.1f') '] dBm']);
-    xlabel ('Frequency [MHz]');
-    ylabel ('Power [dBm]');
+    switch st_ctl.n_ch
+        case 3
+            if spec.xlog == 0
+                plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+            else
+                semilogx(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
+            end
 
-    if spec.matrix == 0; return; end
+            [xmax,ix] = max(spec.x);
+            [ymax,iy] = max(spec.y);
+            [zmax,iz] = max(spec.z);
+            dmax      = [xmax,ymax,zmax];
+            imax      = [ix,iy,iz];
+            [~,im]   = max(dmax);
+            p_freq = spec.f(imax(im)) / 1e3;
+            title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(X)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Y)[' num2str(spec.y(imax(im)),'%0.1f') '] Blue(Z)[' num2str(spec.z(imax(im)),'%0.1f') '] dBm']);
+        case 2    
+            if spec.xlog == 0
+                plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g')
+            else
+                semilogx(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g')
+            end
 
-    % Plot cross spectrum (xy) 
-    nexttile(2)
-    if spec.xlog == 0
-        if spec.ylog == 0
-            plot(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
-        else
-            semilogy(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
-        end
-    else
-        if spec.ylog == 0
-            semilogx(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
-        else
-            loglog(spec.f/1e3, spec.re_xy,'ro', spec.f/1e3, spec.im_xy,'bo')
-        end
+            [xmax,ix] = max(spec.x);
+            [ymax,iy] = max(spec.y);
+            dmax      = [xmax,ymax];
+            imax      = [ix,iy];
+            [~,im]   = max(dmax);
+            p_freq = spec.f(imax(im)) / 1e3;
+            title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(Ch1)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Ch2)[' num2str(spec.y(imax(im)),'%0.1f') ']']);
     end
     xlabel ('Frequency [MHz]');
-    ylabel ('XY');
+    ylabel ('Power [rel]');
+    if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
 
-    % Plot cross spectrum (yz) 
-    nexttile(3)
-    if spec.xlog == 0
-        if spec.ylog == 0
-            plot(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
-        else
-            semilogy(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
-        end
-    else
-        if spec.ylog == 0
-            semilogx(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
-        else
-            loglog(spec.f/1e3, spec.re_yz,'ro', spec.f/1e3, spec.im_yz,'bo')
-        end
-    end
-    xlabel ('Frequency [MHz]');
-    ylabel ('YX');
+    % Plot power of each channel
+    for i=1:st_ctl.n_ch
 
-    % Plot cross spectrum (zx) 
-    nexttile(4)
-    if spec.xlog == 0
-        if spec.ylog == 0
-            plot(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
-        else
-            semilogy(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        switch i
+            case 1
+                if st_ctl.n_ch == 3; label='X'; else; label='Ch1'; end  
+                data = spec.xx;
+            case 2
+                if st_ctl.n_ch == 3; label='Y'; else; label='Ch2'; end  
+                data = spec.yy;
+            case 3
+                label='Z';
+                data = spec.zz;
         end
-    else
-        if spec.ylog == 0
-            semilogx(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+        
+        nexttile(i+1)
+
+        if spec.xlog == 0
+            if spec.ylog == 0
+                plot(spec.f/1e3, data)
+            else
+                semilogy(spec.f/1e3, data)
+            end
         else
-            loglog(spec.f/1e3, spec.re_zx,'ro', spec.f/1e3, spec.im_zx,'bo')
+            if spec.ylog == 0
+                semilogx(spec.f/1e3, data)
+            else
+                loglog(spec.f/1e3, data)
+            end
         end
+        
+        xlabel ('Frequency [MHz]');
+        ylabel (label);
+        if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
     end
-    xlabel ('Frequency [MHz]');
-    ylabel ('ZX');
 
 end

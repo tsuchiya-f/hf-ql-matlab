@@ -3,7 +3,7 @@
 % RPWI header
 % see https://spis.irfu.se/mw/matlab_utilities/-/blob/dp_plot_201026/plot_sid_timing.m#L63-93
 %------------------------------------------------------------------------------------------------
-function [st_time] = hf_get_time_info(st_ctl, st_sec, st_rpw)
+function [st_time, st_ctl] = hf_get_time_info(st_ctl, st_sec, st_rpw)
 
     cuc_time_coarse = bitshift( bitand(st_sec.time, 0x7FFFFFFF0000), -16);
     cuc_time_fine   = bitand(st_sec.time, 0x00000000FFFF);
