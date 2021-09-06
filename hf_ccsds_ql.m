@@ -26,19 +26,21 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default parameters, they are used if arguments are not set.
     %-----------------------------------
     % QL/DL switch (1: QL, 0:DL)
+    ql=1; 
     if ~exist('ql', 'var'); ql = 1; else; ql = 0; end
     st_ctl.ql = ql;
     % Default directory of CCSDS file to read/write
-    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = 'C:\share\Linux\juice_test\'; end
-    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = 'C:\share\Linux\juice_test\'; end
-    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = 'C:\share\Linux\juice_test\'; end
-    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = 'C:\share\Linux\juice_test\'; end
+    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
     % Default file name (ccsds and report)
     if ~isfield(st_ctl, 'file_out'); st_ctl.file_out = ''; end
     % Default title
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
     if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
+    if ~isfield(st_ctl, 'file_in'); st_ctl.file_in='hf_rawpacket_pssr2.bin';
     %-----------------------------------
     
     %-----------------------------------

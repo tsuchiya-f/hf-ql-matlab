@@ -65,6 +65,8 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         
         st.n_band = int8(len-4)/8;
         
+        if len < 5; return; end
+        
         st.band0_startf = bitshift(hdr(5),8) + hdr(6);
         st.band0_stopf  = bitshift(hdr(7),8) + hdr(8);
         st.band0_step   = bitshift(hdr(9),8) + hdr(10);

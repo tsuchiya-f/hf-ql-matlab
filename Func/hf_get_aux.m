@@ -101,6 +101,57 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.start_freq = uint32(aux(5))*256 + uint32(aux(6));
             st.stop_freq  = uint32(aux(7))*256 + uint32(aux(8));
             st.sweep_step = uint32(aux(9))*256 + uint32(aux(10));
+            st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
+
+        case {st_ctl.sid_pssr2_s}
+            % HF header size
+            st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
+            % Channel select
+            ant_sel       = bitshift(bitand(aux(1),0x0C),-2);
+            st.xch_sel=0;
+            st.ych_sel=0;
+            st.zch_sel=0;
+            if ant_sel == 0
+                st.xch_sel = 1;
+            elseif ant_sel == 1 
+                st.ych_sel    = 1;
+            elseif ant_set == 2 
+                st.zch_sel    = 1;
+            else
+                st.xch_sel    = 1;
+            end
+            st.decimation = bitshift(bitand(aux(2),0x60),-5);
+            st.sweep_step = bitshift(uint32(bitand(aux(2),0x1F)),4) + bitshift(uint32(bitand(aux(3),0xF0)),-4);
+            % TLM format
+            st.start_freq = uint32(aux(5))*256 + uint32(aux(6));
+            st.stop_freq  = uint32(aux(7))*256 + uint32(aux(8));
+            st.n_sample   = uint32(aux(9))*256 + uint32(aux(10));
+            st.cal_ena    = bitand(aux(1),0x01);
+
+        case {st_ctl.sid_pssr2_r}
+            % HF header size
+            st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
+            % Channel select
+            ant_sel       = bitshift(bitand(aux(1),0x0C),-2);
+            st.xch_sel=0;
+            st.ych_sel=0;
+            st.zch_sel=0;
+            if ant_sel == 0
+                st.xch_sel = 1;
+            elseif ant_sel == 1 
+                st.ych_sel    = 1;
+            elseif ant_sel == 2 
+                st.zch_sel    = 1;
+            else
+                st.xch_sel    = 1;
+            end
+            st.cal_ena    = bitshift(bitand(aux(1),0x01), 0);
+            st.pol_sel    = bitshift(bitand(aux(2),0x80),-7);
+            st.decimation = bitshift(bitand(aux(2),0x60),-5);
+            st.n_sample   = bitshift(uint32(bitand(aux(3),0xFF)),8) + bitshift(uint32(bitand(aux(4),0xFF)), 0);
+            st.sweep_step = bitshift(uint32(bitand(aux(7),0xFF)),1) + bitshift(uint32(bitand(aux(8),0x80)),-7);
+            % TLM format
+            st.freq_sel   = uint32(aux(5))*256 + uint32(aux(6));
 
         case {st_ctl.sid_pssr3_s}
             % HF header size
@@ -112,10 +163,11 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitand(aux(1),0x01);
             st.pol        = bitshift(bitand(aux(2),0x80),-7);
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
-            st.n_data     = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
+            st.n_packet   = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
             st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
+            st.n_data     = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
             st.center_freq= bitshift(aux(5),8) + aux(6);
-            
+
         case {st_ctl.sid_pssr3_r}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
@@ -126,11 +178,13 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitand(aux(1),0x01);
             st.pol        = bitshift(bitand(aux(2),0x80),-7);
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
+            st.n_packet   = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
             st.n_block    = double(bitshift(bitand(aux(2),0x1F),3) + bitshift(bitand(aux(3),0xE0),-5));
             st.freq_hi    = double(uint32(aux(5))*256 + uint32(aux(6)));
             st.freq_lo    = double(uint32(aux(7))*256 + uint32(aux(8)));
             st.send_reg   = double(uint32(aux(9))*256  + uint32(aux(10)));
             st.skip_reg   = double(uint32(aux(11))*256 + uint32(aux(12)));
+            st.decimation = bitshift(bitand(aux(2),0x60),-5);
             
     end
 

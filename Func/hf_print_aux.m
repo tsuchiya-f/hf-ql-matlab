@@ -52,6 +52,24 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
             fprintf('sweep step            %d\n', st_aux.sweep_step);
         
         case st_ctl.sid_pssr2_s   % PSSR2, survey data
+            % HF header size
+            fprintf('HF header size        %d\n', st_aux.hf_hdr_len);
+            % Channel select
+            fprintf('Channel select X/Y/Z  %d/%d/%d\n', st_aux.xch_sel, st_aux.ych_sel, st_aux.zch_sel);
+            fprintf('Data number     %d\n', st_aux.n_sample);
+
+            fprintf('start/stop freq [kHz] %d/%d\n', st_aux.start_freq, st_aux.stop_freq);
+            fprintf('sweep step            %d\n', st_aux.sweep_step);
+        
+        case st_ctl.sid_pssr2_r   % PSSR2, rich data
+            % HF header size
+            fprintf('HF header size        %d\n', st_aux.hf_hdr_len);
+            % Channel select
+            fprintf('Channel select X/Y/Z  %d/%d/%d\n', st_aux.xch_sel, st_aux.ych_sel, st_aux.zch_sel);
+            fprintf('Data number     %d\n', st_aux.n_sample);
+
+%            fprintf('start/stop freq [kHz] %d/%d\n', st_aux.start_freq, st_aux.stop_freq);
+            fprintf('sweep step            %d\n', st_aux.sweep_step);
         
         case st_ctl.sid_pssr3_s   % PSSR3, survey data
 

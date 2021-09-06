@@ -8,6 +8,7 @@ function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
     feed = st_aux.send_reg;     % number of feed frames in one block
     skip = st_aux.skip_reg;     % number of skip frames in one block
     nb   = st_aux.n_block;      % number of block in one packet
+    nb   = 10;                  % number of block in one packet
 
     ns   = 128;                 % number of data sample in one frame (fixed)
     num_sampl = feed * ns;      % number of data sample in one block
