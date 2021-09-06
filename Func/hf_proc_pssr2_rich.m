@@ -1,4 +1,4 @@
-function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
+function [ret, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data)
 
     ret = 0;
 
@@ -10,7 +10,7 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
     % time data [sec]
     t = zeros(1,n_time);
     for i=0:n_time-1
-        t(1+i) = single(1+i)*single(st_hfa.snum+1)/single(n_time)/single(fs);
+        t(1+i) = single(1+i)/single(fs);
     end
     auto.t = t;
 

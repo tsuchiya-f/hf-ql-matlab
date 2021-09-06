@@ -67,14 +67,14 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             fprintf('SID:%02x PSSR2 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 9: PSSR2 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
             [~, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data);
-            ret = hf_plot_autocorr(st_ctl, auto);
-%            ret = hf_rpt_add_figure(st_ctl);
+            ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
+            ret = hf_rpt_add_figure(st_ctl);
 
         case st_ctl.sid_pssr3_s   % PSSR3, survey data
             fprintf('SID:%02x PSSR3 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 10: PSSR3 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
 %            [~, stream] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data);
-%            ret = hf_plot_stream(st_ctl, stream);
+%            ret = hf_plot_autocorr(st_rpw, st_ctl, stream);
 %            ret = hf_rpt_add_figure(st_ctl);
 
         case st_ctl.sid_burst_r   % Radio burst, rich data
@@ -95,8 +95,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_pssr2_r   % PSSR2, rich data
             fprintf('SID:%02x PSSR2 (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 9: PSSR2 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-%            [~, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data);
-%            ret = hf_plot_autocorr(st_ctl, auto);
+            [~, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data);
+            ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
+            ret = hf_rpt_add_figure(st_ctl);
         
         case st_ctl.sid_pssr3_r   % PSSR3, rich data
             fprintf('SID:%02x PSSR3 (rich data)\n', st_rpw.sid);
