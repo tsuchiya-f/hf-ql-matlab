@@ -29,11 +29,19 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     ql=1; 
     if ~exist('ql', 'var'); ql = 1; else; ql = 0; end
     st_ctl.ql = ql;
+
     % Default directory of CCSDS file to read/write
+    % --- for kimura
     if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
     if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
     if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
     if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+    % --- for tsuchiya
+%     if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%     if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%     if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%     if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+
     % Default file name (ccsds and report)
     if ~isfield(st_ctl, 'file_out'); st_ctl.file_out = ''; end
     % Default title
