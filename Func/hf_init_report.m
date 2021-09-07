@@ -13,7 +13,7 @@ function [st_ctl] = hf_init_report(st_ctl)
     ch = mlreportgen.report.Chapter('Test information');
     txt = append('Test title : ', st_ctl.title);
     append(ch, mlreportgen.dom.Text(txt));
-    txt = append('Location of CCSDS file  : ', st_ctl.dir);
+    txt = append('Location of CCSDS file  : ', st_ctl.dir_out);
     append(ch, mlreportgen.dom.Text(txt));
     append(rpt, ch)
 

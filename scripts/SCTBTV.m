@@ -2,30 +2,22 @@
 % User inputs
 %------------------------------------------------------------------------------------
 st_ctl_in.raw_ver1_corrected = 1;
-st_ctl_in.title = '20210527_SCPFM_PTR_RPWI';
-st_ctl_in.ylim = [-60 -10];
+st_ctl_in.title = 'SCTBTV';
+%st_ctl_in.ylim = [-60 -10];
 
-basedir_in = "C:\share\Linux\RESULTS\20210527_SCPFM_PTR_RPWI\";
-basedir_out = "C:\share\Linux\RESULTS\20210527_SCPFM_PTR_RPWI\";
+basedir_in = "C:\Users\tsuch\Dropbox\JUICE_Data\SCTBTV-July-2021-Complete-bulkExport\";
+basedir_out = "C:\share\Linux\RESULTS\SCTBTV\";
 
-indir  = ["2021_05_11T05_17_29_pomi159_ded31615_RT_RPWI_DAY_3\USER\CFDP\RETRIEVAL\"];
-outdir = ["DAY_3_\"];
-file_search_str = 'xid32776.data';
-
-% indir  = ["2021_05_17T04_32_56_pomi159_ded31615_RT_RPWI_FFT_DAY5\USER\CFDP\RETRIEVAL\"];
-% outdir = ["DAY_5\"];
-% file_search_str = 'xid32774.data';
-
-% indir  = ["2021_05_15T04_28_37_pomi159_ded31615_RT_RPWI_FFT_DAY4\USER\CFDP\RETRIEVAL\"  ...
-%           "2021_05_17T04_32_56_pomi159_ded31615_RT_RPWI_FFT_DAY5\USER\CFDP\RETRIEVAL\"];
-% outdir = ["DAY_4\" "DAY_5\"];
-% file_search_str = '*.data';
-
-% indir  = ["2021_05_11T05_17_29_pomi159_ded31615_RT_RPWI_DAY_3\USER\CFDP\RETRIEVAL\"  ...
-%           "2021_05_15T04_28_37_pomi159_ded31615_RT_RPWI_FFT_DAY4\USER\CFDP\RETRIEVAL\"  ...
-%           "2021_05_17T04_32_56_pomi159_ded31615_RT_RPWI_FFT_DAY5\USER\CFDP\RETRIEVAL\"];
-% outdir = ["DAY_3\" "DAY_4\" "DAY_5\"];
-% file_search_str = '*.data';
+ indir  = [ ...
+           "SCTBTV_Phase3\RPWI_CFDP_PH3\" ...
+           "SCTBTV_Phase5\CFDP_S22_P4_P5_RPWI\" ...
+           "SCTBTV_Phase11\CFDP_RPWI_S53_P11_2\" ...
+           "SCTBTV_Phase12\RIME_CFDP_S59_P12\" ...     % No HF data
+           "SCTBTV_Phase13\RPWI_CFDP_S66_P13\"];
+ outdir = ["Phase3\" "Phase5\" "Phase11\" "Phase12\" "Phase13\"];
+% indir  = ["SCTBTV_Phase12\RIME_CFDP_S59_P12\"];
+% outdir = ["Phase12\"];
+file_search_str = "*.data";
 %------------------------------------------------------------------------------------
 
 ql=0;
@@ -57,7 +49,7 @@ for j=1: n_dir
             st_ctl_in.dir_in = append(basedir_in, indir(j));
             st_ctl_in.dir_out = append(basedir_out, outdir(j));
             st_ctl_in.file_in = file;
-            hf_ccsds_ql(ql, st_ctl_in)
+            [st_ctl_in] = hf_ccsds_ql(ql, st_ctl_in);
 
         else
             fprintf("No HF data in %s\n", file);

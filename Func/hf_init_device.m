@@ -26,14 +26,14 @@ function [st_ctl] = hf_init_device(st_ctl)
     % --- for DL ---
     else
         % Open CCSDS data file to read (st_ctl.r)
-        if strlength(st_ctl.file) ~=0
-            st_ctl.rfile  = st_ctl.file;
+        if strlength(st_ctl.file_in) ~=0
+            st_ctl.rfile  = st_ctl.file_in;
         else
-            [file,fdir] = uigetfile([st_ctl.dir '*.*']);
+            [file,fdir] = uigetfile([st_ctl.dir_in '*.*']);
             st_ctl.rfile  = fullfile(fdir,file);
         end
         
-        tfile = append(st_ctl.dir, st_ctl.rfile);
+        tfile = append(st_ctl.dir_in, st_ctl.rfile);
 %        tfile = [st_ctl.dir '\' st_ctl.rfile];
         fileInfo =  dir(tfile);
         st_ctl.fileSize = fileInfo.bytes;
@@ -41,7 +41,7 @@ function [st_ctl] = hf_init_device(st_ctl)
         st_ctl.r  = r;
 
         % Report file name
-        st_ctl.file_rep = tfile;
+        st_ctl.file_rep = append(st_ctl.dir_out, st_ctl.rfile);
     end
 
 end

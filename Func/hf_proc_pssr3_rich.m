@@ -1,12 +1,14 @@
 function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
 
     ret = 0;
+    sample_rate = [296000 148000 74000 37000];
 
-    % for rich data ( NOTE : below parameters should be included in HF packet header )
-    fs   = st_hfa.sample_rate;  % sampling rate of decimated waveform [Hz]
-    feed = st_hfa.feed;         % number of feed frames in one block
-    skip = st_hfa.skip;         % number of skip frames in one block
-    nb   = st_hfa.block_num;    % number of block in one packet
+    % for rich data
+    fs   = sample_rate(st_aux.decimation+1);  % sampling rate of decimated waveform [Hz]
+    feed = st_aux.send_reg;     % number of feed frames in one block
+    skip = st_aux.skip_reg;     % number of skip frames in one block
+    nb   = st_aux.n_block;      % number of block in one packet
+    nb   = 10;                  % number of block in one packet
 
     ns   = 128;                 % number of data sample in one frame (fixed)
     num_sampl = feed * ns;      % number of data sample in one block
@@ -18,9 +20,9 @@ function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
     % rich data (waveform)
     % -------------------------------------------
     % time data [sec]
-    t = [];
+    t = zeros(1,feed*ns*nb);
     for i=0:nb-1
-        t = [ t, (feed+skip)*ns*i/fs + linspace(1,feed*ns,feed*ns)/fs ];
+        t(1+feed*ns*i:feed*ns*(i+1)) = (feed+skip)*ns*i/fs + (1:feed*ns)/fs;
     end
     wave.t = t;
     

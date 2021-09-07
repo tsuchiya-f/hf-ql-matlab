@@ -31,7 +31,7 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
             fprintf('Power select      %d\n', st_aux.power_sel);
             fprintf('Complex select    %d\n', st_aux.complex_sel);
             fprintf('BG subtract       %d\n', st_aux.bg_subtract);
-            fprintf('Raw select        %d\n', st_aux.raw_select);
+            fprintf('BG select         %d\n', st_aux.bg_select);
             fprintf('FFT window        %d\n', st_aux.fft_win);
             fprintf('RFI rejection     %d\n', st_aux.rfi_rej_sw);
             fprintf('Pol sep threshold %d\n', st_aux.pol_sep_th);
@@ -52,6 +52,24 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
             fprintf('sweep step            %d\n', st_aux.sweep_step);
         
         case st_ctl.sid_pssr2_s   % PSSR2, survey data
+            % HF header size
+            fprintf('HF header size        %d\n', st_aux.hf_hdr_len);
+            % Channel select
+            fprintf('Channel select X/Y/Z  %d/%d/%d\n', st_aux.xch_sel, st_aux.ych_sel, st_aux.zch_sel);
+            fprintf('Data number     %d\n', st_aux.n_sample);
+
+            fprintf('start/stop freq [kHz] %d/%d\n', st_aux.start_freq, st_aux.stop_freq);
+            fprintf('sweep step            %d\n', st_aux.sweep_step);
+        
+        case st_ctl.sid_pssr2_r   % PSSR2, rich data
+            % HF header size
+            fprintf('HF header size        %d\n', st_aux.hf_hdr_len);
+            % Channel select
+            fprintf('Channel select X/Y/Z  %d/%d/%d\n', st_aux.xch_sel, st_aux.ych_sel, st_aux.zch_sel);
+            fprintf('Data number     %d\n', st_aux.n_sample);
+
+%            fprintf('start/stop freq [kHz] %d/%d\n', st_aux.start_freq, st_aux.stop_freq);
+            fprintf('sweep step            %d\n', st_aux.sweep_step);
         
         case st_ctl.sid_pssr3_s   % PSSR3, survey data
 

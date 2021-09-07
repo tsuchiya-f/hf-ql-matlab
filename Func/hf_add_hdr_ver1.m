@@ -39,6 +39,23 @@ function [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw, st_ctl)
             st_aux.zch_sel     = 1;
             st_aux.complex_sel = 1;
              
+        case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}   % PSSR3
+            st_hfa.snum = 2047;
+            st_hfa.step = 47;
+            st_hfa.decimation = 0;        
+            st_hfa.sample_rate = 296e3;        
+            st_hfa.n_band = 1;
+            st_hfa.band0_startf = 100;       % kHz
+            st_hfa.band0_stopf  = 45000;    % kHz
+            st_hfa.band0_step   = 45;
+            st_hfa.band0_rept   = 1;
+            st_hfa.band0_sdiv   = 1;
+
+            st_aux.sweep_table_id  = 0xFF;
+            st_aux.xch_sel     = 1;
+            st_aux.ych_sel     = 0;
+            st_aux.zch_sel     = 0;
+            
         case {st_ctl.sid_pssr3_s, st_ctl.sid_pssr3_r}   % PSSR3
             st_hfa.feed = 26;
             st_hfa.skip = 154;

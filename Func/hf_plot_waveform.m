@@ -1,4 +1,4 @@
-function ret = hf_plot_waveform(wave)
+function ret = hf_plot_waveform(st_ctl, wave)
 
     tm = wave.t;
     xi = wave.xi;
@@ -9,7 +9,9 @@ function ret = hf_plot_waveform(wave)
     zq = wave.zq;
     
     ret = 0;
-    figure(st_ctl.hf)
+    fig=figure(st_ctl.hf);
+    fig.Units = 'centimeters';
+    fig.Position = [1.0 1.0 20.0 25.0];     %　[left bottom width height]
     
     % set display layout
     tiledlayout(3,1)

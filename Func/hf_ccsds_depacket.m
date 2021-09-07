@@ -92,6 +92,8 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             st_aux = hf_get_aux(aux, st_rpw.sid, st_ctl);
             ret = hf_print_aux(st_rpw.sid, st_aux, st_ctl);
             sz = sz - st_rpw.aux_len;
+            % number of available channel
+            st_ctl.n_ch = st_aux.xch_sel + st_aux.ych_sel + st_aux.zch_sel;
 
             %----------------------------------------
             % Read HF header
@@ -100,9 +102,9 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             if st_ctl.ver == 1.0 
                 hf_hdr_len = 24;
             else
-                if st_aux.sweep_table_id == 0xFF || st_aux.sweep_table_id == 0x1F
+%                if st_aux.sweep_table_id == 0xFF || st_aux.sweep_table_id == 0x1F
                     hf_hdr_len = st_aux.hf_hdr_len;
-                end
+%                end
             end
             fprintf("HF header len : %d\n",hf_hdr_len);
             
@@ -124,7 +126,7 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             %----------------------------------------
             % Get time information (added to hdr_rpw)
             %----------------------------------------
-            [st_time] = hf_get_time_info(st_ctl, st_sec, st_rpw);
+            [st_time, st_ctl] = hf_get_time_info(st_ctl, st_sec, st_rpw);
 
         end
 

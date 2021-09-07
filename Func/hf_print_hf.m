@@ -21,6 +21,9 @@ function ret = hf_print_hf(st, st_ctl)
     fprintf('Decimation        %d\n', st.decimation);
     fprintf('Pol               %d\n', st.pol);
 
+    if st.n_band == 0
+        return; 
+    end
     fprintf('         start stop  step rept sdiv\n');
     fprintf('Band 0 : %5d %5d %4d %4d %4d\n', st.band0_startf, st.band0_stopf, st.band0_step, st.band0_rept, st.band0_sdiv);
     if st.n_band == 1
