@@ -1,26 +1,26 @@
-function [ret, stream] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data)
-
+function [ret, auto] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data)
     ret = 0;
 
+    n_time = st_aux.n_sample; 
+    n_freq = st_aux.sweep_step; 
+    fs     = sample_rate(st_aux.decimation+1);  % sampling rate of decimated waveform [Hz]
+
+    % time data [sec]
+    t = zeros(1,n_time);
+    for i=0:n_time-1
+        t(1+i) = single(1+i)*single(st_hfa.snum+1)/single(n_time)/single(fs);
+    end
+    auto.t = t;
+
     % for survey data
-    tint = st_aux.interval;         % time iterval of data points [msec]
-    nb   = fix(st_aux.n_data);      % number of block in one packet
+    len=length(raw_data);
+    rdata = swapbytes(typecast(uint8(raw_data(1:len)),'single'));
+    sdata = reshape(rdata, n_time, n_freq, []);
 
-    % conversion factor from ADC value to enginnering value
-    cf = -104.1;    % mean power of ADC value to dBm
-
-    % time data
-    % for survey data (rms value) [sec]
-    stream.tm = (0:nb-1) * tint * 1e-3;
-
-    % for survey data
-    sdata = reshape(raw_data, nb, []);
-    sdata = 10.0*log10(sdata) + cf;  %[dBm]
-
-    stream.x = sdata(:,1);
-    stream.y = sdata(:,2);
-    stream.z = sdata(:,3);
     
-    stream.matrix = 1;
+    auto.auto   = sdata;
+    auto.n_time = n_time;
+    auto.n_freq = n_freq;
+
 
 end

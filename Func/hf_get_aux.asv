@@ -163,10 +163,11 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitand(aux(1),0x01);
             st.pol        = bitshift(bitand(aux(2),0x80),-7);
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
-            st.n_block    = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
+            st.n_block :w
+   = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
             st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
             st.n_sample   = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
-            st.sweep_step = st.n_block;
+            st.sweep_step = st.n_packet;
             st.center_freq= bitshift(aux(5),8) + aux(6);
 
         case {st_ctl.sid_pssr3_r}
@@ -179,6 +180,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitand(aux(1),0x01);
             st.pol        = bitshift(bitand(aux(2),0x80),-7);
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
+            st.n_packet   = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
             st.n_block    = double(bitshift(bitand(aux(2),0x1F),3) + bitshift(bitand(aux(3),0xE0),-5));
             st.freq_hi    = double(uint32(aux(5))*256 + uint32(aux(6)));
             st.freq_lo    = double(uint32(aux(7))*256 + uint32(aux(8)));

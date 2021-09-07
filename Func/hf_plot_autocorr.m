@@ -7,14 +7,17 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
         case {st_ctl.sid_pssr2_s}
             intitle='PSSR2 Survey'
             n_fig=3;
+            i_loop=auto.n_freq/n_fig-1;
         
         case {st_ctl.sid_pssr2_r}
             intitle='PSSR2 Rich'
             n_fig=3;
+            i_loop=auto.n_freq/n_fig-1;
 
         case {st_ctl.sid_pssr3_s}
             intitle='PSSR3 Survey'
             n_fig=1;
+            i_loop=auto.n_packet;
     end
     
     % set display layout
@@ -25,7 +28,7 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
     
 
     % Plot stream (x, y, and z) 
-    for i=1:auto.n_freq/n_fig-1
+    for i=1:i_loop
         nexttile(mod(i,n_fig)+1);
         switch st_rpw.sid
             case {st_ctl.sid_pssr2_s}

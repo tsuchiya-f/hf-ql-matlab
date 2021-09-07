@@ -14,18 +14,15 @@ function [ret, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data)
     end
     auto.t = t;
 
-    % data type conversion from uint8 to single (32bit-float)
-    rdata = swapbytes(typecast(uint8(raw_data),'single'));
-
+    
     % for survey data
-    sdata = reshape(rdata, n_time, []);
+    len=length(raw_data);
+    rdata = swapbytes(typecast(uint8(raw_data(1:len)),'single'));
+    sdata = reshape(rdata, n_time, n_freq, []);
 
     
     auto.auto   = sdata;
     auto.n_time = n_time;
     auto.n_freq = n_freq;
-    if length(sdata(1,:)) ~= n_freq 
-        sdata = reshape(rdata, n_time, n_freq);
-    end
 
 end

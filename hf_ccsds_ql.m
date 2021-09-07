@@ -40,7 +40,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
     if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
-    if ~isfield(st_ctl, 'file_in'); st_ctl.file_in='hf_rawpacket_pssr2.bin';
+    if ~isfield(st_ctl, 'file_in'); st_ctl.file_in='hf_rawpacket_pssr3.bin';
     %-----------------------------------
     
     %-----------------------------------
