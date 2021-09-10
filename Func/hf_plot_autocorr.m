@@ -16,8 +16,8 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
 
         case {st_ctl.sid_pssr3_s}
             intitle='PSSR3 Survey'
-            n_fig=1;
-            i_loop=auto.n_packet;
+            n_fig=2;
+            i_loop=auto.n_freq/n_fig-1;
     end
     
     % set display layout
@@ -36,9 +36,9 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
             case {st_ctl.sid_pssr2_r}
                 inauto=[auto.auto(:,n_fig*i+1), auto.auto(:,n_fig*i+2), auto.auto(:,n_fig*i+3)];
             case {st_ctl.sid_pssr3_s}
-                inauto=[auto.auto(:,n_fig*i+1)];
+                inauto=[auto.auto(:,n_fig*i+1), auto.auto(:,n_fig*i+2)];
         end
-        stairs(auto.t, inauto);
+        stairs(auto.t, inauto, '-o');
         title  ( intitle );
         xlabel ('Time [sec]');
         ylabel ('Auto-Corr');
