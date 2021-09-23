@@ -91,6 +91,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_pssr1_r   % PSSR1, rich data
             fprintf('SID:%02x PSSR1 (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 8: PSSR1 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
+            [~, spec] = hf_proc_pssr1_rich(ver, st_aux, st_hfa, raw_data);
+            ret = hf_plot_power_2ch(st_ctl, spec);
+            ret = hf_rpt_add_figure(st_ctl);
             
         case st_ctl.sid_pssr2_r   % PSSR2, rich data
             fprintf('SID:%02x PSSR2 (rich data)\n', st_rpw.sid);

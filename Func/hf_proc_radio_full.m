@@ -44,7 +44,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
 
     % expected data length
     len = nf * nk * 4;          % (Bytes)
-    len_12 = nf * nk * 12 / 8;  % (Bytes)
+    len_12 = nf * nk * 16 / 8;  % (Bytes)
     len_sum = nf * 3;           % (Bytes)
     if st_aux.complex_sel == 2
         len_total = len + len_sum;
@@ -65,7 +65,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
     elseif numel(raw_data) == len_total_12
         % convert 12-bit minifloat to 4-Byte float
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
-        data = hf_minifloat(data12);
+        data = hf_minifloat16(data12);
         if st_aux.complex_sel == 2
             n_sum = reshape(raw_data8(len_12+1:len_total_12), nf, 3, []);
         end
