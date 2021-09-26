@@ -189,6 +189,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.x(:,1) = 10*log10(spec.xx(:,1)) + cf;  % [dBm @ ADC input]
                 spec.y(:,1) = 10*log10(spec.yy(:,1)) + cf;  % [dBm @ ADC input]
                 spec.z(:,1) = 10*log10(spec.zz(:,1)) + cf;  % [dBm @ ADC input]
+                
                 % --- positive pol ---
                 % spectral matrix
                 spec.xx(:,2)    = data(:,10);
@@ -314,6 +315,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 % auto spectra
                 spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
                 spec.y = 10*log10(spec.yy) + cf;  % [dBm @ ADC input]
+                spec.z = zeros(nf);   % dummy
 
                 spec.matrix = 0;
             
@@ -327,6 +329,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 % auto spectra
                 spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
                 spec.y = 10*log10(spec.yy) + cf;  % [dBm @ ADC input]
+                spec.z = zeros(nf);   % dummy
 
                 spec.matrix = 1;
             
@@ -334,6 +337,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 data = reshape(data(1:nf*nk), nf, nk, []);
                 spec.x     = zeros(nf,3);
                 spec.y     = zeros(nf,3);
+                spec.z     = zeros(nf,3);   % dummy
                 spec.xx    = zeros(nf,3);
                 spec.yy    = zeros(nf,3);
                 spec.re_xy = zeros(nf,3);

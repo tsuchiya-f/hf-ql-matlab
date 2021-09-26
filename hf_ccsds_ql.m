@@ -47,7 +47,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default title
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
-    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
+    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 60; end
     
     %-----------------------------------
     
@@ -55,6 +55,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Initialize structure which controls data processing
     %-----------------------------------
     [st_ctl] = hf_init_struct(st_ctl);
+    hf_init_save_data;
     
     %-----------------------------------
     % OPEN Device (QL) or CCSDS File (DL)
@@ -145,14 +146,26 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
         end
 
         % check the latest input from keyboard
-        % if press 'q', program is terminated.
+        % if press 'q' on the figure, program is terminated.
         if strcmp(get(hf,'currentcharacter'),'q')
-            close(hf)
+            fprintf("Please wait until MALAB outputs QL pdf file.\n");
             break
         end
         
     end
-
+    
+    %-----------------------------------
+    % Save FT diagram
+    %----------------------------------- 
+    st_ctl.label = 'Dynamic spectrum';
+    hf_plot_ft(st_ctl);
+    ret = hf_rpt_add_figure(st_ctl);
+    
+    %-----------------------------------
+    % Save matlab data
+    %----------------------------------- 
+    hf_save_data(st_ctl);
+    
     %-----------------------------------
     % Close report
     %----------------------------------- 
@@ -162,7 +175,9 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     %-----------------------------------
     % Close devices
     %-----------------------------------
+    close(hf)
     fclose(st_ctl.r);
     if ql == 1; fclose(st_ctl.w); end
+    fprintf("Finished !\n");
 
 end

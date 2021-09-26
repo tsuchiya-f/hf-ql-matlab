@@ -36,9 +36,11 @@ function ret = hf_plot_power_2ch(st_ctl, spec)
     imax      = [ix,iy];
     [~,im]   = max(dmax);
     p_freq = spec.f(imax(im)) / 1e3;
-    title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(X)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Y)[' num2str(spec.y(imax(im)),'%0.1f') '] dBm']);
+    title(['Peak at　' num2str(p_freq,'%0.3f') ' MHz  Red(X)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Y)[' num2str(spec.y(imax(im)),'%0.1f') '] dBm']);
     xlabel ('Frequency [MHz]');
     ylabel ('Power [dBm]');
+    if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
+    if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
 
     if spec.matrix == 0; return; end
 
@@ -59,5 +61,7 @@ function ret = hf_plot_power_2ch(st_ctl, spec)
     end
     xlabel ('Frequency [MHz]');
     ylabel ('XY');
+    if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
+    if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
 
 end

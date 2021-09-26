@@ -9,17 +9,13 @@ function    [st_ctl] = hf_init_struct(st_ctl)
     if st_ctl.ql == 1 
         % QL
         if strlength(st_ctl.file_out) > 0
-            st_ctl.wfile  = [st_ctl.dir_out 'HF_' st_ctl.file_out '.ccs'];        
+            st_ctl.wfile  = append(st_ctl.dir_out, 'HF_', st_ctl.file_out, '.ccs');        
         else
-            st_ctl.wfile  = [st_ctl.dir_out 'HF_' ds '.ccs'];        
+            st_ctl.wfile  = append(st_ctl.dir_out, 'HF_', ds, '.ccs');        
         end
     else
         % DL
-%        if strlength(file_ccs) > 0
-%            st_ctl.wfile  = [st_ctl.dir file_ccs];
-%        else
-%            st_ctl.wfile  = [st_ctl.dir 'HF_' ds '.temp'];        
-%        end
+        st_ctl.wfile  = append(st_ctl.dir_in, st_ctl.file_in);
     end
 
     % Definition of SID
