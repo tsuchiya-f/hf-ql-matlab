@@ -57,6 +57,13 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.rfi_param1  = aux(6);
             st.rfi_param2  = aux(7);
             st.rfi_param3  = aux(8);
+            st.bg_downlink  = bitshift(bitand(aux(9),0xc0),-6);
+            value = double(bitshift(uint16(aux(10)),4));
+            st.temp_rwi_a  = -232.245 + 1.34E-03*value + 1.05E-04 * value^2 - 5.41E-08 * value^3 + 1.58E-11 * value^4;
+            value = double(bitshift(uint16(aux(11)),4));
+            st.temp_rwi_b  = -232.245 + 1.34E-03*value + 1.05E-04 * value^2 - 5.41E-08 * value^3 + 1.58E-11 * value^4;
+            value = double(bitshift(uint16(aux(12)),4));
+            st.temp_hf  = -230.225 + 0.00134332 * value + 0.000105301 * value^2 - 0.0000000542289 * value^3 + 0.0000000000158352 * value^4;
 
         case {st_ctl.sid_burst_r}
             % HF header size

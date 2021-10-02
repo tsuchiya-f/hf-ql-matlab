@@ -47,7 +47,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default title
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
-    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 60; end
+    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
     
     %-----------------------------------
     
@@ -169,13 +169,13 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     %-----------------------------------
     % Close report
     %----------------------------------- 
+    close(hf)
     close(st_ctl.rpt)
     rptview(st_ctl.rpt)
 
     %-----------------------------------
     % Close devices
     %-----------------------------------
-    close(hf)
     fclose(st_ctl.r);
     if ql == 1; fclose(st_ctl.w); end
     fprintf("Finished !\n");

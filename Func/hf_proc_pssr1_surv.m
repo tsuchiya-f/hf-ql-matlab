@@ -6,7 +6,8 @@ function  [ret, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data)
     spec.f = hf_get_freq_table(ver, st_aux, st_hfa);
     %spec.f = st_aux.start_freq + (st_aux.stop_freq - st_aux.start_freq)/(st_aux.sweep_step-1) * linspace(st_aux.sweep_step);
     % conversion factor from ADC value to enginnering value
-    cf = -104.1;    % mean power of ADC value to dBm (for rms data)
+    % cf = -104.1;    % mean power of ADC value to dBm (for rms data)
+    cf = 0.0;
     % spectram data
     data = swapbytes(typecast(uint8(raw_data),'single'));
     
