@@ -1,14 +1,22 @@
-% connect IRFU VPN before using this SG s\control script
+% connect IRFU VPN before using this SG control script
 %fclose(t); clear all;
 
 % set interval [sec]
-interval=10;
+interval=120;
 
 % set freqneucy(MHz), amplitude(3-ch, mVpp), and phase (3-ch, degree)
-n_set = 3;
+% frequency responce of Gain
 s(1)=struct('freq', 0.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
-s(2)=struct('freq', 1.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
-s(3)=struct('freq',10.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(2)=struct('freq', 0.2,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(3)=struct('freq', 0.5,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(4)=struct('freq', 1.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(5)=struct('freq', 2.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(6)=struct('freq', 5.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(7)=struct('freq',10.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(8)=struct('freq',20.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+s(9)=struct('freq',40.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+% frequency responce of Gain
+n_set = numel(s);
 
 %--------------------------------------------------------
 

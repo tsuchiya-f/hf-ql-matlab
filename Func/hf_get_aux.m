@@ -25,7 +25,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
         st.xch_sel     = 1;
         st.ych_sel     = 1;
         st.zch_sel     = 1;
-
+        st.bg_downlink = 0;
         return;
     end
     
