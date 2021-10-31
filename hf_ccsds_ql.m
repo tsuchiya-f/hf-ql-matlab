@@ -28,6 +28,8 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % QL/DL switch (1: QL, 0:DL)
     if ~exist('ql', 'var'); ql = 1; end
     st_ctl.ql = ql;
+    
+    if ~isfield(st_ctl, 'raw_ver1_corrected'); st_ctl.raw_ver1_corrected = 0; end
 
     % Default directory of CCSDS file to read/write
     % --- for kimura

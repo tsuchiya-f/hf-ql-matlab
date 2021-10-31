@@ -1,6 +1,8 @@
 function hf_plot_ft(st_ctl)
 
     global st_data_spec
+    
+    if ~isfield(st_data_spec, 'f'); return; end
 
     % set figure size
     fig=figure(st_ctl.hf);

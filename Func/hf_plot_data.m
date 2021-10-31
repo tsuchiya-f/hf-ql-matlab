@@ -86,7 +86,15 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_burst_s   % Radio burst, survey data
             fprintf('SID:%02x Radio burst (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 7: Radio burst (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-        
+            [~, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data);
+            if spec.matrix == 0
+                ret = hf_plot_power(st_ctl, spec);
+            else
+                ret = hf_plot_stokes(st_ctl, spec);
+            end
+            %ret = hf_store_save_data(st_ctl, st_time, spec);
+            ret = hf_rpt_add_figure(st_ctl);
+            
         case st_ctl.sid_pssr1_s   % PSSR1, survey data
             fprintf('SID:%02x PSSR1 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 8: PSSR1 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
@@ -112,7 +120,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_burst_r   % Radio burst, rich data
             fprintf('SID:%02x Radio burst (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 7: Radio burst (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            [~, spec] = hf_proc_radio_full(ver, st_aux, st_hfa, raw_data);
+            [~, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data);
             if spec.matrix == 0
                 ret = hf_plot_power(st_ctl, spec);
             else
@@ -133,7 +141,8 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             fprintf('SID:%02x PSSR2 (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 9: PSSR2 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
             [~, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data);
-            ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
+%            ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
+            ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto);
             ret = hf_rpt_add_figure(st_ctl);
         
         case st_ctl.sid_pssr3_r   % PSSR3, rich data

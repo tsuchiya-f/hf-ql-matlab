@@ -45,7 +45,7 @@ function ret = hf_plot_stokes(st_ctl, spec)
     idx_z = find(zz <= 0.0);
     if numel(idx_x) ~= 0 || numel(idx_y) ~= 0 || numel(idx_z) ~= 0 
         fprintf("***** CAUTION : negative value exist \n");
-        pause
+%        pause
     end
     
     nexttile(j)

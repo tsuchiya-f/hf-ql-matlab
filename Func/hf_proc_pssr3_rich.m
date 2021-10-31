@@ -18,12 +18,6 @@ function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
     % -------------------------------------------
     % rich data (waveform)
     % -------------------------------------------
-    % time data [sec]
-    t = zeros(1,feed*ns*nb);
-    for i=0:nb-1
-        t(1+feed*ns*i:feed*ns*(i+1)) = (feed+skip)*ns*i/fs + (1:feed*ns)/fs;
-    end
-    wave.t = t;
     
     % waveform data
     rdata = swapbytes(typecast(uint8(raw_data),'int16'));
@@ -45,11 +39,21 @@ function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
     wave.yi = wave.yi * cw;
     wave.zi = wave.zi * cw;
 
+    nb0  = numel(wave.xq)/num_sampl;      % number of block in one packet
+    % time data [sec]
+    t = zeros(1,feed*ns*nb0);
+%    t = zeros(1,feed*ns*nb);
+%    for i=0:nb-1
+    for i=0:nb0-1
+        t(1+feed*ns*i:feed*ns*(i+1)) = (feed+skip)*ns*i/fs + (1:feed*ns)/fs;
+    end
+    wave.t = t;
+
     spec.f = linspace(-fs*0.5,fs*0.5,feed*ns);
     % waveform to spectrum
-    x = reshape(complex(wave.xi,wave.xq),[num_sampl,nb]);
-    y = reshape(complex(wave.yi,wave.yq),[num_sampl,nb]);
-    z = reshape(complex(wave.zi,wave.zq),[num_sampl,nb]);
+    x = reshape(complex(wave.xi,wave.xq),[num_sampl,nb0]);
+    y = reshape(complex(wave.yi,wave.yq),[num_sampl,nb0]);
+    z = reshape(complex(wave.zi,wave.zq),[num_sampl,nb0]);
     spec.x = abs(fft(x));
     spec.x = flip([spec.x(num_sampl/2+1:num_sampl) spec.x(1:num_sampl/2)]);
     spec.y = abs(fft(y));

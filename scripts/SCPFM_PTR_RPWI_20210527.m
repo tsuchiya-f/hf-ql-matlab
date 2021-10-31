@@ -3,14 +3,14 @@
 %------------------------------------------------------------------------------------
 st_ctl_in.raw_ver1_corrected = 1;
 st_ctl_in.title = '20210527_SCPFM_PTR_RPWI';
-st_ctl_in.ylim = [-60 -10];
+%st_ctl_in.ylim = [-60 -10];
 
 basedir_in = "C:\share\Linux\RESULTS\20210527_SCPFM_PTR_RPWI\";
 basedir_out = "C:\share\Linux\RESULTS\20210527_SCPFM_PTR_RPWI\";
 
-indir  = ["2021_05_11T05_17_29_pomi159_ded31615_RT_RPWI_DAY_3\USER\CFDP\RETRIEVAL\"];
-outdir = ["DAY_3_\"];
-file_search_str = 'xid32776.data';
+%indir  = ["2021_05_11T05_17_29_pomi159_ded31615_RT_RPWI_DAY_3\USER\CFDP\RETRIEVAL\"];
+%outdir = ["DAY_3_\"];
+%file_search_str = 'xid32776.data';
 
 % indir  = ["2021_05_17T04_32_56_pomi159_ded31615_RT_RPWI_FFT_DAY5\USER\CFDP\RETRIEVAL\"];
 % outdir = ["DAY_5\"];
@@ -21,11 +21,11 @@ file_search_str = 'xid32776.data';
 % outdir = ["DAY_4\" "DAY_5\"];
 % file_search_str = '*.data';
 
-% indir  = ["2021_05_11T05_17_29_pomi159_ded31615_RT_RPWI_DAY_3\USER\CFDP\RETRIEVAL\"  ...
-%           "2021_05_15T04_28_37_pomi159_ded31615_RT_RPWI_FFT_DAY4\USER\CFDP\RETRIEVAL\"  ...
-%           "2021_05_17T04_32_56_pomi159_ded31615_RT_RPWI_FFT_DAY5\USER\CFDP\RETRIEVAL\"];
-% outdir = ["DAY_3\" "DAY_4\" "DAY_5\"];
-% file_search_str = '*.data';
+ indir  = ["2021_05_11T05_17_29_pomi159_ded31615_RT_RPWI_DAY_3\USER\CFDP\RETRIEVAL\"  ...
+           "2021_05_15T04_28_37_pomi159_ded31615_RT_RPWI_FFT_DAY4\USER\CFDP\RETRIEVAL\"  ...
+           "2021_05_17T04_32_56_pomi159_ded31615_RT_RPWI_FFT_DAY5\USER\CFDP\RETRIEVAL\"];
+ outdir = ["DAY_3\" "DAY_4\" "DAY_5\"];
+ file_search_str = '*.data';
 %------------------------------------------------------------------------------------
 
 ql=0;

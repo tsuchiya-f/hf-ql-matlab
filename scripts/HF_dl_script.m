@@ -2,15 +2,18 @@
 % User inputs
 %------------------------------------------------------------------------------------
 %st_ctl_in.raw_ver1_corrected = 1;
-st_ctl_in.title = '20210927_Cgf6';
+st_ctl_in.title = '';
 
 basedir_in  = "C:\share\Linux\juice_test\";
 basedir_out = "C:\share\Linux\juice_test\";
 
-indir  = ["20210927_Cgf6\"];
-outdir = ["20210927_Cgf6\DL\"];
-file_search_str = 'HF_20210927-1457.ccs';
+indir  = [""];
+outdir = [""];
+file_search_str = 'HF_20211020-1051.ccs';
 
+% indir  = ["20210927_Cgf6\"];
+% outdir = ["20210927_Cgf6\DL\"];
+% file_search_str = 'HF_20210927-1457.ccs';
 %------------------------------------------------------------------------------------
 
 ql=0;

@@ -3,6 +3,8 @@ function hf_save_data(st_ctl)
     global st_data_spec
     global st_data_wave
 
+    if ~isfield(st_data_spec, 'f'); return; end
+
     freq = st_data_spec.f(1,:);
     x_pow = transpose(st_data_spec.x);
     y_pow = transpose(st_data_spec.y);

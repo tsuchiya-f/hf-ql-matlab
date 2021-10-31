@@ -8,7 +8,7 @@
 % data : array of 4-Byte float
 % 
 % ------------------------------------------------
-function [data] = hf_minifloat16(data16)
+function [data] = hf_minifloat_FP16(data16)
 
     % set constants
 	s_mask = 0x0800;
