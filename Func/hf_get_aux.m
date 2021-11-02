@@ -77,11 +77,21 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitand(aux(1),0x01);
             % Sweep table ID
             st.sweep_table_id  = bitshift(bitand(aux(2),0xf8),-3);
+            st.fft_win     = bitshift(bitand(aux(2),0x04),-2);
+            st.rfi_rej_sw  = bitshift(bitand(aux(2),0x02),-1);
             % TLM format
+            st.sweep_step = uint32(aux(3))*256 + uint32(aux(4));
             st.start_freq = uint32(aux(5))*256 + uint32(aux(6));
             st.stop_freq  = uint32(aux(7))*256 + uint32(aux(8));
-            st.sweep_step = uint32(aux(9))*256 + uint32(aux(10));
-            st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
+            st.sdiv_reduction = aux(9);
+
+            % Temperature
+            value = double(uint16(aux(10)));
+            st.temp_rwi_a  = value * 2.0 - 200.0;
+            value = double(uint16(aux(11)));
+            st.temp_rwi_b  = value * 2.0 - 200.0;
+            value = double(uint16(aux(12)));
+            st.temp_hf  = value - 55.0;
 
         case {st_ctl.sid_pssr1_r}
             % HF header size

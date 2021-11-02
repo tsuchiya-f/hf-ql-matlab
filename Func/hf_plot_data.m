@@ -99,8 +99,8 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             fprintf('SID:%02x PSSR1 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 8: PSSR1 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
             [~, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data);
-            ret = hf_plot_power_2ch(st_ctl, spec);
-            ret = hf_store_save_data(st_ctl, st_time, spec);
+            ret = hf_plot_power_1ch(st_ctl, spec);
+            %ret = hf_store_save_data(st_ctl, st_time, spec);
             ret = hf_rpt_add_figure(st_ctl);
         
         case st_ctl.sid_pssr2_s   % PSSR2, survey data
