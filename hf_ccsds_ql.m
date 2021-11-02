@@ -26,21 +26,23 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default parameters, they are used if arguments are not set.
     %-----------------------------------
     % QL/DL switch (1: QL, 0:DL)
-    ql=1; 
-    if ~exist('ql', 'var'); ql = 1; else; ql = 0; end
+    if ~exist('ql', 'var'); ql = 1; end
     st_ctl.ql = ql;
+    
+    if ~isfield(st_ctl, 'raw_ver1_corrected'); st_ctl.raw_ver1_corrected = 0; end
 
     % Default directory of CCSDS file to read/write
     % --- for kimura
-    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
-    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
-    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
-    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+%    if ~isfield(st_ctl, 'file_in'); st_ctl.file_in='hf_rawpacket_pssr2.bin';
     % --- for tsuchiya
-%     if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
-%     if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
-%     if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
-%     if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
+    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out    = 'C:\share\Linux\juice_test\'; end
+    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = 'C:\share\Linux\juice_test\'; end
+    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in      = 'C:\share\Linux\juice_test\'; end
+    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in   = 'C:\share\Linux\juice_test\'; end
 
     % Default file name (ccsds and report)
     if ~isfield(st_ctl, 'file_out'); st_ctl.file_out = ''; end
@@ -48,13 +50,14 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
     if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
-    if ~isfield(st_ctl, 'file_in'); st_ctl.file_in='hf_rawpacket_pssr2.bin';
+    
     %-----------------------------------
     
     %-----------------------------------
     % Initialize structure which controls data processing
     %-----------------------------------
     [st_ctl] = hf_init_struct(st_ctl);
+    hf_init_save_data;
     
     %-----------------------------------
     % OPEN Device (QL) or CCSDS File (DL)
@@ -145,17 +148,30 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
         end
 
         % check the latest input from keyboard
-        % if press 'q', program is terminated.
+        % if press 'q' on the figure, program is terminated.
         if strcmp(get(hf,'currentcharacter'),'q')
-            close(hf)
+            fprintf("Please wait until MALAB outputs QL pdf file.\n");
             break
         end
         
     end
-
+    
+    %-----------------------------------
+    % Save FT diagram
+    %----------------------------------- 
+    st_ctl.label = 'Dynamic spectrum';
+    hf_plot_ft(st_ctl);
+    ret = hf_rpt_add_figure(st_ctl);
+    
+    %-----------------------------------
+    % Save matlab data
+    %----------------------------------- 
+    hf_save_data(st_ctl);
+    
     %-----------------------------------
     % Close report
     %----------------------------------- 
+    close(hf)
     close(st_ctl.rpt)
     rptview(st_ctl.rpt)
 
@@ -164,5 +180,6 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     %-----------------------------------
     fclose(st_ctl.r);
     if ql == 1; fclose(st_ctl.w); end
+    fprintf("Finished !\n");
 
 end

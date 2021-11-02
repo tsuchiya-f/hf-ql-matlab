@@ -45,6 +45,7 @@ function ret = hf_plot_power(st_ctl, spec)
     end
     xlabel ('Frequency [MHz]');
     ylabel ('Power [rel]');
+    if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
     if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
 
     % Plot power of each channel
@@ -80,6 +81,7 @@ function ret = hf_plot_power(st_ctl, spec)
         
         xlabel ('Frequency [MHz]');
         ylabel (label);
+        if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
         if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
     end
 

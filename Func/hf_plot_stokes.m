@@ -45,31 +45,23 @@ function ret = hf_plot_stokes(st_ctl, spec)
     idx_z = find(zz <= 0.0);
     if numel(idx_x) ~= 0 || numel(idx_y) ~= 0 || numel(idx_z) ~= 0 
         fprintf("***** CAUTION : negative value exist \n");
-        pause
+%        pause
     end
     
     nexttile(j)
     if spec.xlog == 0
-        if isfield(spec,'noise_floor') 
-            semilogy(spec.f/1e3, xx,'r', spec.f/1e3, yy,'g', spec.f/1e3, zz,'b', spec.f/1e3, spec.noise_floor,'k')
-        else
-            semilogy(spec.f/1e3, xx,'r', spec.f/1e3, yy,'g', spec.f/1e3, zz,'b')
-        end
+        semilogy(spec.f/1e3, xx,'r', spec.f/1e3, yy,'g', spec.f/1e3, zz,'b')
     else
-        if isfield(spec,'noise_floor') 
-            loglog(spec.f/1e3, xx,'r', spec.f/1e3, yy,'g', spec.f/1e3, zz,'b', spec.f/1e3, spec.noise_floor,'k')
-        else
-            loglog(spec.f/1e3, xx,'r', spec.f/1e3, yy,'g', spec.f/1e3, zz,'b')
-        end
+        loglog(spec.f/1e3, xx,'r', spec.f/1e3, yy,'g', spec.f/1e3, zz,'b')
     end
 
     [p_freq_MHz, p_xx_dB, p_yy_dB, p_zz_dB] = hf_proc_get_peak_power(spec.f, xx, yy, zz);
     title(['Peak: ' num2str(p_freq_MHz,'%0.2f') ' MHz'],  ['X(Red):' num2str(p_xx_dB,'%0.1f') ' Y(Green):' num2str(p_yy_dB,'%0.1f') ' Z(Blue):' num2str(p_zz_dB,'%0.1f')]);
     xlabel ('Frequency [MHz]');
     ylabel ('Power [rel]');
-    
-%    xlim([0,2])
-    
+    if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
+    if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
+        
     % 2D stokes parameters
     [Ixy, Qxy, Uxy, Vxy] = hf_proc_get_stokes(xx, yy, re_xy, im_xy);
     [dop_xy, dol_xy, doc_xy, ang_xy] = hf_proc_get_pol(Ixy, Qxy, Uxy, Vxy);
@@ -119,6 +111,7 @@ function ret = hf_plot_stokes(st_ctl, spec)
     title(pol_label(j), 'Red:XY, Green:YZ, Blue:ZX');
     xlabel ('Frequency [MHz]');
     ylabel ('Degree of polarization');
+    if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
     
     %---------------------------------
     % Plot polarization
@@ -163,6 +156,7 @@ function ret = hf_plot_stokes(st_ctl, spec)
         end
         title([label ' Polarization'],'Red:DoL, Green:DoC, Blue:Ang');
         xlabel ('Frequency [MHz]');
+        if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
 %        legend('DoL','DoC','Angle')
 
     end
@@ -177,9 +171,9 @@ function ret = hf_plot_stokes(st_ctl, spec)
         else
             semilogx(spec.f/1e3, n_sum, 'r-', spec.f/1e3, spec.n_sum(:,j), 'b-')
         end
-%        ylim([-0.1 1.1])
         xlabel ('Frequency [MHz]');
         ylabel ('Number of Sum');
+        if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
     end
     
     %==========================================================================================

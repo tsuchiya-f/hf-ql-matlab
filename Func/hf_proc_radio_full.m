@@ -6,7 +6,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
     spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa);
     % conversion factor from ADC value to enginnering value
     %cf = -104.1;    % mean power of ADC value to dBm (for rms data)
-    cf = 0.0;    % mean power of ADC value to dBm (for rms data)
+    cf = 0.0;
     
     % data format (size)
     nf = st_hfa.total_step;         % number of frequeucy bins
@@ -20,13 +20,13 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
         case 3
         switch st_aux.complex_sel       % number of data set
             case 0
-                nk = 3;
+                nk = 3 + double(st_aux.bg_downlink);
             case 1
-                nk = 9;
+                nk = 9 + double(st_aux.bg_downlink);
             case 2
-                nk = 28;
+                nk = 27 + double(st_aux.bg_downlink);
             case 3
-                nk = 21;
+                nk = 21 + double(st_aux.bg_downlink);
         end
         %------------
         % 2-ch mode
@@ -34,18 +34,18 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
         case 2
         switch st_aux.complex_sel       % number of data set
             case 0
-                nk = 2;
+                nk = 2 + double(st_aux.bg_downlink);
             case 1
-                nk = 4;
+                nk = 4 + double(st_aux.bg_downlink);
             case 2
-                nk = 13;
+                nk = 12 + double(st_aux.bg_downlink);
         end
     end
 
     % expected data length
     len = nf * nk * 4;          % (Bytes)
-    len_12 = nf * nk * 12 / 8;  % (Bytes)
-    len_sum = nf * 3;           % (Bytes)
+    len_12 = nf * nk * 16 / 8;  % (Bytes)
+    len_sum = nf * 2 * 3;           % (Bytes)
     if st_aux.complex_sel == 2
         len_total = len + len_sum;
         len_total_12 = len_12 + len_sum;
@@ -60,24 +60,28 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
         % 4-Byte float
         data = swapbytes(typecast(raw_data8(1:len),'single'));
         if st_aux.complex_sel == 2
-            n_sum = reshape(raw_data8(len+1:len_total), nf, 3, []);
+            n_sum = swapbytes(typecast(raw_data8(len+1:len_total),'uint16'));
+            n_sum = reshape(n_sum, nf, 3, []);
         end
     elseif numel(raw_data) == len_total_12
         % convert 12-bit minifloat to 4-Byte float
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
-        data = hf_minifloat(data12);
+        data = hf_minifloat16(data12);
         if st_aux.complex_sel == 2
-            n_sum = reshape(raw_data8(len_12+1:len_total_12), nf, 3, []);
+            n_sum = swapbytes(typecast(raw_data8(len_12+1:len_total_12),'uint16'));
+            n_sum = reshape(n_sum, nf, 3, []);
         end
     else
         fprintf("***** ERROR : invalid data length\n");
         pause
     end
+    
 
     %  for SW ver.1
     if st_ctl.ver == 1
         
-        cf = -104.1;    % mean power of ADC value to dBm (for rms data)
+%        cf = -104.1;    % mean power of ADC value to dBm (for rms data)
+        cf = 0.0;
 
         data = reshape(data(1:nf*nk), nf, nk, []);
         % spectral matrix
@@ -189,6 +193,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.x(:,1) = 10*log10(spec.xx(:,1)) + cf;  % [dBm @ ADC input]
                 spec.y(:,1) = 10*log10(spec.yy(:,1)) + cf;  % [dBm @ ADC input]
                 spec.z(:,1) = 10*log10(spec.zz(:,1)) + cf;  % [dBm @ ADC input]
+                
                 % --- positive pol ---
                 % spectral matrix
                 spec.xx(:,2)    = data(:,10);
@@ -216,9 +221,6 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.re_zx(:,3) = data(:,26);
                 spec.im_zx(:,3) = data(:,27);
                 
-                % noise floor
-                spec.noise_floor = data(:,28);
-
                 % auto spectra
                 spec.x(:,3) = 10*log10(spec.xx(:,3)) + cf;  % [dBm @ ADC input]
                 spec.y(:,3) = 10*log10(spec.yy(:,3)) + cf;  % [dBm @ ADC input]
@@ -226,7 +228,8 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 
                 % set NAN value to invalid data
                 for i=1:3
-                    idx = find(spec.xx(:,i) < 0.0);
+%                    idx = find(spec.n_sum(:,i) == 0.0);
+                    idx = find(spec.xx(:,i) < 1.0);
                     spec.xx(idx,i) = NaN;
                     spec.yy(idx,i) = NaN;
                     spec.zz(idx,i) = NaN;
@@ -295,13 +298,16 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.WrWi(idx) = NaN;
 
                 % auto spectra
+                spec.xx = spec.UrUr + spec.UiUi;
+                spec.yy = spec.VrVr + spec.ViVi;
+                spec.zz = spec.WrWr + spec.WiWi;
                 spec.x = 10*log10(spec.UrUr + spec.UiUi) + cf;  % [dBm @ ADC input]
                 spec.y = 10*log10(spec.VrVr + spec.ViVi) + cf;  % [dBm @ ADC input]
                 spec.z = 10*log10(spec.WrWr + spec.WiWi) + cf;  % [dBm @ ADC input]
 
                 spec.matrix = 2;   % 3D spectral matrix (2)
         end
-
+        
         %------------
         % 2-ch mode (here, x=ch1, y=ch2)
         %------------
@@ -311,9 +317,11 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 data = reshape(data(1:nf*nk), nf, nk, []);
                 spec.xx = data(:,1);
                 spec.yy = data(:,2);
+                spec.zz = zeros(nf);   % dummy
                 % auto spectra
                 spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
                 spec.y = 10*log10(spec.yy) + cf;  % [dBm @ ADC input]
+                spec.z = zeros(nf);   % dummy
 
                 spec.matrix = 0;
             
@@ -322,11 +330,13 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 % spectral matrix
                 spec.xx = data(:,1);
                 spec.yy = data(:,2);
+                spec.zz = zeros(nf);   % dummy
                 spec.re_xy = data(:,3);
                 spec.im_xy = data(:,4);
                 % auto spectra
                 spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
                 spec.y = 10*log10(spec.yy) + cf;  % [dBm @ ADC input]
+                spec.z = zeros(nf);   % dummy
 
                 spec.matrix = 1;
             
@@ -334,8 +344,10 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 data = reshape(data(1:nf*nk), nf, nk, []);
                 spec.x     = zeros(nf,3);
                 spec.y     = zeros(nf,3);
+                spec.z     = zeros(nf,3);   % dummy
                 spec.xx    = zeros(nf,3);
                 spec.yy    = zeros(nf,3);
+                spec.zz    = zeros(nf,3);   % dummy
                 spec.re_xy = zeros(nf,3);
                 spec.im_xy = zeros(nf,3);
                 % --- number of sum ---
@@ -366,7 +378,15 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.im_xy(:,3) = data(:,12);
 
                 % noise floor
-                spec.noise_floor = data(:,13);
+                % noise floor
+                switch st_aux.bg_downlink
+                    case 1
+                        spec.noise_floor_x = data(:,13);
+                        spec.noise_floor_y = data(:,13);
+                    case 2
+                        spec.noise_floor_x = data(:,13);
+                        spec.noise_floor_y = data(:,14);
+                end
 
                 % auto spectra
                 spec.x(:,3) = 10*log10(spec.xx(:,3)) + cf;  % [dBm @ ADC input]
@@ -385,9 +405,28 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 
                 spec.matrix = 1;
 
-        end
+        end      
+        
     end
     
+    %------------
+    % common for 2 & 3-ch mode
+    %------------
+    % noise floor
+    n_ofs = nk - st_aux.bg_downlink;
+    switch st_aux.bg_downlink
+        case 1
+            spec.noise_floor_x = data(:,n_ofs+1);
+            spec.noise_floor_y = data(:,n_ofs+1);
+            spec.noise_floor_z = data(:,n_ofs+1);
+        case 2
+            spec.noise_floor_x = data(:,n_ofs+1);
+            spec.noise_floor_y = data(:,n_ofs+2);
+        case 3
+            spec.noise_floor_x = data(:,n_ofs+1);
+            spec.noise_floor_y = data(:,n_ofs+2);
+            spec.noise_floor_z = data(:,n_ofs+3);
+    end    
     spec.xlog = 0;
     spec.ylog = 0;
 

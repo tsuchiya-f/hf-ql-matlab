@@ -25,13 +25,13 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
         st.xch_sel     = 1;
         st.ych_sel     = 1;
         st.zch_sel     = 1;
-
+        st.bg_downlink = 0;
         return;
     end
     
     switch sid
         
-        case {st_ctl.sid_raw, st_ctl.sid_full}
+        case {st_ctl.sid_raw, st_ctl.sid_full, st_ctl.sid_burst_r, st_ctl.sid_burst_s}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
             % Channel select
@@ -57,35 +57,15 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.rfi_param1  = aux(6);
             st.rfi_param2  = aux(7);
             st.rfi_param3  = aux(8);
-
-        case {st_ctl.sid_burst_r}
-            % HF header size
-            st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
-            % Channel select
-            st.xch_sel     = bitshift(bitand(aux(1),0x08),-3);
-            st.ych_sel     = bitshift(bitand(aux(1),0x04),-2);
-            st.zch_sel     = bitshift(bitand(aux(1),0x02),-1);
-            st.cal_ena     = bitand(aux(1),0x01);
-            % Sweep table ID
-            st.sweep_table_id  = bitshift(bitand(aux(2),0xf8),-3);
-            % TLM format
-            st.power_sel   = bitshift(bitand(aux(2),0x04),-2);
-            st.complex_sel = bitand(aux(2),0x03);
-            st.bg_subtract = bitshift(bitand(aux(3),0x80),-7);
-            st.bg_select  = bitshift(bitand(aux(3),0x40),-6);
-            st.fft_win     = bitshift(bitand(aux(3),0x20),-5);
-            st.rfi_rej_sw  = bitshift(bitand(aux(3),0x10),-4);
-            st.pol_sep_th  = bitand(aux(3),0x0f);
-            st.pol_sel     = bitshift(bitand(aux(4),0xc0),-6);
-            st.ovf_stat_x  = bitshift(bitand(aux(4),0x30),-4);
-            st.ovf_stat_y  = bitshift(bitand(aux(4),0x0c),-2);
-            st.ovf_stat_z  = bitand(aux(4),0x03);
-            st.rfi_param0  = aux(5);
-            st.rfi_param1  = aux(6);
-            st.rfi_param2  = aux(7);
-            st.rfi_param3  = aux(8);
-            st.n_block     = bitshift(aux(9), 8) + aux(10);
-            spare          = bitshift(aux(11),8) + aux(12);    
+            st.bg_downlink = bitshift(bitand(aux(9),0xc0),-6);
+            st.n_block     = bitshift(bitand(aux(9),0x38),-3);
+            % Temperature
+            value = double(uint16(aux(10)));
+            st.temp_rwi_a  = value * 2.0 - 200.0;
+            value = double(uint16(aux(11)));
+            st.temp_rwi_b  = value * 2.0 - 200.0;
+            value = double(uint16(aux(12)));
+            st.temp_hf  = value - 55.0;
 
         case {st_ctl.sid_pssr1_s}
             % HF header size
@@ -97,12 +77,51 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitand(aux(1),0x01);
             % Sweep table ID
             st.sweep_table_id  = bitshift(bitand(aux(2),0xf8),-3);
+            st.fft_win     = bitshift(bitand(aux(2),0x04),-2);
+            st.rfi_rej_sw  = bitshift(bitand(aux(2),0x02),-1);
             % TLM format
+            st.sweep_step = uint32(aux(3))*256 + uint32(aux(4));
             st.start_freq = uint32(aux(5))*256 + uint32(aux(6));
             st.stop_freq  = uint32(aux(7))*256 + uint32(aux(8));
-            st.sweep_step = uint32(aux(9))*256 + uint32(aux(10));
-            st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
+            st.sdiv_reduction = aux(9);
 
+            % Temperature
+            value = double(uint16(aux(10)));
+            st.temp_rwi_a  = value * 2.0 - 200.0;
+            value = double(uint16(aux(11)));
+            st.temp_rwi_b  = value * 2.0 - 200.0;
+            value = double(uint16(aux(12)));
+            st.temp_hf  = value - 55.0;
+
+        case {st_ctl.sid_pssr1_r}
+            % HF header size
+            st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
+            % Channel select
+            st.xch_sel     = bitshift(bitand(aux(1),0x08),-3);
+            st.ych_sel     = bitshift(bitand(aux(1),0x04),-2);
+            st.zch_sel     = bitshift(bitand(aux(1),0x02),-1);
+            st.cal_ena     = bitand(aux(1),0x01);
+            % Sweep table ID
+            st.sweep_table_id  = bitshift(bitand(aux(2),0xf8),-3);
+            % TLM format
+            st.power_sel   = bitshift(bitand(aux(2),0x04),-2);
+            st.complex_sel = bitand(aux(2),0x03);
+            st.bg_subtract = bitshift(bitand(aux(3),0x80),-7);
+            st.bg_select  = bitshift(bitand(aux(3),0x40),-6);
+            st.fft_win     = bitshift(bitand(aux(3),0x20),-5);
+            st.rfi_rej_sw  = bitshift(bitand(aux(3),0x10),-4);
+            st.pol_sep_th  = bitand(aux(3),0x0f);
+            st.pol_sel     = bitshift(bitand(aux(4),0xc0),-6);
+            st.ovf_stat_x  = bitshift(bitand(aux(4),0x30),-4);
+            st.ovf_stat_y  = bitshift(bitand(aux(4),0x0c),-2);
+            st.ovf_stat_z  = bitand(aux(4),0x03);
+            st.rfi_param0  = aux(5);
+            st.rfi_param1  = aux(6);
+            st.rfi_param2  = aux(7);
+            st.rfi_param3  = aux(8);
+            st.rfi_param3  = aux(8);
+            st.start_freq = uint32(aux(10))*256 + uint32(aux(9));
+            
         case {st_ctl.sid_pssr2_s}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
@@ -120,13 +139,23 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             else
                 st.xch_sel    = 1;
             end
-            st.decimation = bitshift(bitand(aux(2),0x60),-5);
-            st.sweep_step = bitshift(uint32(bitand(aux(2),0x1F)),4) + bitshift(uint32(bitand(aux(3),0xF0)),-4);
-            % TLM format
-            st.start_freq = uint32(aux(5))*256 + uint32(aux(6));
-            st.stop_freq  = uint32(aux(7))*256 + uint32(aux(8));
-            st.n_sample   = uint32(aux(9))*256 + uint32(aux(10));
             st.cal_ena    = bitand(aux(1),0x01);
+            st.pol_sel    = bitshift(bitand(aux(2),0x80),-7);
+            st.decimation = bitshift(bitand(aux(2),0x60),-5);
+
+            % Temperature
+            value = double(uint16(aux(4)));
+            st.temp_rwi_a  = value * 2.0 - 200.0;
+            value = double(uint16(aux(5)));
+            st.temp_rwi_b  = value * 2.0 - 200.0;
+            value = double(uint16(aux(6)));
+            st.temp_hf  = value - 55.0;
+            
+            % TLM format
+            st.sweep_step   = uint32(bitand(aux(2),0x1f))*16 + uint32(bitshift(bitand(aux(3),0xf0),-4));
+            st.start_freq = uint32(aux(7))*256 + uint32(aux(8));
+            st.stop_freq  = uint32(aux(9))*256 + uint32(aux(10));
+            st.n_sample = uint32(aux(11))*256 + uint32(aux(12));
 
         case {st_ctl.sid_pssr2_r}
             % HF header size
@@ -148,10 +177,13 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena    = bitshift(bitand(aux(1),0x01), 0);
             st.pol_sel    = bitshift(bitand(aux(2),0x80),-7);
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
-            st.n_sample   = bitshift(uint32(bitand(aux(3),0xFF)),8) + bitshift(uint32(bitand(aux(4),0xFF)), 0);
-            st.sweep_step = bitshift(uint32(bitand(aux(7),0xFF)),1) + bitshift(uint32(bitand(aux(8),0x80)),-7);
+
             % TLM format
-            st.freq_sel   = uint32(aux(5))*256 + uint32(aux(6));
+            st.n_sample   = uint32(aux(3))*256 + uint32(aux(4));
+            st.n_auto_corr= uint32(aux(5))*256 + uint32(aux(6));
+            st.sweep_step = uint32(aux(7))*256 + uint32(aux(8));
+            st.start_freq = uint32(aux(9))*256 + uint32(aux(10));
+            st.stop_freq  = uint32(aux(11))*256 + uint32(aux(12));
 
         case {st_ctl.sid_pssr3_s}
             % HF header size
@@ -168,6 +200,14 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.n_sample   = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
             st.sweep_step = st.n_block;
             st.center_freq= bitshift(aux(5),8) + aux(6);
+
+            % Temperature
+            value = double(uint16(aux(10)));
+            st.temp_rwi_a  = value * 2.0 - 200.0;
+            value = double(uint16(aux(11)));
+            st.temp_rwi_b  = value * 2.0 - 200.0;
+            value = double(uint16(aux(12)));
+            st.temp_hf  = value - 55.0;
 
         case {st_ctl.sid_pssr3_r}
             % HF header size
