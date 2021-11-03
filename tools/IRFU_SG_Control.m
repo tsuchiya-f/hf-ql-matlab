@@ -2,7 +2,7 @@
 %fclose(t); clear all;
 
 % set freqneucy and amplitude
-freq = 7.05; % MHz
+freq = 1.05; % MHz
 mvpp = [10, 10, 10] ; % mVpp
 pha  = [90.0, 0.0, 0.0] ; % deg
 sw = 0;  % 1:ON, 0:OFF

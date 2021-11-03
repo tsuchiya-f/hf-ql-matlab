@@ -5,8 +5,8 @@
 start_freq = 0.2; % MHz
 stop_freq  = 2.0; % MHz
 swp_time   = 10;  % sec    
-mvpp = [10, 10, 10] ; % mVpp
-pha  = [90.0, 0.0, 0.0] ; % deg
+mvpp = [10, 10, 0] ; % mVpp
+pha  = [0.0, 90.0, 0.0] ; % deg
 sw = 0;  % 1:ON, 0:OFF
 
 %--------------------------------------------------------
@@ -62,7 +62,11 @@ if sw == 1
     % output ON
     fprintf(t,':OUTP1:STAT ON');
     fprintf(t,':OUTP2:STAT ON');
-    fprintf(t,':OUTP1:SYNC:TYPE SFCT');    
+    if mvpp(3)==0 
+        fprintf(t,':OUTP1:SYNC:SWE:TYPE OFF');
+    else
+        fprintf(t,':OUTP1:SYNC:TYPE SFCT');    
+    end
     fprintf('   Output ON\n');
 else
     % output OFF
