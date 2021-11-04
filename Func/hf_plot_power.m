@@ -12,8 +12,8 @@ function ret = hf_plot_power(st_ctl, spec)
 
     % Plot Power spectrum (x, y, and z) 
     nexttile(1)
-    switch st_ctl.n_ch
-        case 3
+%    switch st_ctl.n_ch
+%        case 3
             if spec.xlog == 0
                 plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g', spec.f/1e3, spec.z,'b')
             else
@@ -28,21 +28,21 @@ function ret = hf_plot_power(st_ctl, spec)
             [~,im]   = max(dmax);
             p_freq = spec.f(imax(im)) / 1e3;
             title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(X)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Y)[' num2str(spec.y(imax(im)),'%0.1f') '] Blue(Z)[' num2str(spec.z(imax(im)),'%0.1f') '] dBm']);
-        case 2    
-            if spec.xlog == 0
-                plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g')
-            else
-                semilogx(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g')
-            end
-
-            [xmax,ix] = max(spec.x);
-            [ymax,iy] = max(spec.y);
-            dmax      = [xmax,ymax];
-            imax      = [ix,iy];
-            [~,im]   = max(dmax);
-            p_freq = spec.f(imax(im)) / 1e3;
-            title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(Ch1)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Ch2)[' num2str(spec.y(imax(im)),'%0.1f') ']']);
-    end
+%         case 2    
+%             if spec.xlog == 0
+%                 plot(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g')
+%             else
+%                 semilogx(spec.f/1e3, spec.x,'r', spec.f/1e3, spec.y,'g')
+%             end
+% 
+%             [xmax,ix] = max(spec.x);
+%             [ymax,iy] = max(spec.y);
+%             dmax      = [xmax,ymax];
+%             imax      = [ix,iy];
+%             [~,im]   = max(dmax);
+%             p_freq = spec.f(imax(im)) / 1e3;
+%             title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(Ch1)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Ch2)[' num2str(spec.y(imax(im)),'%0.1f') ']']);
+%     end
     xlabel ('Frequency [MHz]');
     ylabel ('Power [rel]');
     if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end

@@ -63,10 +63,10 @@ if sw == 1
     fprintf(t,':OUTP1:STAT ON');
     fprintf(t,':OUTP2:STAT ON');
     if mvpp(3)==0 
-        fprintf(t,':OUTP1:SYNC:SWE:TYPE OFF');
-    else
-        fprintf(t,':OUTP1:SYNC:TYPE SFCT');    
+        fprintf(t,':OUTP1:SYNC:TYPE OFF');
+        fprintf(t,':OUTP2:SYNC:TYPE OFF');
     end
+    fprintf(t,':OUTP1:SYNC:SWE:TYPE SSYN');
     fprintf('   Output ON\n');
 else
     % output OFF

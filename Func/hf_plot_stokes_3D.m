@@ -12,15 +12,15 @@ function ret = hf_plot_stokes_3D(st_ctl, spec)
     tiledlayout(np,2)
 
     % Spectral matrix
-    xx = spec.UrUr + spec.UiUi;
-    yy = spec.VrVr + spec.ViVi;
-    zz = spec.WrWr + spec.WiWi;
-    re_xy = spec.UrVr + spec.UiVi;
-    im_xy = - spec.UrVi + spec.UiVr;
-    re_yz = spec.VrWr + spec.ViWi;
-    im_yz = - spec.VrWi + spec.ViWr;
-    re_zx = spec.WrUr + spec.WiUi;
-    im_zx = - spec.WrUi + spec.WiUr;
+    xx = spec.xx;
+    yy = spec.yy;
+    zz = spec.zz;
+    re_xy = spec.re_xy;
+    im_xy = spec.im_xy;
+    re_yz = spec.re_yz;
+    im_yz = spec.im_yz;
+    re_zx = spec.re_zx;
+    im_zx = spec.im_zx;
 
     % 2D stokes parameters
     [Ixy, Qxy, Uxy, Vxy] = hf_proc_get_stokes(xx, yy, re_xy, im_xy);

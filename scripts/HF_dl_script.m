@@ -7,9 +7,9 @@ st_ctl_in.title = '';
 basedir_in  = "C:\share\Linux\juice_test\";
 basedir_out = "C:\share\Linux\juice_test\";
 
-indir  = [""];
-outdir = [""];
-file_search_str = 'HF_20211020-1051.ccs';
+indir  = ["20211102_radio_burst_SGin\"];
+outdir = ["20211102_radio_burst_SGin\"];
+file_search_str = 'HF_20211102-1540.ccs';
 
 % indir  = ["20210927_Cgf6\"];
 % outdir = ["20210927_Cgf6\DL\"];

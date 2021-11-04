@@ -19,7 +19,6 @@ function hf_save_data(st_ctl)
     
     file_save = append(filepath, '\', name, '.mat');
     
-    save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z')
-
+    save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'st_data_spec')
 
 end
