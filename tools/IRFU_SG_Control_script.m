@@ -14,9 +14,10 @@ s(3)=struct('freq',10.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,
 
 % open port to NF WF1968 at IRFU
 if ~exist('t','var') 
-    t=tcpip('192.168.1.222',5025);
+%    t=tcpip('192.168.1.222',5025);
+    t=visa('ni','USB0::0x0D4A::0x000E::9140149::INSTR');   %   SG (NF WF1974)
     fopen(t);
-
+    
     % check *IDN
     fprintf(t,'*IDN?');
     res = fscanf(t);
