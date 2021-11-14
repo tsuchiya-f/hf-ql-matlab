@@ -2,20 +2,20 @@
 %fclose(t); clear all;
 
 % set freqneucy and amplitude
-start_freq = 1.0; % MHz
-stop_freq  = 2.0; % MHz
-swp_time   = 30;  % sec    
+start_freq = 0.08; % MHz
+stop_freq  = 44.0; % MHz
+swp_time   = 600;  % sec    
 mvpp = [10, 10, 0] ; % mVpp
 pha  = [0.0, 90.0, 0.0] ; % deg
-sw = 1;  % 1:ON, 0:OFF
+sw = 0;  % 1:ON, 0:OFF
 reset = 1;
 
 %--------------------------------------------------------
 
 % open port to NF WF1968 at IRFU
 if ~exist('t','var') 
-    % t=tcpip('192.168.1.222',5025);
-    t=visa('ni','USB0::0x0D4A::0x000E::9140149::INSTR');   %   SG (NF WF1974)
+    t=tcpip('192.168.1.222',5025);
+    %t=visa('ni','USB0::0x0D4A::0x000E::9140149::INSTR');   %   SG (NF WF1974)
     fopen(t);
 
     % check *IDN
@@ -26,7 +26,7 @@ end
 
 if reset == 1
     fprintf(t,'*RST');
-    pause(1);
+    pause(3);
 end
 
 if sw == 1
