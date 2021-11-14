@@ -42,9 +42,23 @@ function  [ret, spec] = hf_proc_pssr1_rich(ver, st_aux, st_hfa, raw_data)
     end
 
     data = reshape(data, nf, nk, []);
-    spec.x = real(10*log10(data(:,1))) + cf;  % [dBm @ ADC input]
-    spec.y = real(10*log10(data(:,2))) + cf;  % [dBm @ ADC input]
-    spec.z = zeros(nf,1);
+    
+    % spectral matrix
+    spec.xx = data(:,1);
+    spec.yy = data(:,2);
+    % create dummy data
+    spec.zz    = zeros(nf,1); spec.zz(:,1)=NaN;
+    spec.z     = zeros(nf,1); spec.z(:,1)=NaN;
+    spec.re_xy = zeros(nf,1); spec.re_xy(:,1)=NaN;
+    spec.im_xy = zeros(nf,1); spec.im_xy(:,1)=NaN;
+    spec.re_yz = zeros(nf,1); spec.re_yz(:,1)=NaN;
+    spec.im_yz = zeros(nf,1); spec.im_yz(:,1)=NaN;
+    spec.re_zx = zeros(nf,1); spec.re_zx(:,1)=NaN;
+    spec.im_zx = zeros(nf,1); spec.im_zx(:,1)=NaN;
+        
+    % auto spectra
+    spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
+    spec.y = 10*log10(spec.yy) + cf;  % [dBm @ ADC input]   
     switch st_aux.complex_sel       % number of data set
         case 1
             spec.re_xy = data(:,3);
