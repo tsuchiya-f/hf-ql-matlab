@@ -93,6 +93,8 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             value = double(uint16(aux(12)));
             st.temp_hf  = value - 55.0;
 
+            st.n_block = 1;
+        
         case {st_ctl.sid_pssr1_r}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
@@ -122,6 +124,8 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.rfi_param3  = aux(8);
             st.start_freq = uint32(aux(10))*256 + uint32(aux(9));
             
+            st.n_block = 1;
+
         case {st_ctl.sid_pssr2_s}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
@@ -157,6 +161,8 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.stop_freq  = uint32(aux(9))*256 + uint32(aux(10));
             st.n_sample = uint32(aux(11))*256 + uint32(aux(12));
 
+            st.n_block = 1;
+
         case {st_ctl.sid_pssr2_r}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);
@@ -184,6 +190,8 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.sweep_step = uint32(aux(7))*256 + uint32(aux(8));
             st.start_freq = uint32(aux(9))*256 + uint32(aux(10));
             st.stop_freq  = uint32(aux(11))*256 + uint32(aux(12));
+
+            st.n_block = 1;
 
         case {st_ctl.sid_pssr3_s}
             % HF header size
