@@ -8,14 +8,15 @@ swp_time   = 30;  % sec
 mvpp = [10, 10, 0] ; % mVpp
 pha  = [0.0, 90.0, 0.0] ; % deg
 sw = 1;  % 1:ON, 0:OFF
-reset = 1;
+reset = 0;
 
 %--------------------------------------------------------
 
 % open port to NF WF1968 at IRFU
 if ~exist('t','var') 
     % t=tcpip('192.168.1.222',5025);
-    t=visa('ni','USB0::0x0D4A::0x000E::9140149::INSTR');   %   SG (NF WF1974)
+    %t=visa('ni','USB0::0x0D4A::0x000E::9140149::INSTR');   %   SG (NF WF1974)
+    t=visa('ni','USB0::0x0D4A::0x003A::9202473::INSTR');   %   SG (NF WF1968@Meisei)
     fopen(t);
 
     % check *IDN
@@ -30,9 +31,6 @@ if reset == 1
 end
 
 if sw == 1
-
-    % 2ch mode (phase sync)
-    fprintf(t,':CHAN:MODE PHAS');
 
     % Frequency sweep mode
     fprintf(t,':SOUR:FREQ:MODE SWE');
@@ -68,6 +66,10 @@ if sw == 1
     cmd = [':SOUR1:SCH:PHAS:ADJ ' num2str(pha(3)) 'DEG'];
     fprintf(t,cmd);
     fprintf('   Set phase %6.1f/%6.1f/%6.1f deg.\n',pha(1),pha(2),pha(3));
+
+    % 2ch mode (phase sync)
+    %fprintf(t,':CHAN:MODE PHAS');
+    fprintf(t,':CHAN:MODE TONE');
 
     % output ON
     fprintf(t,':OUTP1:STAT ON');
