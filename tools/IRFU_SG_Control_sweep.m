@@ -2,9 +2,9 @@
 %fclose(t); clear all;
 
 % set freqneucy and amplitude
-start_freq = 1.0; % MHz
-stop_freq  = 2.0; % MHz
-swp_time   = 30;  % sec    
+start_freq = 11.0; % MHz
+stop_freq  = 19.0; % MHz
+swp_time   = 7200;  % sec    
 mvpp = [10, 10, 0] ; % mVpp
 pha  = [0.0, 90.0, 0.0] ; % deg
 sw = 1;  % 1:ON, 0:OFF
@@ -27,7 +27,7 @@ end
 
 if reset == 1
     fprintf(t,'*RST');
-    pause(1);
+    pause(3);
 end
 
 if sw == 1
