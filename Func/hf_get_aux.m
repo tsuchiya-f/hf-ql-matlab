@@ -67,6 +67,9 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             value = double(uint16(aux(12)));
             st.temp_hf  = value - 55.0;
 
+            % temporal
+            %st.n_block = 1;
+
         case {st_ctl.sid_pssr1_s}
             % HF header size
             st.hf_hdr_len = double(bitshift(bitand(aux(1),0xF0),-4) * 4.0);

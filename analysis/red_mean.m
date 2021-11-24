@@ -10,7 +10,7 @@ function data = red_mean(data, mask, m)
         for i=1:m1
             i1 = (i-1)*m+1;
             i2 = i*m;
-            idx = find(mask(i1:i2,j) == 1);
+            idx = find(mask(i1:i2,j) == 1) + (i-1)*m;
             if numel(idx) == 0 
                 data_red(i,j) = 0.0;
             else
