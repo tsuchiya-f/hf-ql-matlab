@@ -15,9 +15,13 @@ basedir_out = "C:\share\Linux\juice_test\";
 % outdir = ["20210927_Cgf6\DL\"];
 % file_search_str = 'HF_20210927-1457.ccs';
 
-indir  = [""];
-outdir = [""];
-file_search_str = 'HF_20211104-0939.ccs';
+% indir  = [""];
+% outdir = [""];
+% file_search_str = 'HF_20211104-0939.ccs';
+
+indir  = ["20211116_radio-burst_SGin\"];
+outdir = ["20211116_radio-burst_SGin\"];
+file_search_str = 'HF_20211116-1241.ccs';
 
 %------------------------------------------------------------------------------------
 
