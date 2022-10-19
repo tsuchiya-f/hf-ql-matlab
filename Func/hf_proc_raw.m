@@ -44,15 +44,23 @@ function  [ret, spec, wave] = hf_proc_raw(ver, st_aux, st_hfa, raw_data)
     %ovf = bitshift(bitand(57344,rawData(8,:)),-13);     % 3bit  1110 0000 0000 0000  0xE000=57344
 
     % auto correlation
-    Xabs = sqrt( mean( xq.^2+xi.^2, 1 ) );
-    Yabs = sqrt( mean( yq.^2+yi.^2, 1 ) );
-    Zabs = sqrt( mean( zq.^2+zi.^2, 1 ) );
+    Xabs = sqrt( transpose(mean( xq.^2+xi.^2, 1 )) );
+    Yabs = sqrt( transpose(mean( yq.^2+yi.^2, 1 )) );
+    Zabs = sqrt( transpose(mean( zq.^2+zi.^2, 1 )) );
     spec.x = 20 * ( log10( Xabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
     spec.y = 20 * ( log10( Yabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
     spec.z = 20 * ( log10( Zabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
     spec.xx = spec.x;
     spec.yy = spec.y;
     spec.zz = spec.z;
+
+    % dummy
+    spec.re_xy = zeros(num_steps,1); spec.re_xy(:,1)=NaN;
+    spec.im_xy = zeros(num_steps,1); spec.im_xy(:,1)=NaN;
+    spec.re_yz = zeros(num_steps,1); spec.re_yz(:,1)=NaN;
+    spec.im_yz = zeros(num_steps,1); spec.im_yz(:,1)=NaN;
+    spec.re_zx = zeros(num_steps,1); spec.re_zx(:,1)=NaN;
+    spec.im_zx = zeros(num_steps,1); spec.im_zx(:,1)=NaN;
 
     spec.matrix = 0;
     spec.xlog = 0;

@@ -19,9 +19,13 @@ clear all;
 % file_in = "HF_20211111-0120.mat";
 % label   = "HF PSSR1";
 
-dir_in  = "C:\share\Linux\juice_test\20211116_radio-burst_SGin\";
-%file_in = "HF_20211116-0622.mat";
-file_in = "HF_20211116-1241.mat";
+%dir_in  = "C:\share\Linux\juice_test\20211116_radio-burst_SGin\";
+%%file_in = "HF_20211116-0622.mat";
+%file_in = "HF_20211116-1241.mat";
+%label   = "HF Radio-burst";
+
+dir_in  = "C:\share\Linux\juice_test\20211126_radio_burst_SGin\";
+file_in = "HF_20211126-1252.mat";
 label   = "HF Radio-burst";
 
 %trange=[205 290];

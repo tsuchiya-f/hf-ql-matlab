@@ -6,8 +6,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
     spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa);
     
     % conversion factor from ADC value to enginnering value
-    %cf = -104.1;    % mean power of ADC value to dBm (for rms data)
-    cf = 0.0;
+    cf = st_ctl.cf;    % mean power of ADC value to dBm (for rms data)
     
     % data format (size)
     nf = st_hfa.total_step;         % number of frequeucy bins

@@ -44,7 +44,7 @@ function ret = hf_plot_power(st_ctl, spec)
 %             title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(Ch1)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Ch2)[' num2str(spec.y(imax(im)),'%0.1f') ']']);
 %     end
     xlabel ('Frequency [MHz]');
-    ylabel ('Power [rel]');
+    ylabel ('Power');
     if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
     if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
 

@@ -3,6 +3,9 @@
 %------------------------------------------------------------------------------------
 st_ctl_in.raw_ver1_corrected = 1;
 st_ctl_in.title = '20210527_SCPFM_PTR_RPWI';
+st_ctl_in.xlim = [0 45];
+st_ctl_in.ylim = [-90 -10];
+st_ctl_in.cf = -104.1;
 %st_ctl_in.ylim = [-60 -10];
 
 basedir_in = "C:\share\Linux\RESULTS\20210527_SCPFM_PTR_RPWI\";

@@ -2,23 +2,16 @@
 % User inputs
 %------------------------------------------------------------------------------------
 st_ctl_in.raw_ver1_corrected = 1;
-st_ctl_in.title = 'SCTBTV';
-st_ctl_in.ylim = [-90 -10];
+st_ctl_in.title = 'SCPFM_EMCR';
 st_ctl_in.xlim = [0 45];
+st_ctl_in.ylim = [-90 -10];
 st_ctl_in.cf = -104.1;
 
-basedir_in = "C:\Users\tsuch\Dropbox\JUICE_Data\SCTBTV-July-2021-Complete-bulkExport\";
-basedir_out = "C:\share\Linux\RESULTS\report_SCTBTV\";
+basedir_in = "C:\share\Linux\RESULTS\20220499_SCPFM_EMCR\";
+basedir_out= "C:\share\Linux\RESULTS\report_SCPFM_EMCR\";
 
- indir  = [ ...
-           "SCTBTV_Phase3\RPWI_CFDP_PH3\" ...
-           "SCTBTV_Phase5\CFDP_S22_P4_P5_RPWI\" ...
-           "SCTBTV_Phase11\CFDP_RPWI_S53_P11_2\" ...
-           "SCTBTV_Phase12\RIME_CFDP_S59_P12\" ...     % No HF data
-           "SCTBTV_Phase13\RPWI_CFDP_S66_P13\"];
- outdir = ["Phase3\" "Phase5\" "Phase11\" "Phase12\" "Phase13\"];
-% indir  = ["SCTBTV_Phase12\RIME_CFDP_S59_P12\"];
-% outdir = ["Phase12\"];
+indir  = ["CFDP_04_RT_EMC_AC_SC2RIME\CFDP\RETRIEVAL\" "CFDP_RT_EMC_RE_SPC_16\CFDP\RETRIEVAL\" "RPWI_NCR\"];
+outdir = ["CFDP_04_RT_EMC_AC_SC2RIME\" "CFDP_RT_EMC_RE_SPC_16\" "RPWI_NCR\"];
 file_search_str = "*.data";
 %------------------------------------------------------------------------------------
 

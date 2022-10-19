@@ -24,11 +24,22 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
         end
         n_pkt = n_pkt + 1;
         st_pre = hf_get_hdr_pre(hdr_pre);
+        
+        if st_pre.err ~= 0
+            fprintf("Packet error: invalid primary packet header\n");
+            ret = -1;
+            break;
+        end
 
         % packet secondary header (data field header)
         hdr_sec = fread(r,10,'uint8');
         st_sec = hf_get_hdr_sec(hdr_sec);
         
+        if st_sec.err ~= 0
+            fprintf("Packet error: invalid secondary packet header\n");
+            ret = -1;
+            break;
+        end
 %        fprintf("PID: %3d  STYPE: %3d\n", st_pre.pid, st_sec.ser_type);
         
         %----------------------------------------

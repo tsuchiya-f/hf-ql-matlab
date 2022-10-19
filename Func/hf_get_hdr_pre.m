@@ -12,7 +12,7 @@ function [st] = hf_get_hdr_pre(hdr)
     st.sec_hdr_flag = bitshift(bitand(hdr(1),0x08),-3);
     % Process ID (77=0x4D) 7bit
     st.pid          = bitshift(bitand(hdr(1),0x07),4) + bitshift(bitand(hdr(2),0xF0),-4);
-    if st.pid ~= 77; err = err + 1; end
+%    if st.pid ~= 77; err = err + 1; end
     % Packet category (12=0x0C) 4bit
     st.cat          = bitand(hdr(2),0x0F);
     if st.cat ~= 12; err = err + 1; end
