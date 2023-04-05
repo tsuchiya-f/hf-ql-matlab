@@ -35,6 +35,7 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
         hdr_sec = fread(r,10,'uint8');
         st_sec = hf_get_hdr_sec(hdr_sec);
         
+%        fprintf("err:%d pus_ver:%d ser_type:%d ser_subtype:%d dest_id:%d time:0x%12x\n", st_sec.err, st_sec.pus_ver, st_sec.ser_type, st_sec.ser_subtype, st_sec.dest_id, st_sec.time);
         if st_sec.err ~= 0
             fprintf("Packet error: invalid secondary packet header\n");
             ret = -1;
