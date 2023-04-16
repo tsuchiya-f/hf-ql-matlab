@@ -7,6 +7,13 @@
 function ret = HF_dl_script(input_file, outdir)
 
     %------------------------------------------------------------------------------------
+    % User path
+    %------------------------------------------------------------------------------------
+    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab')
+    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\Func\')
+    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\scripts')
+    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\tools')
+    %------------------------------------------------------------------------------------
     % User inputs
     %------------------------------------------------------------------------------------
     st_ctl_in.raw_ver1_corrected = 1;
