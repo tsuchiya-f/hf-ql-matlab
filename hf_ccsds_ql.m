@@ -26,7 +26,6 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default parameters, they are used if arguments are not set.
     %-----------------------------------
     % QL/DL switch (1: QL, 0:DL)
-    if ~exist('ql', 'var'); ql = 1; end
     st_ctl.ql = ql;
     
     if ~isfield(st_ctl, 'raw_ver1_corrected'); st_ctl.raw_ver1_corrected = 0; end
@@ -169,7 +168,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     %-----------------------------------
     % Save matlab data
     %----------------------------------- 
-    hf_save_data(st_ctl);
+    %hf_save_data(st_ctl);
     
     %-----------------------------------
     % Close report

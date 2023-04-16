@@ -5,7 +5,9 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
     % Input file
     r = fopen(in_file,'r');
     % Output file
-    w = fopen(out_file,'w');
+    if exist('out_file', 'var')
+        w = fopen(out_file,'w');    
+    end
     
     out_sz = 0;
     n_pkt = 0;
@@ -60,22 +62,24 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
             %----------------------------------------
             % Write CCSDS packet to a local file
             %----------------------------------------
-            fwrite(w, hdr_pre, 'uint8');
-            out_sz = out_sz + 6;
-            fwrite(w, hdr_sec, 'uint8');
-            out_sz = out_sz + 10;
-            fwrite(w, buff, 'uint8');
-            out_sz = out_sz + sz;
-
+            if exist('out_file', 'var')
+                fwrite(w, hdr_pre, 'uint8');
+                out_sz = out_sz + 6;
+                fwrite(w, hdr_sec, 'uint8');
+                out_sz = out_sz + 10;
+                fwrite(w, buff, 'uint8');
+                out_sz = out_sz + sz;
+            end
         end
         
     end
         
     fclose(r);
-    fclose(w);
-    
-    if out_sz == 0
-        delete(out_file)
+    if exist('out_file', 'var')
+        fclose(w);
+        if out_sz == 0
+            delete(out_file)
+        end
     end
     
     st_ctl.n_pkt = n_pkt;

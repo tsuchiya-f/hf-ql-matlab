@@ -33,7 +33,7 @@ function [st_ctl] = hf_init_device(st_ctl)
             st_ctl.rfile  = fullfile(fdir,file);
         end
         
-        tfile = append(st_ctl.dir_in, st_ctl.rfile);
+        tfile = append(st_ctl.dir_in, filesep, st_ctl.rfile);
 %        tfile = [st_ctl.dir '\' st_ctl.rfile];
         fileInfo =  dir(tfile);
         st_ctl.fileSize = fileInfo.bytes;
@@ -41,7 +41,7 @@ function [st_ctl] = hf_init_device(st_ctl)
         st_ctl.r  = r;
 
         % Report file name
-        st_ctl.file_rep = append(st_ctl.dir_out, st_ctl.rfile);
+        st_ctl.file_rep = append(st_ctl.dir_out, filesep, st_ctl.rfile);
     end
 
 end

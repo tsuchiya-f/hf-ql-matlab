@@ -25,7 +25,7 @@ function ret = HF_dl_script(input_file, outdir)
     
     [indir_,infile_,inext_] = fileparts(input_file);
 
-    indir = append(indir_, '\');
+    indir = append(indir_, filesep);
     outext='.hf.ccsds';
 
     if ~exist('outdir', 'var') 

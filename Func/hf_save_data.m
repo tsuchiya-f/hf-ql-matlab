@@ -17,7 +17,7 @@ function hf_save_data(st_ctl)
 
     [filepath,name,ext] = fileparts(st_ctl.wfile);
     
-    file_save = append(filepath, '\', name, '.mat');
+    file_save = append(filepath, filesep, name, '.mat');
     
     save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'st_data_spec')
 
