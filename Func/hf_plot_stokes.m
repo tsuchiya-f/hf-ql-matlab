@@ -58,7 +58,7 @@ function ret = hf_plot_stokes(st_ctl, spec)
     [p_freq_MHz, p_xx_dB, p_yy_dB, p_zz_dB] = hf_proc_get_peak_power(spec.f, xx, yy, zz);
     title(['Peak: ' num2str(p_freq_MHz,'%0.2f') ' MHz'],  ['X(Red):' num2str(p_xx_dB,'%0.1f') ' Y(Green):' num2str(p_yy_dB,'%0.1f') ' Z(Blue):' num2str(p_zz_dB,'%0.1f')]);
     xlabel ('Frequency [MHz]');
-    ylabel ('Power [rel]');
+    ylabel (st_ctl.power_unit);
     if isfield(st_ctl, 'xlim'); xlim(st_ctl.xlim); end
     if isfield(st_ctl, 'ylim'); ylim(st_ctl.ylim); end
         

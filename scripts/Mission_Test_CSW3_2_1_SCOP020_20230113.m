@@ -6,6 +6,7 @@ st_ctl_in.title = 'Mission_Test_CSW3.2.1_SCOP020';
 st_ctl_in.ylim = [-90 -10];
 st_ctl_in.xlim = [0 45];
 st_ctl_in.cf = -104.1;
+st_ctl.power_unit = 'dBm@ADCin';
 
 basedir_in = "E:\JUICE\system_test\20230113_Mission_Test_CSW3.2.1_SCOP020\bulkExport_2023_01_13T23_19_10_leal197_ded31615_RT_SCOP_020_RUN2\2023_01_13T23_19_10_leal197_ded31615_RT_SCOP_020_RUN2\FILES\PUBLISHED\GNDFSROOT\";
 basedir_out = "C:\share\Linux\RESULTS\report_20230113_Mission_Test_CSW3.2.1_SCOP020\";

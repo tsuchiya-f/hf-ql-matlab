@@ -51,8 +51,13 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
 
     % Default conversion factor
-    if ~isfield(st_ctl, 'cf'); st_ctl.cf = 0.0; end
-    
+    if ~isfield(st_ctl, 'cf')
+        st_ctl.cf = 0.0; 
+        st_ctl.power_unit = 'Power (RAW)'; 
+    end
+    if ~isfield(st_ctl, 'power_unit')
+        st_ctl.power_unit = 'Power'; 
+    end
     %-----------------------------------
     
     %-----------------------------------

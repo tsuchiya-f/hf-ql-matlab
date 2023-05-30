@@ -6,6 +6,7 @@ st_ctl_in.title = '20210531_SCPFM_PTR_RPWI_2_complete';
 st_ctl_in.xlim = [0 45];
 st_ctl_in.ylim = [-90 -10];
 st_ctl_in.cf = -104.1;
+st_ctl.power_unit = 'dBm@ADCin';
 %st_ctl_in.ylim = [-60 -10];
 
 basedir_in = "C:\share\Linux\RESULTS\20210531_SCPFM_PTR_RPWI_2_complete\";

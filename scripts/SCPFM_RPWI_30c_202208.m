@@ -6,6 +6,7 @@ st_ctl_in.title = 'SCPFM_RPWI_30c';
 st_ctl_in.xlim = [0 45];
 st_ctl_in.ylim = [-90 -10];
 st_ctl_in.cf = -104.1;
+st_ctl.power_unit = 'dBm@ADCin';
 
 basedir_in = "C:\share\Linux\RESULTS\20220824_HF-FFT-rerun\CFDP_RPWI\";
 basedir_out = "C:\share\Linux\RESULTS\report_SCPFM_RPWI_30c\";

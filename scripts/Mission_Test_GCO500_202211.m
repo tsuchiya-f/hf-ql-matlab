@@ -6,6 +6,7 @@ st_ctl_in.title = 'Mission_Test_GCO500';
 st_ctl_in.xlim = [0 45];
 st_ctl_in.ylim = [-90 -10];
 st_ctl_in.cf = -104.1;
+st_ctl.power_unit = 'dBm@ADCin';
 
 basedir_in = "C:\share\Linux\RESULTS\20221115_Mission_Test_GCO500_Sciops\bulkExport_2022_11_15T05_55_36_leal197_ded31615_RT_SCOP_020_run3\SCOP_020_CFDP_files\";
 basedir_out = "C:\share\Linux\RESULTS\report_20221115_Mission_Test_GCO500\";

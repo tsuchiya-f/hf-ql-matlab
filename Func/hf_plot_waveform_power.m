@@ -69,7 +69,7 @@ function ret = hf_plot_waveform_power(st_ctl, wave, spec)
     p_freq = spec.f(imax(im)) / 1e6;
     title(['Peak at　' num2str(p_freq,'%0.2f') ' MHz  Red(X)[' num2str(spec.x(imax(im)),'%0.1f') '] Green(Y)[' num2str(spec.y(imax(im)),'%0.1f') '] Blue(Z)[' num2str(spec.z(imax(im)),'%0.1f') '] dBm']);
     xlabel('Frequency [MHz]')
-    ylabel('Power')
+    ylabel (st_ctl.power_unit);
 
 %    disp('Plot rich data')
     

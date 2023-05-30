@@ -6,6 +6,7 @@ st_ctl_in.title = 'TV2';
 st_ctl_in.ylim = [-90 -10];
 st_ctl_in.xlim = [0 45];
 st_ctl_in.cf = -104.1;
+st_ctl.power_unit = 'dBm@ADCin';
 
 basedir_in = "E:\JUICE\system_test\TV2-Complete\";
 basedir_out = "C:\share\Linux\RESULTS\report_TV2\";

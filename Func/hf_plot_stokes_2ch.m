@@ -50,7 +50,7 @@ function ret = hf_plot_stokes_2ch(st_ctl, spec)
         [p_freq_MHz, p_xx_dB, p_yy_dB] = hf_proc_get_peak_power_2ch(spec.f, xx, yy);
         title(['Peak: ' num2str(p_freq_MHz,'%0.2f') ' MHz'],  ['Ch1(Red):' num2str(p_xx_dB,'%0.1f') ' Ch2(Green):' num2str(p_yy_dB,'%0.1f')]);
         xlabel ('Frequency [MHz]');
-        ylabel ('Power [rel]');
+        ylabel (st_ctl.power_unit);
 
         % 2D stokes parameters
         [Ixy, Qxy, Uxy, Vxy] = hf_proc_get_stokes(xx, yy, re_xy, im_xy);
