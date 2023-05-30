@@ -29,6 +29,7 @@ function    [st_ctl] = hf_init_struct(st_ctl)
     st_ctl.sid_pssr1_r = 0x75;
     st_ctl.sid_pssr2_r = 0x76;
     st_ctl.sid_pssr3_r = 0x77;
+    st_ctl.sid_pssr3_r_v1 = 0x67;
     
     % CUC time control
     if ~isfield(st_ctl, 'first_packet'); st_ctl.first_packet = 1; end
