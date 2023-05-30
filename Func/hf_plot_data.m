@@ -10,7 +10,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             st_ctl.label = ['HF Config 0: Sweep cycle / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
             
             if st_ctl.raw_ver1_corrected == 1
-                [ret_proc, spec] = hf_proc_raw_ver1_corrected(ver, st_aux, st_hfa, raw_data);
+                [ret_proc, spec] = hf_proc_raw_ver1_corrected(ver, , st_ctlst_aux, st_hfa, raw_data);
                 if ret_proc == 0
                     ret = hf_plot_power(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
@@ -20,7 +20,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     return;
                 end
             else
-                [ret, spec, wave] = hf_proc_raw(ver, st_aux, st_hfa, raw_data);
+                [ret, spec, wave] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa, raw_data);
                 if ret == 0
                     ret = hf_plot_power(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);

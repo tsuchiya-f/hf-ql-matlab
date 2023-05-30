@@ -32,7 +32,7 @@ function hf_plot_ft(st_ctl)
 %    imagesc(time, freq, x_pow)
     title('X-ch');
     xlabel ('Time');
-    ylabel ('Frequency [MHz]');
+    ylabel ('Frequency [kHz]');
     c=colorbar;
     c.Label.String = 'Power';
     
@@ -41,7 +41,7 @@ function hf_plot_ft(st_ctl)
 %    imagesc(time, freq, y_pow)
     title('Y-ch');
     xlabel ('Time');
-    ylabel ('Frequency [MHz]');
+    ylabel ('Frequency [kHz]');
     c=colorbar;
     c.Label.String = 'Power';
     
@@ -50,7 +50,7 @@ function hf_plot_ft(st_ctl)
 %    imagesc(time, freq, z_pow)
     title('Z-ch');
     xlabel ('Time');
-    ylabel ('Frequency [MHz]');
+    ylabel ('Frequency [kHz]');
     c=colorbar;
     c.Label.String = 'Power';
 

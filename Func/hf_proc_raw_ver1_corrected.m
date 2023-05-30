@@ -1,4 +1,4 @@
-function  [ret, spec] = hf_proc_raw_ver1_corrected(ver, st_aux, st_hfa, raw_data)
+function  [ret, spec] = hf_proc_raw_ver1_corrected(ver, st_ctl, st_aux, st_hfa, raw_data)
 
     %------------------------------------
     % create data pool as global
@@ -86,9 +86,9 @@ function  [ret, spec] = hf_proc_raw_ver1_corrected(ver, st_aux, st_hfa, raw_data
     Xabs = transpose(sqrt( mean( xq.^2+xi.^2, 1 ) ));
     Yabs = transpose(sqrt( mean( yq.^2+yi.^2, 1 ) ));
     Zabs = transpose(sqrt( mean( zq.^2+zi.^2, 1 ) ));
-    spec.x = 20 * ( log10( Xabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
-    spec.y = 20 * ( log10( Yabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
-    spec.z = 20 * ( log10( Zabs ) - log10( 1.357 * 2^17 ) ) + 0.9;
+    spec.x = 20 * log10( Xabs ) + st_ctl.cf;  % [dBm @ ADC input]
+    spec.y = 20 * log10( Yabs ) + st_ctl.cf;  % [dBm @ ADC input]
+    spec.z = 20 * log10( Zabs ) + st_ctl.cf;  % [dBm @ ADC input]
     spec.xx = spec.x;
     spec.yy = spec.y;
     spec.zz = spec.z;
