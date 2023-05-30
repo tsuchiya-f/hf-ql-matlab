@@ -166,6 +166,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     %-----------------------------------
     % Save FT diagram
     %----------------------------------- 
+    global st_data_spec
     if st_data_spec.nf ~= -1
         st_ctl.label = 'Dynamic spectrum';
         hf_plot_ft(st_ctl);
