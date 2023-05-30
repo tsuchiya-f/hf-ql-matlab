@@ -127,8 +127,10 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                 [~, auto] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data);
                 ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
                 ret = hf_rpt_add_figure(st_ctl);
+            else
+                fprintf('---skip\n');
             end
-            
+
         case st_ctl.sid_burst_r   % Radio burst, rich data
             fprintf('SID:%02x Radio burst (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 7: Radio burst (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
@@ -164,6 +166,8 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                 [~, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data);
                 ret = hf_plot_waveform_power(st_ctl, wave, spec);
                 ret = hf_rpt_add_figure(st_ctl);
+            else
+                fprintf('---skip\n');
             end
     end
     
