@@ -12,6 +12,7 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
     out_sz = 0;
     n_pkt = 0;
     ret = 0;
+    cnt = 0;
 
     while ~feof(r)
         
@@ -26,6 +27,11 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
         end
         n_pkt = n_pkt + 1;
         st_pre = hf_get_hdr_pre(hdr_pre);
+
+        % sequence flag (0: continue, 1: first, 2: last, 3: single)
+        if hdr_pre.seq_flag == 1 || hdr_pre.seq_flag == 3
+            cnt = cnt + 1;
+        end
         
         if st_pre.err ~= 0
             fprintf("Packet error: invalid primary packet header\n");
@@ -38,6 +44,7 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
         st_sec = hf_get_hdr_sec(hdr_sec);
         
 %        fprintf("err:%d pus_ver:%d ser_type:%d ser_subtype:%d dest_id:%d time:0x%12x\n", st_sec.err, st_sec.pus_ver, st_sec.ser_type, st_sec.ser_subtype, st_sec.dest_id, st_sec.time);
+        fprintf("cnt:%6d pid:0x%2x seq_flag:%d seq_cnt:%5d pkt_len:%4d pus_ver:%d ser_type:%2x ser_subtype:%d dest_id:%d time:0x%12x\n", cnt, st_pre.pid, st_pre.pkt_len, st_pre.seq_flag, st_pre.seq_cnt, st_sec.pus_ver, st_sec.ser_type, st_sec.ser_subtype, st_sec.dest_id, st_sec.time);
         if st_sec.err ~= 0
             fprintf("Packet error: invalid secondary packet header\n");
             ret = -1;
