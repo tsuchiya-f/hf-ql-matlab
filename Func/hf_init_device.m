@@ -7,7 +7,8 @@ function [st_ctl] = hf_init_device(st_ctl)
     if st_ctl.ql == 1
         % Open TCPIP port to receive HF science temeletry via TSC (st_ctl.r)
         if ~exist('r','var')
-            r = tcpip('localhost',7902);
+%            r = tcpip('localhost',7902);
+            r = tcpclient('localhost',7902);
             set(r,'InputBufferSize',2^16);
             fopen(r);
             st_ctl.r  = r;
