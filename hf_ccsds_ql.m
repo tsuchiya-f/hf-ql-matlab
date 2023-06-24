@@ -48,7 +48,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default title
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
-    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 90; end
+    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 70; end
 
     % Default conversion factor
     if ~isfield(st_ctl, 'cf')
