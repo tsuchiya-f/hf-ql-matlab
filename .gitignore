@@ -1,1 +1,5 @@
 # List of untracked files to ignore
+resources
+misc
+scripts
+not-used

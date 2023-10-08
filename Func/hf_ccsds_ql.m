@@ -108,7 +108,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
             % --- only for QL ---
             if st_ctl.r.BytesAvailable == 0
                 elapse_time = toc;
-                if tlm_cnt > 1
+                if tlm_cnt > 0
                     if elapse_time > wait_time; break; end
                 end
                 continue;

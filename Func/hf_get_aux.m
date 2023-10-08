@@ -1,6 +1,3 @@
-% ***********************************
-% *** 20231007   Y Kasaba
-% ***********************************
 function [st] = hf_get_aux(aux, sid, st_ctl)
 
 %-----------------------------------
@@ -212,7 +209,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
             st.n_block    = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
             % DEBUG: 230930
-            st.n_block = st.n_block + 1;
+            % st.n_block = st.n_block + 1;
             st.sweep_step = st.n_block;
             st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
             st.n_sample   = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
@@ -246,12 +243,13 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             % B8-B9
             st.send_reg   = double(uint32(aux(9))*256  + uint32(aux(10)));
             if (st.send_reg>0)
-                st.send_reg = st.send_reg + 1
+                st.send_reg = st.send_reg + 1;
             end
+            
             % B9-B10
             st.skip_reg   = double(uint32(aux(11))*256 + uint32(aux(12)));
             if (st.skip_reg>0)
-                st.skip_reg = st.skip_reg + 1
+                st.skip_reg = st.skip_reg + 1;
             end
      
     end
