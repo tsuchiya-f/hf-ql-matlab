@@ -21,6 +21,7 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
 
         % check EOF
         if size(hdr_pre) ~= 6
+            fprintf("***** EOF is detected *****\n");
             err = 1;
             break;
         end
@@ -75,6 +76,9 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
         if st_pre.seq_flag == 1 || st_pre.seq_flag == 3
             idx_first = 0;
             
+            fprintf("\n");
+            fprintf("=========================================================\n");
+
             %----------------------------------------
             % Read Auxilary data
             %----------------------------------------

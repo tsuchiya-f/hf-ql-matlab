@@ -15,6 +15,9 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
     cnt = 0;
     cnt_seq = 0;
 
+    fprintf("\n");
+    fprintf("=========================================================\n");
+
     while ~feof(r)
         
         %----------------------------------------
@@ -95,5 +98,8 @@ function [ret, st_ctl] = hf_get_packet(in_file, out_file)
     
     st_ctl.n_pkt = n_pkt;
     st_ctl.out_sz = out_sz;
+
+    fprintf("=========================================================\n");
+    fprintf("\n");
 
 end
