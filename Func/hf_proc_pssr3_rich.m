@@ -5,8 +5,8 @@ function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
 
     % for rich data
     fs   = sample_rate(st_aux.decimation+1);  % sampling rate of decimated waveform [Hz]
-    feed = st_aux.send_reg+1;     % number of feed frames in one block
-    skip = st_aux.skip_reg+1;     % number of skip frames in one block
+    feed = st_aux.send_reg;     % number of feed frames in one block
+    skip = st_aux.skip_reg;     % number of skip frames in one block
     nb   = st_aux.n_block;      % number of block in one packet
 
     ns   = 128;                 % number of data sample in one frame (fixed)

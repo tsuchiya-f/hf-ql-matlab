@@ -1,22 +1,21 @@
+%------------------------------------------------------------------------------------
+% ex)
+%   % set user path first
+%   addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab')
+%   addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\Func\')
 %
-% ex)   input_file = 'C:\share\Linux\doc\juice\ccsds\system_test\20210531_SCPFM_PTR_RPWI_2\20210531_SCPFM_PTR_RPWI_2_day3_xid32770.data.hf.ccsds'
-%       outdir = 'C:\share\Linux\doc\juice\ccsds\system_test\ql\'
-%       ret = HF_dl_script(input_file, outdir)
+%   input_file = 'C:\share\Linux\doc\juice\ccsds\system_test\20210531_SCPFM_PTR_RPWI_2\20210531_SCPFM_PTR_RPWI_2_day3_xid32770.data.hf.ccsds'
+%   outdir = 'C:\share\Linux\doc\juice\ccsds\system_test\ql\'
+%
+%   ret = HF_dl_script(input_file, outdir)
 %
 
 function ret = HF_dl_script(input_file, outdir)
 
     %------------------------------------------------------------------------------------
-    % User path
-    %------------------------------------------------------------------------------------
-    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab')
-    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\Func\')
-    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\scripts')
-    addpath('C:\Users\tsuch\Documents\MATLAB\hf_ql_matlab\tools')
-    %------------------------------------------------------------------------------------
     % User inputs
     %------------------------------------------------------------------------------------
-    st_ctl_in.raw_ver1_corrected = 1;
+    st_ctl_in.raw_ver1_corrected = 0;
     st_ctl_in.title = '';
     %------------------------------------------------------------------------------------
     
@@ -46,7 +45,7 @@ function ret = HF_dl_script(input_file, outdir)
         st_ctl_in.dir_in  = indir;
         st_ctl_in.dir_out = outdir;
         st_ctl_in.file_in = infile;
-        hf_ccsds_ql(ql, st_ctl_in)
+        hf_ccsds_ql(ql, st_ctl_in);
     else
         fprintf("No HF data in %s\n", infile);
     end

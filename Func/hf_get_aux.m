@@ -208,9 +208,11 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.pol        = bitshift(bitand(aux(2),0x80),-7);
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
             st.n_block    = bitshift(bitand(aux(2),0x1F),1) + bitshift(bitand(aux(3),0x80),-7);
+            % DEBUG: 230930
+            % st.n_block = st.n_block + 1;
+            st.sweep_step = st.n_block;
             st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
             st.n_sample   = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
-            st.sweep_step = st.n_block;
             st.center_freq= bitshift(aux(5),8) + aux(6);
 
             % Temperature
@@ -234,10 +236,22 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.n_block    = double(bitshift(bitand(aux(2),0x1F),3) + bitshift(bitand(aux(3),0xE0),-5));
             st.freq_hi    = double(uint32(aux(5))*256 + uint32(aux(6)));
             st.freq_lo    = double(uint32(aux(7))*256 + uint32(aux(8)));
-            st.send_reg   = double(uint32(aux(9))*256  + uint32(aux(10)));
-            st.skip_reg   = double(uint32(aux(11))*256 + uint32(aux(12)));
+            % st.send_reg   = double(uint32(aux(9))*256  + uint32(aux(10)));
+            % st.skip_reg   = double(uint32(aux(11))*256 + uint32(aux(12)));
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
+
+            % B8-B9
+            st.send_reg   = double(uint32(aux(9))*256  + uint32(aux(10)));
+            if (st.send_reg>0)
+                st.send_reg = st.send_reg + 1;
+            end
             
+            % B9-B10
+            st.skip_reg   = double(uint32(aux(11))*256 + uint32(aux(12)));
+            if (st.skip_reg>0)
+                st.skip_reg = st.skip_reg + 1;
+            end
+     
     end
 
 %    % Sweep table ID

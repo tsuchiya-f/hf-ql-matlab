@@ -1,9 +1,12 @@
+% ***********************************
+% *** 20231007   Y Kasaba
+% ***********************************
 function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
 
     ret = 0;
         
     switch st_rpw.sid
-        
+       
         % Raw data (sweep data for test purpose)
         case st_ctl.sid_raw
             fprintf('SID:%02x Sweep cycle\n', st_rpw.sid);
@@ -159,7 +162,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto);
             ret = hf_rpt_add_figure(st_ctl);
         
-        case {st_ctl.sid_pssr3_r, st_ctl.sid_pssr3_r_v1}  % PSSR3, rich data
+        case st_ctl.sid_pssr3_r  % PSSR3, rich data
             fprintf('SID:%02x PSSR3 (rich data)\n', st_rpw.sid);
             if st_ctl.ver > 1
                 st_ctl.label = ['HF Config 10: PSSR3 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
@@ -170,9 +173,20 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                 fprintf('---skip\n');
             end
 
+        case sid_pssr3_r_v1  % PSSR3, rich data V1
+            fprintf('SID:%02x PSSR3_v1 (rich data)\n', st_rpw.sid);
+            if st_ctl.ver > 1
+                st_ctl.label = ['HF Config 10: PSSR3 (rich data) V1 / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
+                [~, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data);
+                ret = hf_plot_waveform_power(st_ctl, wave, spec);
+                ret = hf_rpt_add_figure(st_ctl);
+            else
+                fprintf('---skip\n');
+            end
+
         otherwise
-            fprintf('SID:%02x !!! unknown !!!\n', st_rpw.sid);
-            
+            fprintf('***Error - SID:%02x\n', st_rpw.sid);
+           
     end
     
 end
