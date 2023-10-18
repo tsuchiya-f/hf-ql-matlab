@@ -1,0 +1,9 @@
+make_hf_floor_table.m
+    MATLAB script to generate HF_Table_Floor.t
+
+make_hf_mask_table.m
+    MATLAB script to generate HF_Table_Mask.t
+
+hf_show_freq_table.m
+    MATLAB script to output frequency table for each SID
+    output : freq_table_sid-X.txt
