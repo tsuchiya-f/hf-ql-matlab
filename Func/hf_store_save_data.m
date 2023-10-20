@@ -52,6 +52,10 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
         end
         
     else
+        [~,nf_] = size(st_data_spec.x);
+        if nf ~= nf_
+            fprintf("Number of frequency bin dose not matck. Skip to save st_data_spec in hf_store_save_data.");
+        else
         for i=1:nb
             st_data_spec.t = [st_data_spec.t; double(st_time.cuc_time_elapse) + double(i-1)/double(st_aux.n_block)];
             st_data_spec.x = [st_data_spec.x; transpose(spec.x(nf*(i-1)+1:nf*i,1))];
@@ -70,6 +74,7 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
             st_data_spec.im_zx = [st_data_spec.im_zx; transpose(spec.im_zx(nf*(i-1)+1:nf*i,1))];
 
             st_data_spec.f = [st_data_spec.f; spec.f(nf*(i-1)+1:nf*i)];
+        end
         end
 
     end

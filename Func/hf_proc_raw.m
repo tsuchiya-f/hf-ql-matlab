@@ -1,4 +1,4 @@
-function  [ret, spec, wave] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa, raw_data)
+function  [ret, spec, wave, spec_hres] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa, raw_data)
 
     ret = 0;
 
@@ -42,6 +42,9 @@ function  [ret, spec, wave] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa, raw_data)
     wave.swp = reshape( bitshift(bitand( 1024,rawData(8,:)),-10), [num_sampl, num_steps]);     % 1bit  0000 0100 0000 0000  0x0400=1024
     wave.dec = reshape( bitshift(bitand( 6144,rawData(8,:)),-11), [num_sampl, num_steps]);     % 2bit  0001 1000 0000 0000  0x1800=6144
     wave.ovf = reshape( bitshift(bitand(57344,rawData(8,:)),-13), [num_sampl, num_steps]);     % 3bit  1110 0000 0000 0000  0xE000=57344
+
+    % fine resolution spectrum
+    spec_hres = hf_proc_raw_hres_spec(st_hfa, spec.f, wave);
 
     % auto correlation
     Xabs = sqrt( transpose(mean( xq.^2+xi.^2, 1 )) );

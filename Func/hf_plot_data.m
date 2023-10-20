@@ -1,6 +1,3 @@
-% ***********************************
-% *** 20231007   Y Kasaba
-% ***********************************
 function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
 
     ret = 0;
@@ -23,12 +20,20 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     return;
                 end
             else
-                [ret, spec, wave] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa, raw_data);
+                [ret, spec, wave, spec_hres] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa, raw_data);
                 if ret == 0
+                    ret = hf_plot_waveform(st_ctl, wave);
+                    ret = hf_rpt_add_figure(st_ctl);
+
                     ret = hf_plot_power(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
-                    ret = hf_plot_waveform(st_ctl, wave);
+
+                    st_ctl_hres.power_unit = 'relative power [dB]';
+                    st_ctl_hres.n_ch=3;
+                    st_ctl_hres.hf=st_ctl.hf;
+                    st_ctl_hres.xlim = [min(spec_hres.f*1e-3), max(spec_hres.f*1e-3)];
+                    ret = hf_plot_power(st_ctl_hres, spec_hres);
                     ret = hf_rpt_add_figure(st_ctl);
                 else
                     fprintf('   ERROR in hf_proc_raw / error ID = %d\n', ret);
