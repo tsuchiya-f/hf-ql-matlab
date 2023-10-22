@@ -75,6 +75,20 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
             fprintf('sweep step            %d\n', st_aux.sweep_step);
         
         case st_ctl.sid_pssr3_s   % PSSR3, survey data
+            % HF header size
+            fprintf('HF header size        %d\n', st_aux.hf_hdr_len);
+            % Channel select
+            fprintf('Channel select X/Y/Z  %d/%d/%d\n', st_aux.xch_sel, st_aux.ych_sel, st_aux.zch_sel);
+            fprintf('Data number       %d\n', st_aux.n_sample);
+            fprintf('Cal signal enable %d\n', st_aux.cal_ena);
+            fprintf('Pol enable        %d\n', st_aux.pol);
+            fprintf('Decimation        %d\n', st_aux.decimation);
+            fprintf('Number of block   %d\n', st_aux.n_block);
+
+            fprintf('Interval          %d\n', st_aux.interval);
+            fprintf('Number of sample  %d\n', st_aux.n_sample);
+            fprintf('Center freq       %d\n', st_aux.center_freq);
+
             fprintf('temp A/B/HF       %6.1f/%6.1f/%6.1f\n', st_aux.temp_rwi_a, st_aux.temp_rwi_b, st_aux.temp_hf);
 
         case st_ctl.sid_burst_r   % Radio burst, rich data
@@ -84,7 +98,18 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
         case st_ctl.sid_pssr2_r   % PSSR2, rich data
         
         case st_ctl.sid_pssr3_r   % PSSR3, rich data
-
+            % HF header size
+            fprintf('HF header size        %d\n', st_aux.hf_hdr_len);
+            % Channel select
+            fprintf('Channel select X/Y/Z  %d/%d/%d\n', st_aux.xch_sel, st_aux.ych_sel, st_aux.zch_sel);
+            fprintf('Cal signal enable %d\n', st_aux.cal_ena);
+            fprintf('Pol enable        %d\n', st_aux.pol);
+            fprintf('Decimation        %d\n', st_aux.decimation);
+            fprintf('Number of block   %d\n', st_aux.n_block);
+            fprintf('Freq Hi       0x%04x\n', st_aux.freq_hi);
+            fprintf('Freq Lo       0x%04x\n', st_aux.freq_lo);
+            fprintf('Send reg          %d\n', st_aux.send_reg);
+            fprintf('Skip reg          %d\n', st_aux.skip_reg);
     end
     fprintf('---------------------------------------------------------\n');
    
