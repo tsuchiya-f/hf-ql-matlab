@@ -35,8 +35,8 @@ function ret = hf_plot_stokes_3D(st_ctl, spec)
     Q_3d = spec.UrUr - spec.UiUi + spec.VrVr - spec.ViVi + spec.WrWr - spec.WiWi;
     U_3d = 2.0 * (spec.UrUi + spec.VrVi + spec.WrWi);
     V_3d_x = -2.0 * (spec.VrWi - spec.ViWr); 
-    V_3d_y = -2.0 * (spec.VrWi - spec.ViWr); 
-    V_3d_z = -2.0 * (spec.VrWi - spec.ViWr); 
+    V_3d_y = -2.0 * (spec.WrUi - spec.WiUr); 
+    V_3d_z = -2.0 * (spec.UrVi - spec.UiVr); 
     [dop_3d, dol_3d, doc_3d, ang_3d, k_lon, k_lat] = hf_proc_get_pol_3D(I_3d, Q_3d, U_3d, V_3d_x, V_3d_y, V_3d_z);
     
     % print peak values

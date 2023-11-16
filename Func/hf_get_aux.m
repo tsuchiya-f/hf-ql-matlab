@@ -213,7 +213,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.sweep_step = st.n_block;
             st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
             st.n_sample   = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
-            st.center_freq= bitshift(aux(5),8) + aux(6);
+            st.center_freq= bitshift(uint16(aux(5)),8) + uint16(aux(6));
 
             % Temperature
             value = double(uint16(aux(10)));
