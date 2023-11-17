@@ -378,6 +378,10 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.zz    = zeros(nf,3);   % dummy
                 spec.re_xy = zeros(nf,3);
                 spec.im_xy = zeros(nf,3);
+                spec.re_yz = zeros(nf,3);   % dummy
+                spec.im_yz = zeros(nf,3);   % dummy
+                spec.re_zx = zeros(nf,3);   % dummy
+                spec.im_zx = zeros(nf,3);   % dummy
                 % --- number of sum ---
                 spec.n_sum = n_sum;
                 % --- no-pol ---
