@@ -236,8 +236,6 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.n_block    = double(bitshift(bitand(aux(2),0x1F),3) + bitshift(bitand(aux(3),0xE0),-5));
             st.freq_hi    = double(uint32(aux(5))*256 + uint32(aux(6)));
             st.freq_lo    = double(uint32(aux(7))*256 + uint32(aux(8)));
-            st.send_reg   = double(uint32(aux(9))*256  + uint32(aux(10)));
-            st.skip_reg   = double(uint32(aux(11))*256 + uint32(aux(12)));
             st.decimation = bitshift(bitand(aux(2),0x60),-5);
 
             % B8-B9
