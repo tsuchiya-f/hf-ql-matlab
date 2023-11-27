@@ -17,7 +17,7 @@ function [dop, dol, doc, ang, k_lon, k_lat] = hf_proc_get_pol_3D(I, Q, U, Vx, Vy
         end
     end
 
-    k_lat = asin(Vz/sqrt(Vx.*Vx + Vy.*Vy)) * 180.0 / pi;
+    k_lat = atan(Vz/sqrt(Vx.*Vx + Vy.*Vy)) * 180.0 / pi;
     k_lon = atan2(Vy, Vx) * 180.0 / pi;
 
 end
