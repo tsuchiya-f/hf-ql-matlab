@@ -27,7 +27,7 @@ function spec_hres = hf_proc_raw_hres_spec(st_hfa, freq, wave)
         ys = fft(yw .* win); ys = fftshift(ys); %ys = flip([ys(num_sampl/2+1:num_sampl) ys(1:num_sampl/2)]);
         zs = fft(zw .* win); zs = fftshift(zs); %zs = flip([zs(num_sampl/2+1:num_sampl) zs(1:num_sampl/2)]);
 
-        freq_h = linspace(-sr*0.5,sr*0.5,num_sampl) + freq(i) + bw_eff * 0.5;  % [kHz]
+        freq_h = linspace(-sr*0.5,sr*0.5,num_sampl) + freq(i);  % [kHz]
 
         spec_hres.x = [spec_hres.x, NaN, transpose(20.0 * log10(abs(xs)))];
         spec_hres.y = [spec_hres.y, NaN, transpose(20.0 * log10(abs(ys)))];

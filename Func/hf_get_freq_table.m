@@ -47,7 +47,7 @@ function f_band = hf_get_band(startf, stopf, step, sdiv, bw_eff)
     	freq_div = bw_eff / sdiv;
     	freq_low = freq_mid - bw_eff*0.5;
         for j=1:sdiv
-        	f_band((i-1)*sdiv + j) = freq_low + freq_div*(j-1);
+        	f_band((i-1)*sdiv + j) = freq_low + freq_div*(j-1) + freq_div*0.5;
         end
     end
     
