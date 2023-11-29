@@ -5,6 +5,7 @@ scripts
 not-used
 IRFU_util
 analysis
+data
 *.mat
 *.asv
 *.prj
