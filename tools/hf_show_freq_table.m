@@ -2,6 +2,17 @@ function f = hf_show_freq_table(sid)
 
     switch sid
 
+        case 2
+        % RAW
+        ver = 2;
+        st_aux.sweep_table_id = 0x1f;
+        st_hfa.n_band = 1;
+        st_hfa.decimation   = 0;
+        st_hfa.band0_startf = 191;
+        st_hfa.band0_stopf  = 45111;
+        st_hfa.band0_step   = 202;
+        st_hfa.band0_sdiv   = 1;
+
         case 3
         % radio full
         ver = 2;
@@ -80,8 +91,8 @@ function f = hf_show_freq_table(sid)
         fprintf(fid,"   start[kHz] stop[kHz] bw[kHz]\n");
         n = numel(f);
         for i=1:n
-            fprintf("%3d  %8.2f  %8.2f %7.2f\n", i, f(i), f(i)+bw(i), bw(i));
-            fprintf(fid, "%3d  %8.2f  %8.2f %7.2f\n", i, f(i), f(i)+bw(i), bw(i));
+            fprintf("%3d  %8.2f  %8.2f %7.2f\n", i, f(i)-bw(i)*0.5, f(i)+bw(i)*0.5, bw(i));
+            fprintf(fid, "%3d  %8.2f  %8.2f %7.2f\n", i, f(i)-bw(i)*0.5, f(i)+bw(i)*0.5, bw(i));
         end
         fclose(fid);
 
