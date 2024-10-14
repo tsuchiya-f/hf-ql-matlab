@@ -1,7 +1,7 @@
 % ----------------------------------------------------------------------------------------------
-% csv_file_in = '..\data\mask\test_20231128_artificial\hf_mask_artificial.csv';
-% csv_file_in = '..\data\mask\test_20231128_natural\hf_mask_natural.csv';
-% make_hf_mask_table_csv(csv_file_in);
+% How to use
+% >> csv_file_in = '../data/mask/kasaba_mask_table/hf_sid3_mask.csv';
+% >> make_hf_mask_table_csv(csv_file_in);
 % -------------------------------------
 function [err] = make_hf_mask_table_csv(file_in)
 
@@ -21,7 +21,7 @@ freq_e_def = f_start + (1:nf)*df;
 [file_path,~,~] = fileparts(file_in);
 
 % mask table (log output)
-filename = append(file_path,'\freq_mask_table.txt');
+filename = append(file_path,'/freq_mask_table_def.txt');
 fid = fopen(filename,'w');
 fprintf(fid,"   start[kHz] stop[kHz]\n");
 for i=1:nf
@@ -30,7 +30,7 @@ end
 fclose(fid);
 
 % output file name
-file_out=append(file_path,"\HF_Table_Mask.t");
+file_out=append(file_path,"/HF_Table_Mask.t");
 fprintf("%s\n",file_out);
 
 % Read csv file (frequency mask table)
@@ -38,7 +38,7 @@ A = readmatrix(file_in);
 index = A(:,1);
 sta_freq = A(:,2);
 end_freq = A(:,3);
-mask_freq = A(:,4);
+mask_val = A(:,4);
 
 % check input file
 err = 0;
@@ -75,16 +75,16 @@ mask = zeros(1,n_ent);
 for i_freq=1:nf
     i_ent = fix((i_freq-1)/8)+1;
     i_bin = mod((i_freq-1),8);
-    if mask_freq(i_freq) ~= 0
+    if mask_val(i_freq) ~= 0
         mask_ptn = 2^(7-i_bin);
     else
         mask_ptn = 0;
     end
     mask(i_ent) = bitor(mask(i_ent), mask_ptn);
 
-    if i_ent < 4
-        fprintf("%d %d %d %d 0x%02x\n", i_freq, mask_freq(i_freq), i_ent, i_bin, mask(i_ent));
-    end
+%    if i_ent < 4
+%        fprintf("%d %d %d %d 0x%02x\n", i_freq, mask_freq(i_freq), i_ent, i_bin, mask(i_ent));
+%    end
 end
 
 % output table
