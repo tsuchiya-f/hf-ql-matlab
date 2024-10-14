@@ -113,7 +113,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
         % 3-ch mode
         %------------
         case 3
-        switch st_aux.complex_sel       % number of data set
+        switch st_aux.complex_sel       % complex
             case 0
                 data = reshape(data(1:nf*nk), nf, nk, []);
                 spec.xx = data(:,1);
