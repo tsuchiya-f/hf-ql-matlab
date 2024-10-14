@@ -53,7 +53,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                 else
@@ -63,7 +63,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                 end
@@ -75,7 +75,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                 else
@@ -85,7 +85,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                 end
@@ -96,7 +96,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
             end

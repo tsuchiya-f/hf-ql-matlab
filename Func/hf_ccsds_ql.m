@@ -180,7 +180,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     %-----------------------------------
     % Save matlab data
     %----------------------------------- 
-    %hf_save_data(st_ctl);
+    hf_save_data(st_ctl, st_aux);
     
     %-----------------------------------
     % Close report
