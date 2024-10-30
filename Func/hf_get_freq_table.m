@@ -39,16 +39,34 @@ end
 %-------------------------------------------------------------------------
 function f_band = hf_get_band(startf, stopf, step, sdiv, bw_eff)
 
-    f_band = zeros(1,step * sdiv);
-	freq_step = (stopf - startf) /  step;
+    if sdiv > 0
     
-	for i=1:step
-    	freq_mid = startf + freq_step * (i-1);
-    	freq_div = bw_eff / sdiv;
-    	freq_low = freq_mid - bw_eff*0.5;
-        for j=1:sdiv
-        	f_band((i-1)*sdiv + j) = freq_low + freq_div*(j-1) + freq_div*0.5;
+        f_band = zeros(1,step * sdiv);
+	    freq_step = (stopf - startf) /  step;
+        
+        for i=1:step
+    	    freq_mid = startf + freq_step * (i-1);
+    	    freq_div = bw_eff / sdiv;
+    	    freq_low = freq_mid - bw_eff*0.5;
+            for j=1:sdiv
+        	    f_band((i-1)*sdiv + j) = freq_low + freq_div*(j-1) + freq_div*0.5;
+            end
         end
+     
+    else
+
+        f_band = zeros(1,step / abs(sdiv));
+	    freq_step = (stopf - startf) / step;
+
+        ii = 1;
+        for i=1:abs(sdiv):step
+    	    freq_mid1 = startf + freq_step * (i-1);
+    	    freq_mid2 = startf + freq_step * (i+abs(sdiv)-2);
+            freq_mid = (freq_mid1 + freq_mid2) * 0.5;
+        	f_band(ii) = freq_mid;
+            ii = ii + 1;
+        end
+
     end
     
 end
