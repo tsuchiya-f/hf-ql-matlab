@@ -6,6 +6,8 @@ not-used
 IRFU_util
 analysis
 data
+tools/old
+tools/tmp
 *.mat
 *.asv
 *.prj

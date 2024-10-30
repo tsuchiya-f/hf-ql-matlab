@@ -58,6 +58,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
     raw_data8 = uint8(raw_data);
     if numel(raw_data) == len_total
         % 4-Byte float
+        fprintf("***** Convert 4-Byte float\n");
         data = swapbytes(typecast(raw_data8(1:len),'single'));
         if st_aux.complex_sel == 2
             n_sum = swapbytes(typecast(raw_data8(len+1:len_total),'uint16'));
@@ -65,8 +66,16 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
         end
     elseif numel(raw_data) == len_total_12
         % convert 12-bit minifloat to 4-Byte float
+        fprintf("***** Convert 12-bit mini-float\n");
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
         data = hf_minifloat16(data12);
+        
+%        oldFmt = format("hex");
+%        data12(1)
+%        single(data(1))
+%        format(oldFmt);
+%        data(1)
+
         if st_aux.complex_sel == 2
             n_sum = swapbytes(typecast(raw_data8(len_12+1:len_total_12),'uint16'));
             n_sum = reshape(n_sum, nf, 3, []);
@@ -237,7 +246,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 
                 % set NAN value to invalid data
                 for i=1:3
-                    idx = find(spec.xx(:,i) < 1.0);
+                    idx = find(spec.xx(:,i) == 0.0);
                     spec.xx(idx,i) = NaN;
                     spec.yy(idx,i) = NaN;
                     spec.zz(idx,i) = NaN;

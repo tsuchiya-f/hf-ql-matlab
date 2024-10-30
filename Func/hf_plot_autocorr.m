@@ -37,9 +37,11 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
             case {st_ctl.sid_pssr3_s}
                 inauto=[auto.auto(:,n_plot*i+1), auto.auto(:,n_plot*i+2)];
         end
-        stairs(auto.t, inauto, '-o');
+%        stairs(auto.t, inauto, '-o');
+        plot(inauto, '-o');
         title  ( [intitle ': block from ' num2str(n_plot*i+1) ' to ' num2str(n_plot*i+n_plot)] );
-        xlabel ('Time [sec]');
+%        xlabel ('Time [sec]');
+        xlabel ('data number');
         ylabel ('Auto-Corr');
     end
     

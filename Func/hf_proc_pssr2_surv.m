@@ -19,6 +19,8 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
     len32 = n_time*n_freq*4;
     
     % interpretaion of data (4-Byte float or 12-bit MiniFloat)
+    fprintf("Data Len: %d, Expexted Len:%d\n", len, len32);
+    fprintf("ntime: %d, nfreq:%d\n", n_time, n_freq);    
     if len == len32
         % 4-Byte float
 %        rdata = swapbytes(typecast(uint8(raw_data(1:len)),'single'));

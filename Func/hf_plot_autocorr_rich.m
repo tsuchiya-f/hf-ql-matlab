@@ -14,10 +14,13 @@ function ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto)
     % Plot stream (x, y, and z) 
     for i=1:i_loop
         nexttile;
-        intitle = sprintf('Rank:%d %7.1f kHz', i_loop+1-i, auto.freq(i));
-        plot(auto.t(2:n), auto.auto(2:n,i), '-');
+        intitle = sprintf('Rank:%d', i_loop+1-i);
+%        intitle = sprintf('Rank:%d %7.1f kHz', i_loop+1-i, auto.freq(i));
+        plot(auto.auto(2:n,i), '-');
+%        plot(auto.t(2:n), auto.auto(2:n,i), '-');
         title  ( intitle );
-        xlabel ('Time [sec]');
+        xlabel ('data number');
+%        xlabel ('Time [sec]');
         ylabel ('Auto-Corr');
     end
 end
