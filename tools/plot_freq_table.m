@@ -1,8 +1,8 @@
 function plot_freq_table
 
-    tab_org = readmatrix('freq_table_sid-3.txt');
-    tab_rv1 = readmatrix('freq_table_sid3_v3.txt');
-    tab_rv2 = readmatrix('freq_table_sid3_v3.1.txt');
+    tab_org = readmatrix('freq_sweep_table_id0_v2.txt');
+    tab_rv1 = readmatrix('freq_sweep_table_id1_v3.txt');
+    tab_rv2 = readmatrix('freq_sweep_table_id2_v3.txt');
     ky40 = readtable('SID3-SID2_ASW3_frequency_table_plan.xlsx','Sheet','SID-3 ASW3 (40MHz)','Range','B2:F257');
     ky45 = readtable('SID3-SID2_ASW3_frequency_table_plan.xlsx','Sheet','SID-3 ASW3 (45MHz)','Range','B2:F257');
 
