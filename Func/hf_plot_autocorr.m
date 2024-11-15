@@ -47,9 +47,13 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
         case {st_ctl.sid_pssr2_s}
          nexttile(n_fig+1);
          nf = numel(auto.freq);
-        semilogy(auto.freq,auto.auto(1,1:nf),'-o');
+        semilogy(auto.freq,abs(auto.auto(1,1:nf)),'-o');
+        hold on
+        semilogy(auto.freq,auto.amp_i,'-o');
+        semilogy(auto.freq,auto.amp_q,'-o');
         title  ( 'Amplitude @ lag=0' );
         xlabel ('Frequency');
         ylabel ('Auto-Corr');
+        legend('Auto-corr','Amp I','Amp Q')
     end
 end

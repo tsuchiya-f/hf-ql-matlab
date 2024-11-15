@@ -106,9 +106,7 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             if st_ctl.ver == 1.0 
                 hf_hdr_len = 24;
             else
-%                if st_aux.sweep_table_id == 0xFF || st_aux.sweep_table_id == 0x1F
-                    hf_hdr_len = st_aux.hf_hdr_len;
-%                end
+                hf_hdr_len = st_aux.hf_hdr_len;
             end
             fprintf("HF header len : %d\n",hf_hdr_len);
             
@@ -119,9 +117,16 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
                 sz = sz - double(hf_hdr_len);
                 ret = hf_print_hf(st_hfa, st_ctl);
             else
-                st_hfa.exist = 0;
+                fprintf("***** ERROR : No HF header\n");
+                pause;
             end
-            
+
+            % add pre-uploaded sweep table info
+            if st_aux.sweep_table_id ~= 0xFF || st_aux.sweep_table_id ~= 0x1F
+                st_hfa = hf_add_freq_table(st_aux.sweep_table_id, st_hfa);
+            end
+
+
             if st_ctl.ver == 1.0 
                 % add fixed AUX field & HF header for Ver1 SW 
                 [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw, st_ctl);

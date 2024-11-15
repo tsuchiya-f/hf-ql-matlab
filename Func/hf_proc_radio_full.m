@@ -72,7 +72,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
             n_sum = reshape(n_sum, nf, 3, []);
         end
     else
-        fprintf("***** ERROR : invalid data length\n");
+        fprintf("***** ERROR : invalid data length %d (%d or %d expected)\n", numel(raw_data), len_total, len_total_12);
         pause
     end
 
@@ -236,21 +236,21 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.z(:,3) = 10*log10(spec.zz(:,3)) + cf;  % [dBm @ ADC input]
                 
                 % set NAN value to invalid data
-                for i=1:3
-                    idx = find(spec.xx(:,i) < 1.0);
-                    spec.xx(idx,i) = NaN;
-                    spec.yy(idx,i) = NaN;
-                    spec.zz(idx,i) = NaN;
-                    spec.re_xy(idx,i) = NaN;
-                    spec.im_xy(idx,i) = NaN;
-                    spec.re_yz(idx,i) = NaN;
-                    spec.im_yz(idx,i) = NaN;
-                    spec.re_zx(idx,i) = NaN;
-                    spec.im_zx(idx,i) = NaN;
-                    spec.x(idx,i) = NaN;
-                    spec.y(idx,i) = NaN;
-                    spec.z(idx,i) = NaN;
-                end
+                % for i=1:3
+                %     idx = find(spec.xx(:,i) < 1.0);
+                %     spec.xx(idx,i) = NaN;
+                %     spec.yy(idx,i) = NaN;
+                %     spec.zz(idx,i) = NaN;
+                %     spec.re_xy(idx,i) = NaN;
+                %     spec.im_xy(idx,i) = NaN;
+                %     spec.re_yz(idx,i) = NaN;
+                %     spec.im_yz(idx,i) = NaN;
+                %     spec.re_zx(idx,i) = NaN;
+                %     spec.im_zx(idx,i) = NaN;
+                %     spec.x(idx,i) = NaN;
+                %     spec.y(idx,i) = NaN;
+                %     spec.z(idx,i) = NaN;
+                % end
 
                 spec.matrix = 1;   % nominal 2D spectral matrix (1)
 
