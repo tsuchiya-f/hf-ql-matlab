@@ -77,7 +77,7 @@ function ret = hf_plot_stokes_2ch(st_ctl, spec)
         if spec.xlog == 0
             plot(spec.f/1e3, dol_xy,'.')
         else
-            semilogy(spec.f/1e3, dol_xy,'.')
+            semilogx(spec.f/1e3, dol_xy,'.')
         end
         ylim([-0.1 1.1])
         xlabel ('Frequency [MHz]');
@@ -90,7 +90,7 @@ function ret = hf_plot_stokes_2ch(st_ctl, spec)
         if spec.xlog == 0
             plot(spec.f/1e3, doc_xy,'.')
         else
-            semilogy(spec.f/1e3, doc_xy,'.')
+            semilogx(spec.f/1e3, doc_xy,'.')
         end
         ylim([-1.1 1.1])
         xlabel ('Frequency [MHz]');
@@ -103,7 +103,7 @@ function ret = hf_plot_stokes_2ch(st_ctl, spec)
         if spec.xlog == 0
             plot(spec.f/1e3, ang_xy,'b.')
         else
-            semilogy(spec.f/1e3, ang_xy,'b.')
+            semilogx(spec.f/1e3, ang_xy,'b.')
         end
         ylim([-5.0 185.0])
         xlabel ('Frequency [MHz]');

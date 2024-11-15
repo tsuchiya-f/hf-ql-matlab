@@ -11,3 +11,6 @@ tools/tmp
 *.mat
 *.asv
 *.prj
+.DS_Store
+tools/.DS_Store
+tools/old

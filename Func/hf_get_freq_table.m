@@ -11,8 +11,8 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa)
     bw_eff = bw * 0.75; 
 
     f = [];
-    switch st_aux.sweep_table_id
-        case {0x1f, 0xff}
+%    switch st_aux.sweep_table_id
+%        case {0x1f, 0xff}
             % band 0
             f_band = hf_get_band(st_hfa.band0_startf, st_hfa.band0_stopf, st_hfa.band0_step, st_hfa.band0_sdiv, bw_eff);
             f = [f, f_band];
@@ -32,23 +32,41 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa)
             % band 4
             f_band = hf_get_band(st_hfa.band4_startf, st_hfa.band4_stopf, st_hfa.band4_step, st_hfa.band4_sdiv, bw_eff);
             f = [f, f_band];            
-    end
+%    end
     
 end
 
 %-------------------------------------------------------------------------
 function f_band = hf_get_band(startf, stopf, step, sdiv, bw_eff)
 
-    f_band = zeros(1,step * sdiv);
-	freq_step = (stopf - startf) /  step;
+    if sdiv > 0
     
-	for i=1:step
-    	freq_mid = startf + freq_step * (i-1);
-    	freq_div = bw_eff / sdiv;
-    	freq_low = freq_mid - bw_eff*0.5;
-        for j=1:sdiv
-        	f_band((i-1)*sdiv + j) = freq_low + freq_div*(j-1) + freq_div*0.5;
+        f_band = zeros(1,step * sdiv);
+	    freq_step = (stopf - startf) ./  step;
+        
+        for i=1:step
+    	    freq_mid = startf + freq_step * (i-1);
+    	    freq_div = bw_eff ./ sdiv;
+    	    freq_low = freq_mid - bw_eff*0.5;
+            for j=1:sdiv
+        	    f_band((i-1)*sdiv + j) = freq_low + freq_div*(j-1) + freq_div*0.5;
+            end
         end
+     
+    else
+
+        f_band = zeros(1,step ./ abs(sdiv));
+	    freq_step = (stopf - startf) ./ step;
+
+        ii = 1;
+        for i=1:abs(sdiv):step
+    	    freq_mid1 = startf + freq_step * (i-1);
+    	    freq_mid2 = startf + freq_step * (i+abs(sdiv)-2);
+            freq_mid = (freq_mid1 + freq_mid2) * 0.5;
+        	f_band(ii) = freq_mid;
+            ii = ii + 1;
+        end
+
     end
     
 end

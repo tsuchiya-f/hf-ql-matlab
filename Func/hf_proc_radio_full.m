@@ -81,7 +81,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
             n_sum = reshape(n_sum, nf, 3, []);
         end
     else
-        fprintf("***** ERROR : invalid data length\n");
+        fprintf("***** ERROR : invalid data length %d (%d or %d expected)\n", numel(raw_data), len_total, len_total_12);
         pause
     end
 

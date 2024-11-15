@@ -146,11 +146,11 @@ function ret = hf_plot_stokes(st_ctl, spec)
             ylim([-5.0 185.0])
         else
             yyaxis left
-            semilogy(spec.f/1e3, dol,'r.', spec.f/1e3, doc,'g.')
+            semilogx(spec.f/1e3, dol,'r.', spec.f/1e3, doc,'g.')
             ylabel ('Deg. L/C pol.');
             ylim([-1.1 1.1])
             yyaxis right
-            semilogy(spec.f/1e3, ang,'b.')
+            semilogx(spec.f/1e3, ang,'b.')
             ylabel ('Angle pol. axis [deg]');
             ylim([-5.0 185.0])
         end

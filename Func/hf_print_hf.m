@@ -13,14 +13,15 @@ function ret = hf_print_hf(st, st_ctl)
     
     % skip for Ver.1 SW
     if st_ctl.ver == 1.0
+        fprintf('AFSW Version      1,0\n');
+        fprintf('---------------------------------------------------------\n');
         return
     end    
     
-    fprintf('Number of samples %d\n', st.snum);
-    fprintf('Number of steps   %d\n', st.step);
-    fprintf('Decimation        %d\n', st.decimation);
-    fprintf('Pol               %d\n', st.pol);
-
+    ver = [2.0, 3.0, 3.1];
+    fprintf('AFSW Version    %3.1f\n', ver(st.afsw_ver));
+    fprintf('Number of samples %4d    Number of steps %4d\n', st.snum, st.step);
+    fprintf('Decimation        %4d    Pol sync        %4d\n', st.decimation, st.pol);
     if st.n_band == 0
         return; 
     end
@@ -46,5 +47,6 @@ function ret = hf_print_hf(st, st_ctl)
         return; 
     end
     fprintf('Band 4 : %5d %5d %4d %4d %4d\n', st.band4_startf, st.band4_stopf, st.band4_step, st.band4_rept, st.band4_sdiv);    
+    fprintf('---------------------------------------------------------\n');
     
 end

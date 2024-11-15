@@ -52,9 +52,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     ret = hf_rpt_add_figure(st_ctl);
                     
                     if st_ctl.ver > 1
-                        ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        ret = hf_rpt_add_figure(st_ctl);
+                        %ret = hf_plot_power_floor(st_ctl, spec);
+                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_rpt_add_figure(st_ctl);
                     end
                 else
                     ret = hf_plot_power_2ch(st_ctl, spec);
@@ -62,9 +62,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     ret = hf_rpt_add_figure(st_ctl);
                     
                     if st_ctl.ver > 1
-                        ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        ret = hf_rpt_add_figure(st_ctl);
+                        %ret = hf_plot_power_floor(st_ctl, spec);
+                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_rpt_add_figure(st_ctl);
                     end
                 end
             elseif spec.matrix == 1
@@ -74,9 +74,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     ret = hf_rpt_add_figure(st_ctl);
                     
                     if st_ctl.ver > 1
-                        ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        ret = hf_rpt_add_figure(st_ctl);
+                        %ret = hf_plot_power_floor(st_ctl, spec);
+                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_rpt_add_figure(st_ctl);
                     end
                 else
                     ret = hf_plot_stokes_2ch(st_ctl, spec);
@@ -84,9 +84,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     ret = hf_rpt_add_figure(st_ctl);
                     
                     if st_ctl.ver > 1
-                        ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        ret = hf_rpt_add_figure(st_ctl);
+                        %ret = hf_plot_power_floor(st_ctl, spec);
+                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_rpt_add_figure(st_ctl);
                     end
                 end
             else
@@ -95,9 +95,9 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     ret = hf_rpt_add_figure(st_ctl);
                     
                     if st_ctl.ver > 1
-                        ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        ret = hf_rpt_add_figure(st_ctl);
+                        %ret = hf_plot_power_floor(st_ctl, spec);
+                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_rpt_add_figure(st_ctl);
                     end
             end
         

@@ -39,13 +39,28 @@ end
 %-------------------------------------------------------------------------
 function f_band = hf_get_bw(step, sdiv, bw_eff)
 
-    f_band = zeros(1,step * sdiv);
+    if sdiv > 0
+
+        f_band = zeros(1,step * sdiv);
     
-    freq_div = bw_eff / sdiv;
-	for i=1:step
-        for j=1:sdiv
-        	f_band((i-1)*sdiv + j) = freq_div;
+        freq_div = bw_eff / sdiv;
+	    for i=1:step
+            for j=1:sdiv
+        	    f_band((i-1)*sdiv + j) = freq_div;
+            end
         end
+
+    else
+
+        f_band = zeros(1,step / abs(sdiv));
+        freq_div = bw_eff * abs(sdiv);
+
+        ii = 1;
+        for i=1:abs(sdiv):step
+        	f_band(ii) = freq_div;
+            ii = ii + 1;
+        end
+
     end
     
 end
