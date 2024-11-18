@@ -3,12 +3,13 @@ function  [ret, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data)
     ret = 0;
 
     % frequency
-    spec.f = single(st_aux.start_freq + (st_aux.stop_freq - st_aux.start_freq)/(st_aux.sweep_step-1) * [0:st_aux.sweep_step-1]);
+    spec.f = decimate(hf_get_freq_table(ver, st_aux, st_hfa), st_aux.rfi_param3);
+    %spec.f = single(st_aux.start_freq + (st_aux.stop_freq - st_aux.start_freq)/(st_aux.sweep_step-1) * [0:st_aux.sweep_step-1]);
     % conversion factor from ADC value to enginnering value
     % cf = -104.1;    % mean power of ADC value to dBm (for rms data)
     cf = 0.0;
 
-    nf = st_aux.sweep_step;         % number of frequeucy bins 
+    nf = st_hfa.total_step / double(st_aux.rfi_param3);         % number of frequeucy bins 
     nk = 1;
 
     % expected data length

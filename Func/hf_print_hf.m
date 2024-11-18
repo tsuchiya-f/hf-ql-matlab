@@ -19,7 +19,7 @@ function ret = hf_print_hf(st, st_ctl)
     end    
     
     ver = [2.0, 3.0, 3.1];
-    fprintf('AFSW Version    %3.1f\n', ver(st.afsw_ver));
+    fprintf('AFSW Version    %3.1f\n', ver(st.afsw_ver+1));
     fprintf('Number of samples %4d    Number of steps %4d\n', st.snum, st.step);
     fprintf('Decimation        %4d    Pol sync        %4d\n', st.decimation, st.pol);
     if st.n_band == 0
