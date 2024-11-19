@@ -1,5 +1,10 @@
 function st_hfa = hf_add_freq_table(table_id, st_hfa)
 
+    if table_id == 0xFF || table_id == 0x1F
+        return;
+    end
+
+
     switch table_id
 
         case 2

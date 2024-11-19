@@ -4,7 +4,7 @@ function [ret, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data)
 
     % for survey data
     n_time = st_aux.n_sample; 
-    n_freq = st_aux.n_auto_corr; 
+    n_freq = 16; 
     fs     = sample_rate(st_aux.decimation+1);  % sampling rate of decimated waveform [Hz]
 
     % time data [sec]

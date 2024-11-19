@@ -92,8 +92,10 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
                 st.xch_sel    = 1;
             end
             st.cal_ena    = bitand(aux(3),0x01);
-            st.fft_win    = bitshift(bitand(aux(4),0x80),-7);
-            st.rfi_rej_sw = bitshift(bitand(aux(4),0x40),-6);
+            % Sweep table ID
+            st.sweep_table_id  = bitshift(bitand(aux(4),0xf8),-3);
+            st.fft_win    = bitshift(bitand(aux(4),0x04),-2);
+            st.rfi_rej_sw = bitshift(bitand(aux(4),0x02),-1);
             st.n_sample   = uint32(aux(5))*256 + uint32(aux(6));
 
             % Temperature
@@ -106,7 +108,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             
             st.n_block = 1;
 
-        case {st_ctl.sid_pssr3_s, st_ctl.sid_pssr3}
+        case {st_ctl.sid_pssr3_s, st_ctl.sid_pssr3_r}
             % Unique ID
             st.unique_id = uint32(aux(1))*256 + uint32(aux(2));
             % HF header size
@@ -117,7 +119,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.zch_sel     = bitshift(bitand(aux(3),0x02),-1);
             st.cal_ena     = bitand(aux(3),0x01);
 
-            st.n_block    = aux(4);
+            st.n_block    = double(aux(4));
             %st.sweep_step = st.n_block;
 
             st.freq_hi    = double(uint32(aux(5))*256 + uint32(aux(6)));
