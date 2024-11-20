@@ -45,7 +45,7 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
         case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}
             fprintf('FFT window        %d\n', st_aux.fft_win);
             fprintf('RFI rejection     %d\n', st_aux.rfi_rej_sw);
-            fprintf('Data number       %d\n', st_aux.n_sample);
+            fprintf('Number of sample  %d\n', st_aux.n_sample);
         
         case {st_ctl.sid_pssr3_s,  st_ctl.sid_pssr3_r}
             fprintf('Number of block   %d\n', st_aux.n_block);

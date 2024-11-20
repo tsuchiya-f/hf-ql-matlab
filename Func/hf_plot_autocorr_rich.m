@@ -23,9 +23,10 @@ function ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto)
     end
 
     nexttile;
-    semilogy(auto.freq,auto.amp_i,'-o');
-    semilogy(auto.freq,auto.amp_q,'-o');
-    xlabel ('Frequency');
+    semilogy(auto.amp_i,'-o');
+    hold on
+    semilogy(auto.amp_q,'-o');
+    xlabel ('Freq bin');
     ylabel ('Amplitude');
     legend('Amp I','Amp Q')
 

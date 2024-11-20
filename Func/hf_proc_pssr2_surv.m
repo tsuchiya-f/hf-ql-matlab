@@ -4,7 +4,7 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
 
     % for survey data
     n_time = st_aux.n_sample; 
-    n_freq = st_hfa.step+1; 
+    n_freq = st_hfa.total_step; 
     fs     = sample_rate(st_hfa.decimation+1);  % sampling rate of decimated waveform [Hz]
 
     % time data [sec]
@@ -28,7 +28,7 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
         % convert 12-bit minifloat to 4-Byte float
         rdata16 = swapbytes(typecast(uint8(raw_data(1:len)),'uint32'));
         rdata = hf_minifloat_FP16(rdata16);
-        sdata = reshape(rdata(1:n_time*n_freq), n_time, n_freq, []);
+        sdata = reshape(rdata(n_freq*2+1:n_freq*2+n_time*n_freq), n_time, n_freq, []);
     else
         fprintf("***** ERROR : invalid data length %d (%d expected)\n", len, len32);
         pause
@@ -40,7 +40,8 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
     auto.n_time = n_time;
     auto.n_freq = n_freq;
 
-    auto.freq = st_aux.start_freq + [0:(st_aux.sweep_step-1)]*(st_aux.stop_freq - st_aux.start_freq)/(st_aux.sweep_step-1);
-    
+    % frequency
+    auto.freq = hf_get_freq_table(0, st_aux, st_hfa);
+
     
 end

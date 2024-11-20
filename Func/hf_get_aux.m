@@ -120,7 +120,6 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.cal_ena     = bitand(aux(3),0x01);
 
             st.n_block    = double(aux(4));
-            %st.sweep_step = st.n_block;
 
             st.freq_hi    = double(uint32(aux(5))*256 + uint32(aux(6)));
             st.freq_lo    = double(uint32(aux(7))*256 + uint32(aux(8)));
@@ -136,9 +135,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
                 st.skip_reg = st.skip_reg + 1;
             end
 
-            st.n_sample   = aux(13);
-            %st.interval   = bitshift(bitand(aux(3),0x7F),8) + aux(4);
-            %st.n_sample   = bitshift(bitand(aux(7),0xFF),8) + bitshift(bitand(aux(8),0xFF),0);
+            st.n_sample   = double(aux(13));
 
             % Temperature
             value = double(uint16(aux(14)));

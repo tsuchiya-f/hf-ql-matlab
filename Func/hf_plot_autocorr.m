@@ -5,18 +5,18 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
     switch st_rpw.sid
         case {st_ctl.sid_pssr2_s}
             intitle='PSSR2 Survey';
-            n_fig=3;
+            n_fig=4;
             n_tile=n_fig+1;
         
         case {st_ctl.sid_pssr2_r}
             intitle='PSSR2 Rich';
-            n_fig=3;
+            n_fig=4;
             n_tile=n_fig;
 
         case {st_ctl.sid_pssr3_s}
             intitle='PSSR3 Survey';
             n_fig=5;
-            n_tile=n_fig;
+            n_tile=n_fig+1;
     end
     n_plot=auto.n_freq/n_fig;
     
@@ -47,15 +47,27 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
     
     switch st_rpw.sid
         case {st_ctl.sid_pssr2_s}
-         nexttile(n_fig+1);
-         nf = numel(auto.freq);
-        semilogy(auto.freq,abs(auto.auto(1,1:nf)),'-o');
-        hold on
-        semilogy(auto.freq,auto.amp_i,'-o');
-        semilogy(auto.freq,auto.amp_q,'-o');
-        title  ( 'Amplitude @ lag=0' );
-        xlabel ('Frequency');
-        ylabel ('Auto-Corr');
-        legend('Auto-corr','Amp I','Amp Q')
+            nexttile(n_fig+1);
+            nf = numel(auto.freq);
+            semilogy(auto.freq,abs(auto.auto(1,1:nf)),'-o');
+            hold on
+            semilogy(auto.freq,auto.amp_i,'-o');
+            semilogy(auto.freq,auto.amp_q,'-o');
+            title  ( 'Amplitude' );
+            xlabel ('Frequency');
+            ylabel ('Auto-Corr');
+            legend('Auto-corr@lag=0','Amp I','Amp Q')
+
+        case {st_ctl.sid_pssr3_s}
+            nexttile(n_fig+1);
+            nf = numel(auto.freq);
+            semilogy(auto.freq,abs(auto.auto(1,1:nf)),'-o');
+            hold on
+            semilogy(auto.freq,auto.amp_i,'-o');
+            semilogy(auto.freq,auto.amp_q,'-o');
+            title  ( 'Amplitude' );
+            xlabel ('Block No.');
+            ylabel ('Auto-Corr');
+            legend('Auto-corr@lag=0','Amp I','Amp Q')
     end
 end

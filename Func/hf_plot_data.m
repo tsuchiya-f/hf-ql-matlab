@@ -47,58 +47,53 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             [~, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data);
             if spec.matrix == 0
                 if st_ctl.n_ch == 3
+                    if st_ctl.ver > 1
+                        ret = hf_plot_power_floor(st_ctl, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        ret = hf_rpt_add_figure(st_ctl);
+                    end
                     ret = hf_plot_power(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                    ret = hf_rpt_add_figure(st_ctl);
-                    
-                    if st_ctl.ver > 1
-                        %ret = hf_plot_power_floor(st_ctl, spec);
-                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        %ret = hf_rpt_add_figure(st_ctl);
-                    end
+                    ret = hf_rpt_add_figure(st_ctl);                    
                 else
+                    if st_ctl.ver > 1
+                        ret = hf_plot_power_floor(st_ctl, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        ret = hf_rpt_add_figure(st_ctl);
+                    end
                     ret = hf_plot_power_2ch(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
-                    
-                    if st_ctl.ver > 1
-                        %ret = hf_plot_power_floor(st_ctl, spec);
-                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        %ret = hf_rpt_add_figure(st_ctl);
-                    end
-                end
+                                    end
             elseif spec.matrix == 1
                 if st_ctl.n_ch == 3
+                    if st_ctl.ver > 1
+                        ret = hf_plot_power_floor(st_ctl, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        ret = hf_rpt_add_figure(st_ctl);
+                    end
                     ret = hf_plot_stokes(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                    ret = hf_rpt_add_figure(st_ctl);
-                    
+                    ret = hf_rpt_add_figure(st_ctl);                    
+                else                    
                     if st_ctl.ver > 1
-                        %ret = hf_plot_power_floor(st_ctl, spec);
-                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        %ret = hf_rpt_add_figure(st_ctl);
+                        ret = hf_plot_power_floor(st_ctl, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        ret = hf_rpt_add_figure(st_ctl);
                     end
-                else
                     ret = hf_plot_stokes_2ch(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
-                    
-                    if st_ctl.ver > 1
-                        %ret = hf_plot_power_floor(st_ctl, spec);
-                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        %ret = hf_rpt_add_figure(st_ctl);
-                    end
                 end
             else
+                    if st_ctl.ver > 1
+                        ret = hf_plot_power_floor(st_ctl, spec);
+                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        ret = hf_rpt_add_figure(st_ctl);
+                    end
                     ret = hf_plot_stokes_3D(st_ctl, spec);
                     ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
-                    
-                    if st_ctl.ver > 1
-                        %ret = hf_plot_power_floor(st_ctl, spec);
-                        %%ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
-                        %ret = hf_rpt_add_figure(st_ctl);
-                    end
             end
         
         case st_ctl.sid_burst_s   % Radio burst, survey data
