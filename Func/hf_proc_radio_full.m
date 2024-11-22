@@ -136,10 +136,10 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.re_zx = zeros(nf,1); spec.re_zx(:,1)=NaN;
                 spec.im_zx = zeros(nf,1); spec.im_zx(:,1)=NaN;
 
-                idx = find(spec.xx < 0.0);
-                spec.xx(idx) = NaN;
-                spec.yy(idx) = NaN;
-                spec.zz(idx) = NaN;
+                %idx = find(spec.xx < 0.0);
+                %spec.xx(idx) = NaN;
+                %spec.yy(idx) = NaN;
+                %spec.zz(idx) = NaN;
 
                 % auto spectra
                 spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
@@ -161,16 +161,16 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.re_zx = data(:,8);
                 spec.im_zx = data(:,9);
 
-                idx = find(spec.xx < 0.0);
-                spec.xx(idx) = NaN;
-                spec.yy(idx) = NaN;
-                spec.zz(idx) = NaN;
-                spec.re_xy(idx) = NaN;
-                spec.im_xy(idx) = NaN;
-                spec.re_yz(idx) = NaN;
-                spec.im_yz(idx) = NaN;
-                spec.re_zx(idx) = NaN;
-                spec.im_zx(idx) = NaN;
+                %idx = find(spec.xx < 0.0);
+                %spec.xx(idx) = NaN;
+                %spec.yy(idx) = NaN;
+                %spec.zz(idx) = NaN;
+                %spec.re_xy(idx) = NaN;
+                %spec.im_xy(idx) = NaN;
+                %spec.re_yz(idx) = NaN;
+                %spec.im_yz(idx) = NaN;
+                %spec.re_zx(idx) = NaN;
+                %spec.im_zx(idx) = NaN;
 
                 % auto spectra
                 spec.x = 10*log10(spec.xx) + cf;  % [dBm @ ADC input]
@@ -245,21 +245,21 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.z(:,3) = 10*log10(spec.zz(:,3)) + cf;  % [dBm @ ADC input]
                 
                 % set NAN value to invalid data
-                for i=1:3
-                    idx = find(spec.xx(:,i) == 0.0);
-                    spec.xx(idx,i) = NaN;
-                    spec.yy(idx,i) = NaN;
-                    spec.zz(idx,i) = NaN;
-                    spec.re_xy(idx,i) = NaN;
-                    spec.im_xy(idx,i) = NaN;
-                    spec.re_yz(idx,i) = NaN;
-                    spec.im_yz(idx,i) = NaN;
-                    spec.re_zx(idx,i) = NaN;
-                    spec.im_zx(idx,i) = NaN;
-                    spec.x(idx,i) = NaN;
-                    spec.y(idx,i) = NaN;
-                    spec.z(idx,i) = NaN;
-                end
+                %for i=1:3
+                %    idx = find(spec.xx(:,i) == 0.0);
+                %    spec.xx(idx,i) = NaN;
+                %    spec.yy(idx,i) = NaN;
+                %    spec.zz(idx,i) = NaN;
+                %    spec.re_xy(idx,i) = NaN;
+                %    spec.im_xy(idx,i) = NaN;
+                %    spec.re_yz(idx,i) = NaN;
+                %    spec.im_yz(idx,i) = NaN;
+                %    spec.re_zx(idx,i) = NaN;
+                %    spec.im_zx(idx,i) = NaN;
+                %    spec.x(idx,i) = NaN;
+                %    spec.y(idx,i) = NaN;
+                %    spec.z(idx,i) = NaN;
+                %end
 
                 spec.matrix = 1;   % nominal 2D spectral matrix (1)
 
@@ -292,27 +292,27 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.VrVi = data(:,20);
                 spec.WrWi = data(:,21);
 
-                idx = find(spec.UiUi < 0.0);
-                spec.UiUi(idx) = NaN;
-                spec.VrVr(idx) = NaN;
-                spec.ViVi(idx) = NaN;
-                spec.WrWr(idx) = NaN;
-                spec.WiWi(idx) = NaN;
-                spec.UrVr(idx) = NaN;
-                spec.VrWr(idx) = NaN;
-                spec.WrUr(idx) = NaN;
-                spec.UiVi(idx) = NaN;
-                spec.ViWi(idx) = NaN;
-                spec.WiUi(idx) = NaN;
-                spec.UrVi(idx) = NaN;
-                spec.UiVr(idx) = NaN;
-                spec.VrWi(idx) = NaN;
-                spec.ViWr(idx) = NaN;
-                spec.WrUi(idx) = NaN;
-                spec.WiUr(idx) = NaN;
-                spec.UrUi(idx) = NaN;
-                spec.VrVi(idx) = NaN;
-                spec.WrWi(idx) = NaN;
+                %idx = find(spec.UiUi < 0.0);
+                %spec.UiUi(idx) = NaN;
+                %spec.VrVr(idx) = NaN;
+                %spec.ViVi(idx) = NaN;
+                %spec.WrWr(idx) = NaN;
+                %spec.WiWi(idx) = NaN;
+                %spec.UrVr(idx) = NaN;
+                %spec.VrWr(idx) = NaN;
+                %spec.WrUr(idx) = NaN;
+                %spec.UiVi(idx) = NaN;
+                %spec.ViWi(idx) = NaN;
+                %spec.WiUi(idx) = NaN;
+                %spec.UrVi(idx) = NaN;
+                %spec.UiVr(idx) = NaN;
+                %spec.VrWi(idx) = NaN;
+                %spec.ViWr(idx) = NaN;
+                %spec.WrUi(idx) = NaN;
+                %spec.WiUr(idx) = NaN;
+                %spec.UrUi(idx) = NaN;
+                %spec.VrVi(idx) = NaN;
+                %spec.WrWi(idx) = NaN;
 
                 % auto spectra
                 spec.xx = spec.UrUr + spec.UiUi;
@@ -423,15 +423,15 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
                 spec.y(:,3) = 10*log10(spec.yy(:,3)) + cf;  % [dBm @ ADC input]
           
                 % set NAN value to invalid data
-                for i=1:3
-                    idx = find(spec.xx(:,i) < 0.0);
-                    spec.xx(idx,i) = NaN;
-                    spec.yy(idx,i) = NaN;
-                    spec.re_xy(idx,i) = NaN;
-                    spec.im_xy(idx,i) = NaN;
-                    spec.x(idx,i) = NaN;
-                    spec.y(idx,i) = NaN;
-                end
+                %for i=1:3
+                %    idx = find(spec.xx(:,i) < 0.0);
+                %    spec.xx(idx,i) = NaN;
+                %    spec.yy(idx,i) = NaN;
+                %    spec.re_xy(idx,i) = NaN;
+                %    spec.im_xy(idx,i) = NaN;
+                %    spec.x(idx,i) = NaN;
+                %    spec.y(idx,i) = NaN;
+                %end
                 
                 spec.matrix = 1;
 

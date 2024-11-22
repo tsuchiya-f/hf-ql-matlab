@@ -8,7 +8,11 @@
 % data : array of 4-Byte float
 % 
 % ------------------------------------------------
-function [data] = hf_minifloat_FP16(data16)
+function [data] = hf_minifloat16(data16, fill_value)
+
+    if ~exist('fill_value', 'var') 
+        fill_value = 0.0; 
+    end
 
     % set constants
 	s_mask = 0x0800;
@@ -34,19 +38,23 @@ function [data] = hf_minifloat_FP16(data16)
 		src_tmp(2) =           bitand( data16(i),   0x0000FFFF );
 
         for j=1:2
-            sign = double( bitshift( bitand(src_tmp(j), uint32(s_mask) ), -(n_exp + n_man) ) );
-            exp  = double( bitshift( bitand(src_tmp(j), uint32(e_mask) ), -n_man) ) - e_bias;
-            man  = double( bitand( src_tmp(j), uint32(m_mask) ) );
+            if src_tmp(j) == fill_value
+                 f_value = NaN;
+            else
+                sign = double( bitshift( bitand(src_tmp(j), uint32(s_mask) ), -(n_exp + n_man) ) );
+                exp  = double( bitshift( bitand(src_tmp(j), uint32(e_mask) ), -n_man) ) - e_bias;
+                man  = double( bitand( src_tmp(j), uint32(m_mask) ) );
 
-            f_value = 1.0;
-            for k=1:n_man
-                i_man = single( bitand( bitshift( man, -(n_man-k) ), uint32(1) ));
-                f_value = f_value + i_man * 2.0^single(-k);
-            end
-            f_value = f_value * 2.0^single(exp);
+                f_value = 1.0;
+                for k=1:n_man
+                    i_man = single( bitand( bitshift( man, -(n_man-k) ), uint32(1) ));
+                    f_value = f_value + i_man * 2.0^single(-k);
+                end
+                f_value = f_value * 2.0^single(exp);
     	
-            if sign==1
-                f_value = -f_value;
+                if sign==1
+                    f_value = -f_value;
+                end
             end
     	
             ii = int32((i-1)*2+j);

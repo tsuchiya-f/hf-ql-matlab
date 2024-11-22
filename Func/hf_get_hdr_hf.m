@@ -21,6 +21,7 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         st.step = double(uint16(bitshift(hdr(3),1)) + uint16(bitshift(bitand(hdr(4),0x80),-7)));
         st.decimation = double(bitshift(bitand(hdr(4),0x60),-5));
         st.pol = bitshift(bitand(hdr(4),0x10),-4);
+        st.ovf_stat = bitshift(bitand(hdr(4),0x0C), -2);
         st.afsw_ver = bitand(hdr(4),0x03);
         
         st.n_band = int8(len-4)/8;
