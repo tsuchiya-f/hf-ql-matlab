@@ -126,7 +126,6 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
                 st_hfa = hf_add_freq_table(st_aux.sweep_table_id, st_hfa);
             end
 
-
             if st_ctl.ver == 1.0 
                 % add fixed AUX field & HF header for Ver1 SW 
                 [st_aux, st_hfa] = hf_add_hdr_ver1(st_aux, st_hfa, st_rpw, st_ctl);
