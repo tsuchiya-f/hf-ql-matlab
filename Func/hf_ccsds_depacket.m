@@ -98,6 +98,10 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             sz = sz - st_rpw.aux_len;
             % number of available channel
             st_ctl.n_ch = st_aux.xch_sel + st_aux.ych_sel + st_aux.zch_sel;
+            % copy members of AUX field which are used for script control
+            if isfield(st_aux, 'complex_sel') == true
+                st_ctl.complex_sel = st_aux.complex_sel;
+            end
 
             %----------------------------------------
             % Read HF header
