@@ -1,4 +1,4 @@
-function hf_save_data(st_ctl, st_aux)
+function hf_save_data(st_ctl)
 
     global st_data_spec
     global st_data_wave
@@ -15,7 +15,7 @@ function hf_save_data(st_ctl, st_aux)
     sp_y = mean(y_pow,2);
     sp_z = mean(z_pow,2);
 
-    if st_aux.complex_sel == 2
+    if st_ctl.complex_sel == 2
         n_sum = st_data_spec.n_sum;
         n_sum_p = st_data_spec.n_sum_p;
         n_sum_n = st_data_spec.n_sum_n;
@@ -25,7 +25,7 @@ function hf_save_data(st_ctl, st_aux)
     
     file_save = append(filepath, filesep, name, '.mat');
     
-    if st_aux.complex_sel == 2
+    if st_ctl.complex_sel == 2
         save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'n_sum', 'n_sum_p', 'n_sum_n', 'st_data_spec')
     else
         save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'st_data_spec')
