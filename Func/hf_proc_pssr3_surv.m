@@ -1,7 +1,7 @@
 function [ret, auto] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data)
     ret = 0;
 
-    n_time = st_aux.n_sample; 
+    n_time = st_aux.n_lag; 
     n_freq = st_aux.n_block; 
     fs     = sample_rate(st_hfa.decimation+1);  % sampling rate of decimated waveform [Hz]
     n_time_raw=st_hfa.snum;
