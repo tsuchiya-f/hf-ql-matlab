@@ -96,7 +96,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.sweep_table_id  = bitshift(bitand(aux(4),0xf8),-3);
             st.fft_win    = bitshift(bitand(aux(4),0x04),-2);
             st.rfi_rej_sw = bitshift(bitand(aux(4),0x02),-1);
-            st.n_sample   = uint32(aux(5))*256 + uint32(aux(6));
+            st.n_lag   = uint32(aux(5))*256 + uint32(aux(6));
 
             % Temperature
             value = double(uint16(aux(14)));
@@ -135,7 +135,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
                 st.skip_reg = st.skip_reg + 1;
             end
 
-            st.n_sample   = double(aux(13));
+            st.n_lag   = double(aux(13));
 
             % Temperature
             value = double(uint16(aux(14)));

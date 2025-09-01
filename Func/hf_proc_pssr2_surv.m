@@ -3,7 +3,7 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
     ret = 0;
 
     % for survey data
-    n_time = st_aux.n_sample; 
+    n_time = st_aux.n_lag; 
     n_freq = st_hfa.total_step; 
     fs     = sample_rate(st_hfa.decimation+1);  % sampling rate of decimated waveform [Hz]
 
