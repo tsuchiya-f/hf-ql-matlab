@@ -76,7 +76,6 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
         if st_pre.seq_flag == 1 || st_pre.seq_flag == 3
             idx_first = 0;
             
-            fprintf("\n");
             fprintf("=========================================================\n");
 
             %----------------------------------------
@@ -84,12 +83,12 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             %----------------------------------------
             % SW version
             if st_rpw.aux_len == 4
-                st_ctl.ver = 1.0;
+                st_ctl.ver = 1;
             else
-                st_ctl.ver = 2.0;
+                st_ctl.ver = 2;
             end
-            fprintf("SW ver  : %d\n",st_ctl.ver);
-            fprintf("Aux len : %d\n",st_rpw.aux_len);
+            fprintf("SW ver index: %d\n",st_ctl.ver);
+            fprintf("Aux len     : %d\n",st_rpw.aux_len);
 
             % read AUX field
             aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');

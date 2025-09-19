@@ -45,11 +45,11 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
         case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}
             fprintf('FFT window        %d\n', st_aux.fft_win);
             fprintf('RFI rejection     %d\n', st_aux.rfi_rej_sw);
-            fprintf('Number of sample  %d\n', st_aux.n_sample);
+            fprintf('Number of lag     %d\n', st_aux.n_lag);
         
         case {st_ctl.sid_pssr3_s,  st_ctl.sid_pssr3_r}
             fprintf('Number of block   %d\n', st_aux.n_block);
-            fprintf('Number of sample  %d\n', st_aux.n_sample);
+            fprintf('Number of lag     %d\n', st_aux.n_lag);
             fprintf('Freq Hi       0x%04x\n', st_aux.freq_hi);
             fprintf('Freq Lo       0x%04x\n', st_aux.freq_lo);
             fprintf('Center freq (kHz) %d\n', st_aux.center_freq);
