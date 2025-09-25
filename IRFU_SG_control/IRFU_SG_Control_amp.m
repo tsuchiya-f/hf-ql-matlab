@@ -1,5 +1,5 @@
 % connect IRFU VPN before using this SG s\control script
-%fclose(t); clear all;
+clear all;
 
 % set interval [sec]
 interval=30;

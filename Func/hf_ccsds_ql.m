@@ -197,5 +197,6 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     fprintf("\n");
     fprintf("=========================================================\n");
     fprintf("Finished !\n");
+    beep;pause(2);beep;pause(2);beep;
 
 end

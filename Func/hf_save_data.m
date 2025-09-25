@@ -26,9 +26,9 @@ function hf_save_data(st_ctl)
     file_save = append(filepath, filesep, name, '.mat');
     
     if st_ctl.complex_sel == 2
-        save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'n_sum', 'n_sum_p', 'n_sum_n', 'st_data_spec')
+        save(file_save, '-v7.3', 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'n_sum', 'n_sum_p', 'n_sum_n', 'st_data_spec')
     else
-        save(file_save, 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'st_data_spec')
+        save(file_save, '-v7.3', 'freq','x_pow','y_pow','z_pow','time', 'sp_x', 'sp_y', 'sp_z', 'st_data_spec')
     end
 
 end
