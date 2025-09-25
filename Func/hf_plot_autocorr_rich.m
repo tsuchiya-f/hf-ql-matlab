@@ -15,7 +15,8 @@ function ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto)
     for i=1:i_loop
         nexttile;
         intitle = sprintf('Ch:%d %7.1f kHz', i, auto.freq(i));
-        plot(auto.t(2:n), auto.auto(2:n,i), '-');
+        %plot(auto.t(2:n), auto.auto(2:n,i), '-');
+        plot(auto.t(1:n), auto.auto(1:n,i), '-');
         title  ( intitle );
         xlabel ('data number');
 %        xlabel ('Time [sec]');

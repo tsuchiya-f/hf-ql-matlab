@@ -2,13 +2,14 @@
 %fclose(t); clear all;
 
 % set interval [sec]
-interval=10;
-
+interval=30;
+freq_set = 1.5;
+amp_set = [0.01 0.02 0.05 0.1 0.2 0.5 1 2 5 10 20 50 100 200 500];
 % set freqneucy(MHz), amplitude(3-ch, mVpp), and phase (3-ch, degree)
-n_set = 3;
-s(1)=struct('freq', 0.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
-s(2)=struct('freq', 1.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
-s(3)=struct('freq',10.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+n_set = 15;
+for i=1:n_set
+    s(i)=struct('freq', freq_set,'amp_x', amp_set(i),'amp_y', amp_set(i),'amp_z', amp_set(i),'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+end
 
 %--------------------------------------------------------
 
@@ -32,6 +33,8 @@ fprintf(t,':OUTP1:STAT OFF');
 fprintf(t,':OUTP2:STAT OFF');
 fprintf(t,':OUTP1:SYNC:TYPE OFF');
 fprintf(t,':OUTP2:SYNC:TYPE OFF');
+
+pause(interval)
 
 for i = 1:n_set
 
@@ -79,3 +82,6 @@ fprintf(t,':OUTP2:SYNC:TYPE OFF');
 
 fclose(t);
 clear t;
+
+fprintf('----- Fin -----\n');
+beep;pause(2);beep;pause(2);beep;

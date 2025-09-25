@@ -38,10 +38,10 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
 %    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in = '/Users/moxon/Documents/Dropbox/private/sci/mynote/juice/hf/devel/hf-ql-matlab/data/'; end
 %    if ~isfield(st_ctl, 'file_in'); st_ctl.file_in='hf_rawpacket_pssr2.bin';
     % --- for tsuchiya
-    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out    = 'C:\share\Linux\juice_test\'; end
-    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = 'C:\share\Linux\juice_test\'; end
-    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in      = 'C:\share\Linux\juice_test\'; end
-    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in   = 'C:\share\Linux\juice_test\'; end
+    if ~isfield(st_ctl, 'dir_out'); st_ctl.dir_out    = 'C:\Users\tsuchi\Documents\Data\juice_test\'; end
+    if strlength(st_ctl.dir_out) == 0; st_ctl.dir_out = 'C:\Users\tsuchi\Documents\Data\juice_test\'; end
+    if ~isfield(st_ctl, 'dir_in'); st_ctl.dir_in      = 'C:\Users\tsuchi\Documents\Data\juice_test\'; end
+    if strlength(st_ctl.dir_in) == 0; st_ctl.dir_in   = 'C:\Users\tsuchi\Documents\Data\juice_test\'; end
 
     % Default file name (ccsds and report)
     if ~isfield(st_ctl, 'file_out'); st_ctl.file_out = ''; end
