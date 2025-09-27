@@ -36,6 +36,21 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
             st_data_spec.xx_n = transpose(spec.xx(nf*(i-1)+1:nf*i,3));
             st_data_spec.yy_n = transpose(spec.yy(nf*(i-1)+1:nf*i,3));
             st_data_spec.zz_n = transpose(spec.zz(nf*(i-1)+1:nf*i,3));
+
+            st_data_spec.re_xy_p = transpose(spec.re_xy(nf*(i-1)+1:nf*i,2));
+            st_data_spec.im_xy_p = transpose(spec.im_xy(nf*(i-1)+1:nf*i,2));
+            st_data_spec.re_yz_p = transpose(spec.re_yz(nf*(i-1)+1:nf*i,2));
+            st_data_spec.im_yz_p = transpose(spec.im_yz(nf*(i-1)+1:nf*i,2));
+            st_data_spec.re_zx_p = transpose(spec.re_zx(nf*(i-1)+1:nf*i,2));
+            st_data_spec.im_zx_p = transpose(spec.im_zx(nf*(i-1)+1:nf*i,2));
+
+            st_data_spec.re_xy_n = transpose(spec.re_xy(nf*(i-1)+1:nf*i,3));
+            st_data_spec.im_xy_n = transpose(spec.im_xy(nf*(i-1)+1:nf*i,3));
+            st_data_spec.re_yz_n = transpose(spec.re_yz(nf*(i-1)+1:nf*i,3));
+            st_data_spec.im_yz_n = transpose(spec.im_yz(nf*(i-1)+1:nf*i,3));
+            st_data_spec.re_zx_n = transpose(spec.re_zx(nf*(i-1)+1:nf*i,3));
+            st_data_spec.im_zx_n = transpose(spec.im_zx(nf*(i-1)+1:nf*i,3));
+
             st_data_spec.n_sum = transpose(spec.n_sum(nf*(i-1)+1:nf*i,1));
             st_data_spec.n_sum_p = transpose(spec.n_sum(nf*(i-1)+1:nf*i,2));
             st_data_spec.n_sum_n = transpose(spec.n_sum(nf*(i-1)+1:nf*i,3));
@@ -46,6 +61,21 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
             st_data_spec.xx_n = nan_arr;
             st_data_spec.yy_n = nan_arr;
             st_data_spec.zz_n = nan_arr;
+
+            st_data_spec.re_xy_p = nan_arr;
+            st_data_spec.im_xy_p = nan_arr;
+            st_data_spec.re_yz_p = nan_arr;
+            st_data_spec.im_yz_p = nan_arr;
+            st_data_spec.re_zx_p = nan_arr;
+            st_data_spec.im_zx_p = nan_arr;
+
+            st_data_spec.re_xy_n = nan_arr;
+            st_data_spec.im_xy_n = nan_arr;
+            st_data_spec.re_yz_n = nan_arr;
+            st_data_spec.im_yz_n = nan_arr;
+            st_data_spec.re_zx_n = nan_arr;
+            st_data_spec.im_zx_n = nan_arr;
+
             st_data_spec.n_sum = nan_arr;
             st_data_spec.n_sum_p = nan_arr;
             st_data_spec.n_sum_n = nan_arr;
@@ -79,6 +109,20 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
                 st_data_spec.yy_n = [st_data_spec.yy_n; transpose(spec.yy(nf*(i-1)+1:nf*i,3))];
                 st_data_spec.zz_n = [st_data_spec.zz_n; transpose(spec.zz(nf*(i-1)+1:nf*i,3))];
 
+                st_data_spec.re_xy_p = [st_data_spec.re_xy_p; transpose(spec.re_xy(nf*(i-1)+1:nf*i,2))];
+                st_data_spec.im_xy_p = [st_data_spec.im_xy_p; transpose(spec.im_xy(nf*(i-1)+1:nf*i,2))];
+                st_data_spec.re_yz_p = [st_data_spec.re_yz_p; transpose(spec.re_yz(nf*(i-1)+1:nf*i,2))];
+                st_data_spec.im_yz_p = [st_data_spec.im_yz_p; transpose(spec.im_yz(nf*(i-1)+1:nf*i,2))];
+                st_data_spec.re_zx_p = [st_data_spec.re_zx_p; transpose(spec.re_zx(nf*(i-1)+1:nf*i,2))];
+                st_data_spec.im_zx_p = [st_data_spec.im_zx_p; transpose(spec.im_zx(nf*(i-1)+1:nf*i,2))];
+
+                st_data_spec.re_xy_n = [st_data_spec.re_xy_n; transpose(spec.re_xy(nf*(i-1)+1:nf*i,3))];
+                st_data_spec.im_xy_n = [st_data_spec.im_xy_n; transpose(spec.im_xy(nf*(i-1)+1:nf*i,3))];
+                st_data_spec.re_yz_n = [st_data_spec.re_yz_n; transpose(spec.re_yz(nf*(i-1)+1:nf*i,3))];
+                st_data_spec.im_yz_n = [st_data_spec.im_yz_n; transpose(spec.im_yz(nf*(i-1)+1:nf*i,3))];
+                st_data_spec.re_zx_n = [st_data_spec.re_zx_n; transpose(spec.re_zx(nf*(i-1)+1:nf*i,3))];
+                st_data_spec.im_zx_n = [st_data_spec.im_zx_n; transpose(spec.im_zx(nf*(i-1)+1:nf*i,3))];
+
                 st_data_spec.n_sum = [st_data_spec.n_sum; transpose(spec.n_sum(nf*(i-1)+1:nf*i,1))];
                 st_data_spec.n_sum_p = [st_data_spec.n_sum_p; transpose(spec.n_sum(nf*(i-1)+1:nf*i,2))];
                 st_data_spec.n_sum_n = [st_data_spec.n_sum_n; transpose(spec.n_sum(nf*(i-1)+1:nf*i,3))];
@@ -90,6 +134,20 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
                 st_data_spec.xx_n = [st_data_spec.xx_n; nan_arr];
                 st_data_spec.yy_n = [st_data_spec.yy_n; nan_arr];
                 st_data_spec.zz_n = [st_data_spec.zz_n; nan_arr];
+
+                st_data_spec.re_xy_p = [st_data_spec.re_xy_p; nan_arr];
+                st_data_spec.im_xy_p = [st_data_spec.im_xy_p; nan_arr];
+                st_data_spec.re_yz_p = [st_data_spec.re_yz_p; nan_arr];
+                st_data_spec.im_yz_p = [st_data_spec.im_yz_p; nan_arr];
+                st_data_spec.re_zx_p = [st_data_spec.re_zx_p; nan_arr];
+                st_data_spec.im_zx_p = [st_data_spec.im_zx_p; nan_arr];
+
+                st_data_spec.re_xy_n = [st_data_spec.re_xy_n; nan_arr];
+                st_data_spec.im_xy_n = [st_data_spec.im_xy_n; nan_arr];
+                st_data_spec.re_yz_n = [st_data_spec.re_yz_n; nan_arr];
+                st_data_spec.im_yz_n = [st_data_spec.im_yz_n; nan_arr];
+                st_data_spec.re_zx_n = [st_data_spec.re_zx_n; nan_arr];
+                st_data_spec.im_zx_n = [st_data_spec.im_zx_n; nan_arr];
 
                 st_data_spec.n_sum = [st_data_spec.n_sum; nan_arr];
                 st_data_spec.n_sum_p = [st_data_spec.n_sum_p; nan_arr];
@@ -130,6 +188,20 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
                     st_data_spec.yy_n = [st_data_spec.yy_n; transpose(spec.yy(nf*(i-1)+1:nf*i,3))];
                     st_data_spec.zz_n = [st_data_spec.zz_n; transpose(spec.zz(nf*(i-1)+1:nf*i,3))];
 
+                    st_data_spec.re_xy_p = [st_data_spec.re_xy_p; transpose(spec.re_xy(nf*(i-1)+1:nf*i,2))];
+                    st_data_spec.im_xy_p = [st_data_spec.im_xy_p; transpose(spec.im_xy(nf*(i-1)+1:nf*i,2))];
+                    st_data_spec.re_yz_p = [st_data_spec.re_yz_p; transpose(spec.re_yz(nf*(i-1)+1:nf*i,2))];
+                    st_data_spec.im_yz_p = [st_data_spec.im_yz_p; transpose(spec.im_yz(nf*(i-1)+1:nf*i,2))];
+                    st_data_spec.re_zx_p = [st_data_spec.re_zx_p; transpose(spec.re_zx(nf*(i-1)+1:nf*i,2))];
+                    st_data_spec.im_zx_p = [st_data_spec.im_zx_p; transpose(spec.im_zx(nf*(i-1)+1:nf*i,2))];
+
+                    st_data_spec.re_xy_n = [st_data_spec.re_xy_n; transpose(spec.re_xy(nf*(i-1)+1:nf*i,3))];
+                    st_data_spec.im_xy_n = [st_data_spec.im_xy_n; transpose(spec.im_xy(nf*(i-1)+1:nf*i,3))];
+                    st_data_spec.re_yz_n = [st_data_spec.re_yz_n; transpose(spec.re_yz(nf*(i-1)+1:nf*i,3))];
+                    st_data_spec.im_yz_n = [st_data_spec.im_yz_n; transpose(spec.im_yz(nf*(i-1)+1:nf*i,3))];
+                    st_data_spec.re_zx_n = [st_data_spec.re_zx_n; transpose(spec.re_zx(nf*(i-1)+1:nf*i,3))];
+                    st_data_spec.im_zx_n = [st_data_spec.im_zx_n; transpose(spec.im_zx(nf*(i-1)+1:nf*i,3))];
+
                     st_data_spec.n_sum = [st_data_spec.n_sum; transpose(spec.n_sum(nf*(i-1)+1:nf*i,1))];
                     st_data_spec.n_sum_p = [st_data_spec.n_sum_p; transpose(spec.n_sum(nf*(i-1)+1:nf*i,2))];
                     st_data_spec.n_sum_n = [st_data_spec.n_sum_n; transpose(spec.n_sum(nf*(i-1)+1:nf*i,3))];
@@ -140,6 +212,20 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
                     st_data_spec.xx_n = [st_data_spec.xx_n; nan_arr];
                     st_data_spec.yy_n = [st_data_spec.yy_n; nan_arr];
                     st_data_spec.zz_n = [st_data_spec.zz_n; nan_arr];
+
+                    st_data_spec.re_xy_p = [st_data_spec.re_xy_p; nan_arr];
+                    st_data_spec.im_xy_p = [st_data_spec.im_xy_p; nan_arr];
+                    st_data_spec.re_yz_p = [st_data_spec.re_yz_p; nan_arr];
+                    st_data_spec.im_yz_p = [st_data_spec.im_yz_p; nan_arr];
+                    st_data_spec.re_zx_p = [st_data_spec.re_zx_p; nan_arr];
+                    st_data_spec.im_zx_p = [st_data_spec.im_zx_p; nan_arr];
+
+                    st_data_spec.re_xy_n = [st_data_spec.re_xy_n; nan_arr];
+                    st_data_spec.im_xy_n = [st_data_spec.im_xy_n; nan_arr];
+                    st_data_spec.re_yz_n = [st_data_spec.re_yz_n; nan_arr];
+                    st_data_spec.im_yz_n = [st_data_spec.im_yz_n; nan_arr];
+                    st_data_spec.re_zx_n = [st_data_spec.re_zx_n; nan_arr];
+                    st_data_spec.im_zx_n = [st_data_spec.im_zx_n; nan_arr];
 
                     st_data_spec.n_sum = [st_data_spec.n_sum; nan_arr];
                     st_data_spec.n_sum_p = [st_data_spec.n_sum_p; nan_arr];

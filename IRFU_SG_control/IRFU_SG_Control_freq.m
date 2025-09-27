@@ -3,13 +3,16 @@
 
 % set interval [sec]
 interval=30;
-freq_set = 1.5;
-amp_set = [0.01 0.02 0.05 0.1 0.2 0.5 1 2 5 10 20 50 100 200 500];
+amp_set=10.0;
+freq_set = [0.02 0.05 0.1 0.2 0.5 1.1 2.1 5.1 10.1 15.1 20.1 25.1 30.1 35.1 40.1 44.1];
+%freq_set = [0.02 0.05 0.1 0.2 0.5 1.1 2.1 5.1 9.1];
 % set freqneucy(MHz), amplitude(3-ch, mVpp), and phase (3-ch, degree)
-n_set = 15;
+n_set = 16;
+%n_set = 9;
 for i=1:n_set
-    s(i)=struct('freq', freq_set,'amp_x', amp_set(i),'amp_y', amp_set(i),'amp_z', amp_set(i),'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+    s(i)=struct('freq', freq_set(i), 'amp_x', amp_set, 'amp_y', amp_set, 'amp_z', amp_set, 'pha_x', 0.0, 'pha_y', 0.0, 'pha_z', 0.0);
 end
+
 
 %--------------------------------------------------------
 

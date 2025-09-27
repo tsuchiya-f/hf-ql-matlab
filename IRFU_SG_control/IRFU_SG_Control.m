@@ -1,5 +1,5 @@
 % connect IRFU VPN before using this SG s\control script
-clear all;
+%clear all;
 
 % set freqneucy and amplitude
 freq = 0.5; % MHz
@@ -66,3 +66,4 @@ end
 
 fclose(t);
 clear t;
+clear all;
