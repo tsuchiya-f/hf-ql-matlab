@@ -8,7 +8,7 @@ function st_hfa = hf_add_freq_table(table_id, st_hfa)
     switch table_id
 
         case 2
-        % radio full
+        % radio full (new table for FSW ver3, 20kHz-45MHz)
         st_hfa.n_band = 5;
         st_hfa.decimation   = 0;
         st_hfa.band0_startf = 131;
@@ -38,7 +38,7 @@ function st_hfa = hf_add_freq_table(table_id, st_hfa)
         st_hfa.band4_sdiv   = -4;
 
         case 1
-        % radio full
+        % radio full (new table for FSW ver3, 20kHz-40MHz)
         st_hfa.n_band = 5;
         st_hfa.band0_startf = 131;
         st_hfa.band0_stopf  = 575;
@@ -67,7 +67,7 @@ function st_hfa = hf_add_freq_table(table_id, st_hfa)
         st_hfa.band4_sdiv   = -4;
 
         case 0
-        % radio full
+        % radio full (new table for FSW ver2, 20kHz-45MHz)
         st_hfa.n_band = 5;
         st_hfa.band0_startf = 131;
         st_hfa.band0_stopf  = 353;

@@ -2,13 +2,27 @@
 %fclose(t); clear all;
 
 % set interval [sec]
-interval=10;
+interval=30;
+freq_def = 1.5;
+amp_def = 10;
+amp_set = [1 2 5 10 20 50 100 200 500];
+freq_set = [0.02 0.05 0.15 0.35 1.1 3.1 10.1 15.1 20.1 25.1 30.1 35.1 40.1 44.1];
+pha_set = [0 45 90 135 180 225 270 315 0];
 
 % set freqneucy(MHz), amplitude(3-ch, mVpp), and phase (3-ch, degree)
-n_set = 3;
-s(1)=struct('freq', 0.1,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
-s(2)=struct('freq', 1.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
-s(3)=struct('freq',10.0,'amp_x', 10.0,'amp_y', 10.0,'amp_z', 10.0,'pha_x',  0.0,'pha_y',  0.0,'pha_z',  0.0);
+n_set =0;
+for i=1:length(amp_set)
+    n_set = n_set+1;
+    s(n_set)=struct('freq', freq_def, 'amp_x', amp_set(i), 'amp_y', amp_set(i), 'amp_z', amp_set(i), 'pha_x',  0.0, 'pha_y', 0.0, 'pha_z',  0.0);
+end
+for i=1:n_set
+    n_set = n_set+1;
+    s(n_set)=struct('freq', freq_set(i), 'amp_x', amp_def, 'amp_y', amp_def, 'amp_z', amp_def, 'pha_x', 0.0, 'pha_y', 0.0, 'pha_z', 0.0);
+end
+for i=1:n_set
+    n_set = n_set+1;
+    s(n_set)=struct('freq', freq_def,'amp_x', amp_def,'amp_y', amp_def,'amp_z', amp_def,'pha_x',  pha_set(i),'pha_y',  0.0,       'pha_z',  0.0);
+end
 
 %--------------------------------------------------------
 
@@ -20,6 +34,7 @@ if ~exist('t','var')
     % check *IDN
     fprintf(t,'*IDN?');
     res = fscanf(t);
+    
     fprintf('%s',res);
 end
 

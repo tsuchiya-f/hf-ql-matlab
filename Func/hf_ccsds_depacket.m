@@ -36,7 +36,7 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
         % Check HF science data or not
         %----------------------------------------
         if st_pre.pid ~= 77 || st_sec.ser_type ~= 204 
-            fprintf("***** CAUTION : differnt HF science packet is detected. PID(HF:77): %d  TYPE(Sci:204): %d *****\n",st_pre.pid, st_sec.ser_type);
+            fprintf("***** CAUTION : different HF science packet is detected. PID(HF:77): %d  TYPE(Sci:204): %d *****\n",st_pre.pid, st_sec.ser_type);
             % size of data remained
             % (10Byte = sec header(10Byte))
             sz = st_pre.pkt_len + 1 - 10;

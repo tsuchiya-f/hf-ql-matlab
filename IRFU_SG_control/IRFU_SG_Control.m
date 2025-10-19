@@ -2,8 +2,8 @@
 %clear all;
 
 % set freqneucy and amplitude
-freq = 0.5; % MHz
-mvpp = [10, 10, 10] ; % mVpp
+freq = 1.5; % MHz
+mvpp = [10,10, 10] ; % mVpp
 pha  = [0.0, 0.0, 0.0] ; % deg
 sw = 0;  % 1:ON, 0:OFF
 
