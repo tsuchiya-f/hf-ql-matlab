@@ -1,4 +1,19 @@
-function f = hf_get_freq_table(ver, st_aux, st_hfa)
+function f = hf_get_freq_table(ver, st_aux, st_hfa, sid)
+
+%-----------------------------------
+%   SID for SW ver.2 & later
+%-----------------------------------
+%    st_ctl.sid_raw     = 0x42;
+%    st_ctl.sid_full    = 0x43;
+%    st_ctl.sid_burst_s = 0x44;
+%    st_ctl.sid_pssr1_s = 0x45 (69);
+%    st_ctl.sid_pssr2_s = 0x46;
+%    st_ctl.sid_pssr3_s = 0x47;
+%    st_ctl.sid_burst_r = 0x64;
+%    st_ctl.sid_pssr1_r = 0x65;
+%    st_ctl.sid_pssr2_r = 0x66;
+%    st_ctl.sid_pssr3_r = 0x67;
+% 
 
      % Bandwidth [kHz]
      switch st_hfa.decimation
@@ -11,8 +26,30 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa)
     bw_eff = bw * 0.75; 
 
     f = [];
-%    switch st_aux.sweep_table_id
-%        case {0x1f, 0xff}
+    switch sid
+        case st_ctl.sid_pssr1_r
+            sdiv = st_hfa.snum/4*3;
+            % band 0
+            f_band = hf_get_band(st_hfa.band0_startf, st_hfa.band0_stopf, st_hfa.band0_step, sdiv, bw_eff);
+            f = [f, f_band];
+            if st_hfa.n_band == 1; return; end
+            % band 1
+            f_band = hf_get_band(st_hfa.band1_startf, st_hfa.band1_stopf, st_hfa.band1_step, sdiv, bw_eff);
+            f = [f, f_band];
+            if st_hfa.n_band == 2; return; end
+            % band 2
+            f_band = hf_get_band(st_hfa.band2_startf, st_hfa.band2_stopf, st_hfa.band2_step, sdiv, bw_eff);
+            f = [f, f_band];
+            if st_hfa.n_band == 3; return; end
+            % band 3
+            f_band = hf_get_band(st_hfa.band3_startf, st_hfa.band3_stopf, st_hfa.band3_step, sdiv, bw_eff);
+            f = [f, f_band];
+            if st_hfa.n_band == 4; return; end
+            % band 4
+            f_band = hf_get_band(st_hfa.band4_startf, st_hfa.band4_stopf, st_hfa.band4_step, sdiv, bw_eff);
+            f = [f, f_band];            
+
+        otherwise
             % band 0
             f_band = hf_get_band(st_hfa.band0_startf, st_hfa.band0_stopf, st_hfa.band0_step, st_hfa.band0_sdiv, bw_eff);
             f = [f, f_band];
@@ -32,7 +69,7 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa)
             % band 4
             f_band = hf_get_band(st_hfa.band4_startf, st_hfa.band4_stopf, st_hfa.band4_step, st_hfa.band4_sdiv, bw_eff);
             f = [f, f_band];            
-%    end
+    end
     
 end
 

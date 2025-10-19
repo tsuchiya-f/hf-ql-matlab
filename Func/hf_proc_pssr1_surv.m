@@ -3,7 +3,7 @@ function  [ret, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data)
     ret = 0;
 
     % frequency
-    spec.f = decimate(hf_get_freq_table(ver, st_aux, st_hfa), st_aux.rfi_param3);
+    spec.f = decimate(hf_get_freq_table(ver, st_aux, st_hfa, st_ctl.sid_pssr1_r), (st_aux.rfi_param2*256 + st_aux.rfi_param3));
     %spec.f = single(st_aux.start_freq + (st_aux.stop_freq - st_aux.start_freq)/(st_aux.sweep_step-1) * [0:st_aux.sweep_step-1]);
     % conversion factor from ADC value to enginnering value
     % cf = -104.1;    % mean power of ADC value to dBm (for rms data)

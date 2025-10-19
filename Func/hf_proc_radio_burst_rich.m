@@ -3,7 +3,7 @@ function  [ret, spec] = hf_proc_radio_burst_rich(st_ctl, st_aux, st_hfa, raw_dat
     ret = 0;
 
     % frequency
-    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa);
+    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa, st_ctl.sid_burst_r);
     
     % conversion factor from ADC value to enginnering value
     %cf = -104.1;    % mean power of ADC value to dBm (for rms data)

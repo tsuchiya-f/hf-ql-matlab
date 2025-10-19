@@ -14,7 +14,7 @@ function  [ret, spec] = hf_proc_raw_ver1_corrected(ver, st_ctl, st_aux, st_hfa, 
     ret = 0;
     
     % freqneucy table
-    spec.f = hf_get_freq_table(ver, st_aux, st_hfa);
+    spec.f = hf_get_freq_table(ver, st_aux, st_hfa, st_ctl.sid_raw);
     fprintf('freq[1]: %f / freq[%d]: %f / %d\n', spec.f(1), numel(spec.f), spec.f(numel(spec.f)), st_hfa.step + 1);
 
     % put data to the data pool

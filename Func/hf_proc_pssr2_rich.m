@@ -33,7 +33,7 @@ function [ret, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data)
     end
     
     % frequency
-    freq = hf_get_freq_table(0, st_aux, st_hfa);
+    freq = hf_get_freq_table(0, st_aux, st_hfa, st_ctl.sid_pssr2_r);
     
     auto.amp_i  = rdata(1:n_freq);                % rms amplitude of I waveform
     auto.amp_q  = rdata(n_freq+1:n_freq*2);       % rms amplitude of Q waveform

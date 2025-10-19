@@ -3,7 +3,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
     ret = 0;
 
     % frequency
-    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa);
+    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa, st_ctl.sid_full);
     
     % conversion factor from ADC value to enginnering value
     cf = st_ctl.cf;    % mean power of ADC value to dBm (for rms data)
