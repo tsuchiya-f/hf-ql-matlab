@@ -3,14 +3,15 @@ function  [ret, spec] = hf_proc_pssr1_rich(ver, st_aux, st_hfa, raw_data)
     ret = 0;
 
     % frequency
-    spec.f = hf_get_freq_table(ver, st_aux, st_hfa, st_ctl.sid_pssr1_r);
+    sid = 0x65;
+    spec.f = hf_get_freq_table(ver, st_aux, st_hfa, sid);
     % conversion factor from ADC value to enginnering value
     % cf = -104.1;    % mean power of ADC value to dBm (for rms data)
     cf = 0.0;
     % spectram data
     data = swapbytes(typecast(uint8(raw_data),'single'));
     
-    nf = st_hfa.total_step;         % number of frequeucy bins 
+    nf = length(spec.f);         % number of frequeucy bins 
 
     % number of available channel (only 2ch mode for PSSR1)
     switch st_aux.complex_sel       % number of data set

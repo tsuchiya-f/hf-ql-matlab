@@ -27,8 +27,11 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa, sid)
 
     f = [];
     switch sid
-        case st_ctl.sid_pssr1_r
-            sdiv = st_hfa.snum/4*3;
+        case {0x65, 0x45}
+            sdiv = double(int16((st_hfa.snum+1)/4*3));
+            if sid == 0x45
+               sdiv = sdiv/double(st_aux.rfi_param2*256 + st_aux.rfi_param3);
+            end
             % band 0
             f_band = hf_get_band(st_hfa.band0_startf, st_hfa.band0_stopf, st_hfa.band0_step, sdiv, bw_eff);
             f = [f, f_band];
@@ -78,7 +81,7 @@ function f_band = hf_get_band(startf, stopf, step, sdiv, bw_eff)
 
     if sdiv > 0
     
-        f_band = zeros(1,step * sdiv);
+        f_band = zeros(1,step * sdiv, 'double');
 	    freq_step = (stopf - startf) ./  step;
         
         for i=1:step

@@ -41,7 +41,8 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
     auto.n_freq = n_freq;
 
     % frequency
-    auto.freq = hf_get_freq_table(0, st_aux, st_hfa, st_ctl.sid_pssr2_s);
+    sid = 0x46;
+    auto.freq = hf_get_freq_table(0, st_aux, st_hfa, sid);
 
     
 end

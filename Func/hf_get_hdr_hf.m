@@ -28,10 +28,10 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         
         if len < 5; return; end
         
-        st.band0_startf = bitshift(hdr(5),8) + hdr(6);
-        st.band0_stopf  = bitshift(hdr(7),8) + hdr(8);
-        st.band0_step   = bitshift(hdr(9),8) + hdr(10);
-        st.band0_rept   = hdr(11);
+        st.band0_startf = double(bitshift(hdr(5),8) + hdr(6));
+        st.band0_stopf  = double(bitshift(hdr(7),8) + hdr(8));
+        st.band0_step   = double(bitshift(hdr(9),8) + hdr(10));
+        st.band0_rept   = double(hdr(11));
         st.band0_sdiv   = double(typecast(uint8(hdr(12)),'int8'));
         if st.band0_sdiv >= 0
             st.total_step   = st.total_step + st.band0_step * st.band0_sdiv;
@@ -40,10 +40,10 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         end
         if st.n_band == 1; return; end
         
-        st.band1_startf = bitshift(hdr(13),8) + hdr(14);
-        st.band1_stopf  = bitshift(hdr(15),8) + hdr(16);
-        st.band1_step   = bitshift(hdr(17),8) + hdr(18);
-        st.band1_rept   = hdr(19);
+        st.band1_startf = double(bitshift(hdr(13),8) + hdr(14));
+        st.band1_stopf  = double(bitshift(hdr(15),8) + hdr(16));
+        st.band1_step   = double(bitshift(hdr(17),8) + hdr(18));
+        st.band1_rept   = double(hdr(19));
         st.band1_sdiv   = double(typecast(uint8(hdr(20)),'int8'));
         if st.band1_sdiv >= 0
             st.total_step   = st.total_step + st.band1_step * st.band1_sdiv;
@@ -52,10 +52,10 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         end
         if st.n_band == 2; return; end
 
-        st.band2_startf = bitshift(hdr(21),8) + hdr(22);
-        st.band2_stopf  = bitshift(hdr(23),8) + hdr(24);
-        st.band2_step   = bitshift(hdr(25),8) + hdr(26);
-        st.band2_rept   = hdr(27);
+        st.band2_startf = double(bitshift(hdr(21),8) + hdr(22));
+        st.band2_stopf  = double(bitshift(hdr(23),8) + hdr(24));
+        st.band2_step   = double(bitshift(hdr(25),8) + hdr(26));
+        st.band2_rept   = double(hdr(27));
         st.band2_sdiv   = double(typecast(uint8(hdr(28)),'int8'));
         if st.band2_sdiv >= 0
             st.total_step   = st.total_step + st.band2_step * st.band2_sdiv;
@@ -64,10 +64,10 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         end
         if st.n_band == 3; return; end
 
-        st.band3_startf = bitshift(hdr(29),8) + hdr(30);
-        st.band3_stopf  = bitshift(hdr(31),8) + hdr(32);
-        st.band3_step   = bitshift(hdr(33),8) + hdr(34);
-        st.band3_rept   = hdr(35);
+        st.band3_startf = double(bitshift(hdr(29),8) + hdr(30));
+        st.band3_stopf  = double(bitshift(hdr(31),8) + hdr(32));
+        st.band3_step   = double(bitshift(hdr(33),8) + hdr(34));
+        st.band3_rept   = double(hdr(35));
         st.band3_sdiv   = double(typecast(uint8(hdr(36)),'int8'));
         if st.band3_sdiv >= 0
             st.total_step   = st.total_step + st.band3_step * st.band3_sdiv;
@@ -76,10 +76,10 @@ function [st] = hf_get_hdr_hf(hdr, len, ver)
         end
         if st.n_band == 4; return; end
 
-        st.band4_startf = bitshift(hdr(37),8) + hdr(38);
-        st.band4_stopf  = bitshift(hdr(39),8) + hdr(40);
-        st.band4_step   = bitshift(hdr(41),1) + hdr(42);
-        st.band4_rept   = hdr(43);
+        st.band4_startf = double(bitshift(hdr(37),8) + hdr(38));
+        st.band4_stopf  = double(bitshift(hdr(39),8) + hdr(40));
+        st.band4_step   = double(bitshift(hdr(41),1) + hdr(42));
+        st.band4_rept   = double(hdr(43));
         st.band4_sdiv   = double(typecast(uint8(hdr(44)),'int8'));
         if st.band4_sdiv >= 0
             st.total_step   = st.total_step + st.band4_step * st.band4_sdiv;

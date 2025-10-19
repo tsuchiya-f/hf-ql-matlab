@@ -3,13 +3,15 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
     ret = 0;
 
     % frequency
-    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa, st_ctl.sid_full);
+    sid = 0x43;
+    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa, sid);
     
     % conversion factor from ADC value to enginnering value
     cf = st_ctl.cf;    % mean power of ADC value to dBm (for rms data)
     
     % data format (size)
-    nf = st_hfa.total_step;         % number of frequeucy bins
+    %nf = st_hfa.total_step;         % number of frequeucy bins
+    nf = length(spec.f);         % number of frequeucy bins 
 
     % number of available channel
     n_ch = st_ctl.n_ch;

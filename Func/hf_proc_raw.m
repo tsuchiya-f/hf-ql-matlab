@@ -22,7 +22,8 @@ function  [ret, spec, wave, spec_hres] = hf_proc_raw(ver, st_ctl, st_aux, st_hfa
     wave.t = linspace(0,st_hfa.snum,st_hfa.snum+1) * ts;
     
     % freqneucy table
-    spec.f = hf_get_freq_table(ver, st_aux, st_hfa, st_ctl.sid_raw);
+    sid = 0x42;
+    spec.f = hf_get_freq_table(ver, st_aux, st_hfa, sid);
     fprintf('freq[1]: %f / freq[%d]: %f / %d\n', spec.f(1), numel(spec.f), spec.f(numel(spec.f)), st_hfa.step + 1);
 
     rawData = swapbytes(typecast(uint8(raw_data),'int16'));
