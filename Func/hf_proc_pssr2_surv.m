@@ -25,7 +25,7 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
         % 4-Byte float
 %        rdata = swapbytes(typecast(uint8(raw_data(1:len)),'single'));
 %        sdata = reshape(rdata, n_time, n_freq, []);
-        % convert 12-bit minifloat to 4-Byte float
+        % convert 16-bit minifloat to 4-Byte float
         rdata16 = swapbytes(typecast(uint8(raw_data(1:len)),'uint32'));
         rdata = hf_minifloat_FP16(rdata16);
         sdata = reshape(rdata(n_freq*2+1:n_freq*2+n_time*n_freq), n_time, n_freq, []);

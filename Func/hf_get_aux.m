@@ -71,7 +71,6 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             value = double(uint16(aux(16)));
             st.temp_hf  = value - 55.0;
 
-
         case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}
             % Unique ID
             st.unique_id = uint32(aux(1))*256 + uint32(aux(2));
@@ -97,6 +96,11 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.fft_win    = bitshift(bitand(aux(4),0x04),-2);
             st.rfi_rej_sw = bitshift(bitand(aux(4),0x02),-1);
             st.n_lag   = uint32(aux(5))*256 + uint32(aux(6));
+
+            st.rfi_param0  = aux(9);
+            st.rfi_param1  = aux(10);
+            st.rfi_param2  = aux(11);
+            st.rfi_param3  = aux(12);
 
             % Temperature
             value = double(uint16(aux(14)));
