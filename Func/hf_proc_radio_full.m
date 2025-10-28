@@ -70,7 +70,7 @@ function  [ret, spec] = hf_proc_radio_full(st_ctl, st_aux, st_hfa, raw_data)
         % convert 12-bit minifloat to 4-Byte float
         fprintf("***** Convert 12-bit mini-float\n");
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
-        data = hf_minifloat16(data12);
+        data = hf_minifloat16(data12) * st_ctl.level_bias;
         
 %        oldFmt = format("hex");
 %        data12(1)

@@ -1,4 +1,4 @@
-function [ret, auto, wave, spec] = hf_proc_pssr3_surv_raw(ver, st_aux, st_hfa, raw_data)
+function [ret, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa, raw_data)
     ret = 0;
 
     len=length(raw_data);
@@ -11,7 +11,7 @@ function [ret, auto, wave, spec] = hf_proc_pssr3_surv_raw(ver, st_aux, st_hfa, r
     % for amplitude data
     len_amp = n_freq * 2;
     amp_data16 = swapbytes(typecast(uint8(raw_data(1:len_amp)),'uint32'));
-    amp_data = hf_minifloat_FP16(amp_data16);
+    amp_data = hf_minifloat_FP16(amp_data16) * st_ctl.level_bias_pssr2;
 
     auto.n_freq = n_freq;
     auto.freq = 1:n_freq;                       % block No.

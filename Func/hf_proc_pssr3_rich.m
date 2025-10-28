@@ -1,4 +1,4 @@
-function [ret, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data)
+function [ret, wave, spec] = hf_proc_pssr3_rich(st_ctl, st_aux, st_hfa, raw_data)
 
     ret = 0;
     sample_rate = [296000 148000 74000 37000];

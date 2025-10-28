@@ -1,4 +1,4 @@
-function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
+function ret = hf_store_save_data(sid, st_ctl, st_aux, st_time, spec)
 
     global st_data_spec
     global st_data_wave
@@ -8,7 +8,42 @@ function ret = hf_store_save_data(st_ctl, st_aux, st_time, spec)
     nf = numel(spec.f) / nb;
 
     nan_arr = zeros(nf);   nan_arr(:)=NaN;
-        
+
+    % save latest power spectrum
+    switch sid
+       
+        case {st_ctl.sid_raw, st_ctl.sid_full, st_ctl.sid_burst_s}
+            freq = spec.f(1:nf);
+            x = spec.x(1:nf);
+            y = spec.y(1:nf);
+            z = spec.z(1:nf);
+            [filepath,name,ext] = fileparts(st_ctl.wfile);
+            file_save = append(filepath, filesep, name, '_SID', string(dec2hex(sid)), '_surv.mat');    
+            save(file_save, '-v7.3', 'freq','x','y','z')
+
+        case {st_ctl.sid_pssr1_s}
+            freq = spec.f(1:nf);
+            x = spec.x(1:nf);
+            y = spec.y(1:nf);
+            z = spec.z(1:nf);
+            [filepath,name,ext] = fileparts(st_ctl.wfile);
+            file_save = append(filepath, filesep, name, '_SID', string(dec2hex(sid)), '_surv.mat');    
+            save(file_save, '-v7.3', 'freq','x','y','z')
+
+        case {st_ctl.sid_burst_r, st_ctl.sid_pssr1_r}
+            freq = spec.f(1:nf);
+            x = spec.x(1:nf);
+            y = spec.y(1:nf);
+            z = spec.z(1:nf);
+            [filepath,name,ext] = fileparts(st_ctl.wfile);
+            file_save = append(filepath, filesep, name, '_SID', string(dec2hex(sid)), '_rich.mat');    
+            save(file_save, '-v7.3', 'freq','x','y','z')
+    end
+
+    if sid == st_ctl.sid_pssr1_s;  return; end
+    if sid == st_ctl.sid_pssr1_r;  return; end
+    if sid == st_ctl.sid_burst_s;  return; end
+    
     if st_data_spec.nf == -1
         % the first data
         i=1;

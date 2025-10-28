@@ -18,7 +18,7 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
             n_fig=5;
             n_tile=n_fig+1;
     end
-    n_plot=auto.n_freq/n_fig;
+    n_plot=int8(auto.n_freq/n_fig);
     
     % set display layout
     fig=figure(st_ctl.hf);
@@ -49,25 +49,19 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
         case {st_ctl.sid_pssr2_s}
             nexttile(n_fig+1);
             nf = numel(auto.freq);
-            semilogy(auto.freq,abs(auto.auto(1,1:nf)),'-o');
-            hold on
             semilogy(auto.freq,auto.amp_i,'-o');
-            semilogy(auto.freq,auto.amp_q,'-o');
             title  ( 'Amplitude' );
             xlabel ('Frequency');
             ylabel ('Auto-Corr');
-            legend('Auto-corr@lag=0','Amp I','Amp Q')
+            legend('Amp I')
 
         case {st_ctl.sid_pssr3_s}
             nexttile(n_fig+1);
             nf = numel(auto.freq);
-            semilogy(auto.freq,abs(auto.auto(1,1:nf)),'-o');
-            hold on
             semilogy(auto.freq,auto.amp_i,'-o');
-            semilogy(auto.freq,auto.amp_q,'-o');
             title  ( 'Amplitude' );
             xlabel ('Block No.');
             ylabel ('Auto-Corr');
-            legend('Auto-corr@lag=0','Amp I','Amp Q')
+            legend('Amp I')
     end
 end

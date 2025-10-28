@@ -25,10 +25,11 @@ function ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto)
 
     nexttile;
     semilogy(auto.amp_i,'-o');
-    hold on
-    semilogy(auto.amp_q,'-o');
     xlabel ('Freq bin');
     ylabel ('Amplitude');
-    legend('Amp I','Amp Q')
+    legend('Amp I')
+    [dmax,imax] = max(auto.amp_i);
+    p_freq = auto.freq(imax);
+    title(['Peak at　' num2str(p_freq/1000,'%0.3f') 'MHz [' num2str(dmax') ']']);
 
 end

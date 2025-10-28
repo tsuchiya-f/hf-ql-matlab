@@ -35,7 +35,7 @@ function  [ret, spec] = hf_proc_radio_burst_rich(st_ctl, st_aux, st_hfa, raw_dat
     elseif numel(raw_data) == len_12
         % convert 12-bit minifloat to 4-Byte float
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
-        data = hf_minifloat16(data12);
+        data = hf_minifloat16(data12) * st_ctl.level_bias;
     else
         fprintf("***** ERROR : invalid data length\n");
         pause

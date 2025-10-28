@@ -1,4 +1,4 @@
-function hf_save_data(st_ctl)
+function hf_save_data(sid, st_ctl)
 
     global st_data_spec
     global st_data_wave

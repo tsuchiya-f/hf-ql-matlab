@@ -1,4 +1,4 @@
-function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
+function [ret, auto] = hf_proc_pssr2_surv(st_ctl, st_aux, st_hfa, raw_data)
 
     ret = 0;
 
@@ -28,6 +28,7 @@ function [ret, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data)
         % convert 16-bit minifloat to 4-Byte float
         rdata16 = swapbytes(typecast(uint8(raw_data(1:len)),'uint32'));
         rdata = hf_minifloat_FP16(rdata16);
+        rdata(1:n_freq*2) = rdata(1:n_freq*2) * st_ctl.level_bias_pssr2;
         sdata = reshape(rdata(n_freq*2+1:n_freq*2+n_time*n_freq), n_time, n_freq, []);
     else
         fprintf("***** ERROR : invalid data length %d (%d expected)\n", len, len32);

@@ -1,10 +1,10 @@
-function  [ret, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data)
+function  [ret, spec] = hf_proc_pssr1_surv(st_ctl, st_aux, st_hfa, raw_data)
 
     ret = 0;
 
     % frequency
     sid = 0x45;
-    spec.f = hf_get_freq_table(ver, st_aux, st_hfa, sid);
+    spec.f = hf_get_freq_table(st_ctl.ver, st_aux, st_hfa, sid);
     % conversion factor from ADC value to enginnering value
     % cf = -104.1;    % mean power of ADC value to dBm (for rms data)
     cf = 0.0;
@@ -25,7 +25,7 @@ function  [ret, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data)
     elseif numel(raw_data) == len_12
         % convert 12-bit minifloat to 4-Byte float
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
-        data = hf_minifloat16(data12);
+        data = hf_minifloat16(data12) * st_ctl.level_bias;
     else
         fprintf("***** ERROR : invalid data length\n");
         pause

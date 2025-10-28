@@ -13,7 +13,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                 [ret_proc, spec] = hf_proc_raw_ver1_corrected(ver, st_ctl, st_aux, st_hfa, raw_data);
                 if ret_proc == 0
                     ret = hf_plot_power(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
                 elseif ret_proc < -1
                     ret = -1;
@@ -26,7 +26,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                     ret = hf_rpt_add_figure(st_ctl);
 
                     ret = hf_plot_power(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
 
                     st_ctl_hres.power_unit = 'relative power [dB]';
@@ -49,50 +49,50 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                 if st_ctl.n_ch == 3
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                     ret = hf_plot_power(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);                    
                 else
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                     ret = hf_plot_power_2ch(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
                                     end
             elseif spec.matrix == 1
                 if st_ctl.n_ch == 3
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                     ret = hf_plot_stokes(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);                    
                 else                    
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                     ret = hf_plot_stokes_2ch(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
                 end
             else
                     if st_ctl.ver > 1
                         ret = hf_plot_power_floor(st_ctl, spec);
-                        %ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                        %ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                         ret = hf_rpt_add_figure(st_ctl);
                     end
                     ret = hf_plot_stokes_3D(st_ctl, spec);
-                    ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+                    ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
                     ret = hf_rpt_add_figure(st_ctl);
             end
         
@@ -105,25 +105,25 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             else
                 ret = hf_plot_stokes(st_ctl, spec);
             end
-            %ret = hf_store_save_data(st_ctl, st_time, spec);
+            ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
             ret = hf_rpt_add_figure(st_ctl);
             
         case st_ctl.sid_pssr1_s   % PSSR1, survey data
             fprintf('SID:%02x PSSR1 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 8: PSSR1 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            [~, spec] = hf_proc_pssr1_surv(ver, st_aux, st_hfa, raw_data);
+            [~, spec] = hf_proc_pssr1_surv(st_ctl, st_aux, st_hfa, raw_data);
             ret = hf_plot_power_1ch(st_ctl, spec);
-            %ret = hf_store_save_data(st_ctl, st_time, spec);
+            ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
             ret = hf_rpt_add_figure(st_ctl);
         
         case st_ctl.sid_pssr2_s   % PSSR2, survey data
             fprintf('SID:%02x PSSR2 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 9: PSSR2 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
             if st_aux.rfi_param0 ~= 255
-                [~, auto] = hf_proc_pssr2_surv_v2(ver, st_aux, st_hfa, raw_data);
+                [~, auto] = hf_proc_pssr2_surv_v2(st_ctl, st_aux, st_hfa, raw_data);
                 ret = hf_plot_autocorr_surv_v2(st_rpw, st_ctl, auto);
             else
-                [~, auto] = hf_proc_pssr2_surv(ver, st_aux, st_hfa, raw_data);
+                [~, auto] = hf_proc_pssr2_surv(st_ctl, st_aux, st_hfa, raw_data);
                 ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
             end
             ret = hf_rpt_add_figure(st_ctl);
@@ -133,10 +133,10 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             if st_ctl.ver > 1
                 st_ctl.label = ['HF Config 10: PSSR3 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
                 if st_aux.unique_id == 0x4F0A
-                    [~, auto] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data);
+                    [~, auto] = hf_proc_pssr3_surv(st_ctl, st_aux, st_hfa, raw_data);
                     ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
                 elseif st_aux.unique_id == 0x4F0C
-                    [~, auto, wave, spec] = hf_proc_pssr3_surv_raw(ver, st_aux, st_hfa, raw_data);
+                    [~, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa, raw_data);
 %                    ret = hf_plot_pssr3_surv_raw(st_rpw, st_ctl, auto, wave, spec);
                 end
                 ret = hf_rpt_add_figure(st_ctl);
@@ -153,21 +153,21 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             else
                 ret = hf_plot_stokes(st_ctl, spec);
             end
-            ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+            ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
             ret = hf_rpt_add_figure(st_ctl);
         
         case st_ctl.sid_pssr1_r   % PSSR1, rich data
             fprintf('SID:%02x PSSR1 (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 8: PSSR1 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            [~, spec] = hf_proc_pssr1_rich(ver, st_aux, st_hfa, raw_data);
+            [~, spec] = hf_proc_pssr1_rich(st_ctl, st_aux, st_hfa, raw_data);
             ret = hf_plot_power_2ch(st_ctl, spec);
-%            ret = hf_store_save_data(st_ctl, st_aux, st_time, spec);
+            ret = hf_store_save_data(st_rpw.sid, st_ctl, st_aux, st_time, spec);
             ret = hf_rpt_add_figure(st_ctl);
             
         case st_ctl.sid_pssr2_r   % PSSR2, rich data
             fprintf('SID:%02x PSSR2 (rich data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 9: PSSR2 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            [~, auto] = hf_proc_pssr2_rich(ver, st_aux, st_hfa, raw_data);
+            [~, auto] = hf_proc_pssr2_rich(st_ctl, st_aux, st_hfa, raw_data);
 %            ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
             ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto);
             ret = hf_rpt_add_figure(st_ctl);
@@ -176,7 +176,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             fprintf('SID:%02x PSSR3 (rich data)\n', st_rpw.sid);
             if st_ctl.ver > 1
                 st_ctl.label = ['HF Config 10: PSSR3 (rich data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-                [~, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data);
+                [~, wave, spec] = hf_proc_pssr3_rich(st_ctl, st_aux, st_hfa, raw_data);
                 ret = hf_plot_waveform_power(st_ctl, wave, spec);
                 ret = hf_rpt_add_figure(st_ctl);
             else
@@ -187,7 +187,7 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             fprintf('SID:%02x PSSR3_v1 (rich data)\n', st_rpw.sid);
             if st_ctl.ver > 1
                 st_ctl.label = ['HF Config 10: PSSR3 (rich data) V1 / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-                [~, wave, spec] = hf_proc_pssr3_rich(ver, st_aux, st_hfa, raw_data);
+                [~, wave, spec] = hf_proc_pssr3_rich(st_ctl, st_aux, st_hfa, raw_data);
                 ret = hf_plot_waveform_power(st_ctl, wave, spec);
                 ret = hf_rpt_add_figure(st_ctl);
             else

@@ -18,6 +18,10 @@ function    [st_ctl] = hf_init_struct(st_ctl)
         st_ctl.wfile  = append(st_ctl.dir_in, filesep, st_ctl.file_in);
     end
 
+    % Level adjustment
+    st_ctl.level_bias  = 1.0e3;
+    st_ctl.level_bias_pssr2    = 1.0e7;
+
     % Definition of SID
     st_ctl.sid_raw     = 0x42;
     st_ctl.sid_full    = 0x43;

@@ -1,4 +1,4 @@
-function [ret, auto] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data)
+function [ret, auto] = hf_proc_pssr3_surv(st_ctl, st_aux, st_hfa, raw_data)
     ret = 0;
 
     n_time = st_aux.n_lag; 
@@ -17,13 +17,13 @@ function [ret, auto] = hf_proc_pssr3_surv(ver, st_aux, st_hfa, raw_data)
     len=length(raw_data);
     rdata16 = swapbytes(typecast(uint8(raw_data(1:len)),'uint32'));
     rdata = hf_minifloat_FP16(rdata16);
-    sdata = reshape(rdata(n_freq*2+1:n_freq*2+n_time*n_freq), n_time, n_freq, []);
+    rdata(1:n_freq) = rdata(1:n_freq) * st_ctl.level_bias_pssr2;
+    sdata = reshape(rdata(n_freq+1:n_freq+n_time*n_freq), n_time, n_freq, []);
     
     auto.auto   = sdata;
     auto.n_time = n_time;
     auto.n_freq = n_freq;
     auto.freq = 1:n_freq;                       % block No.
     auto.amp_i  = rdata(1:n_freq);              % rms amplitude of I waveform
-    auto.amp_q  = rdata(n_freq+1:n_freq*2);     % rms amplitude of Q waveform
 
 end
