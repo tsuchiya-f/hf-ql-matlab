@@ -84,23 +84,28 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             % SW version
             if st_rpw.aux_len == 4
                 st_ctl.ver = 1;
-            else
+            elseif st_rpw.aux_len == 12
                 st_ctl.ver = 2;
+            else
+                st_ctl.ver = 3;
             end
             fprintf("SW ver index: %d\n",st_ctl.ver);
             fprintf("Aux len     : %d\n",st_rpw.aux_len);
 
             % read AUX field
-            aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');
-            st_aux = hf_get_aux(aux, st_rpw.sid, st_ctl);
-            ret = hf_print_aux(st_rpw.sid, st_aux, st_ctl);
-            sz = sz - st_rpw.aux_len;
-            % number of available channel
-            st_ctl.n_ch = st_aux.xch_sel + st_aux.ych_sel + st_aux.zch_sel;
-            % copy members of AUX field which are used for script control
-            if isfield(st_aux, 'complex_sel') == true
-                st_ctl.complex_sel = st_aux.complex_sel;
+            if st_rpw.aux_len > 0
+                aux = cast(fread(st_ctl.r,st_rpw.aux_len),'uint8');
+                st_aux = hf_get_aux(aux, st_rpw.sid, st_ctl);
+                ret = hf_print_aux(st_rpw.sid, st_aux, st_ctl);
+
+                % number of available channel
+                st_ctl.n_ch = st_aux.xch_sel + st_aux.ych_sel + st_aux.zch_sel;
+                % copy members of AUX field which are used for script control
+                if isfield(st_aux, 'complex_sel') == true
+                    st_ctl.complex_sel = st_aux.complex_sel;
+                end
             end
+            sz = sz - st_rpw.aux_len;
 
             %----------------------------------------
             % Read HF header

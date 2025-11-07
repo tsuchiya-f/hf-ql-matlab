@@ -15,4 +15,11 @@ function [st] = hf_get_hdr_rpw(hdr)
     
 %    fprintf('RPWI sequence cnt: %1d\n',st.seq_cnt);
 
+%    fprintf('<RPWI header>\n');
+%    fprintf('   SID: %4x\n',st.sid);
+%    fprintf('   Delta time: %8x\n',st.delta_time);
+%    fprintf('   sequence cnt: %1d\n',st.seq_cnt);
+%    fprintf('   AUX len: %1d\n',st.aux_len);
+
+
 end

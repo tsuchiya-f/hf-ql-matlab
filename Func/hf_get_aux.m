@@ -139,14 +139,19 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
                 st.skip_reg = st.skip_reg + 1;
             end
 
-            st.n_lag   = double(aux(13));
+            st.rfi_param0  = aux(13);
+            st.rfi_param1  = aux(14);
+            st.rfi_param2  = aux(15);
+            st.rfi_param3  = aux(16);
+
+            st.n_lag   = double(aux(17));
 
             % Temperature
-            value = double(uint16(aux(14)));
+            value = double(uint16(aux(18)));
             st.temp_rwi_a  = value * 2.0 - 200.0;
-            value = double(uint16(aux(15)));
+            value = double(uint16(aux(19)));
             st.temp_rwi_b  = value * 2.0 - 200.0;
-            value = double(uint16(aux(16)));
+            value = double(uint16(aux(20)));
             st.temp_hf  = value - 55.0;
      
     end

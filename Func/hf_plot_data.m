@@ -132,12 +132,13 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             fprintf('SID:%02x PSSR3 (survey data)\n', st_rpw.sid);
             if st_ctl.ver > 1
                 st_ctl.label = ['HF Config 10: PSSR3 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-                if st_aux.unique_id == 0x4F0A
+                if st_aux.rfi_param0 ==0
                     [~, auto] = hf_proc_pssr3_surv(st_ctl, st_aux, st_hfa, raw_data);
                     ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
-                elseif st_aux.unique_id == 0x4F0C
+                else
                     [~, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa, raw_data);
-%                    ret = hf_plot_pssr3_surv_raw(st_rpw, st_ctl, auto, wave, spec);
+%                    ret = hf_plot_waveform_power(st_ctl, wave, spec);
+                    ret = hf_plot_pssr3_surv_raw(st_ctl, auto, wave, spec);
                 end
                 ret = hf_rpt_add_figure(st_ctl);
             else

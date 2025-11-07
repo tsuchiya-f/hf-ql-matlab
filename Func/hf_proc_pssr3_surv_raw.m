@@ -9,14 +9,13 @@ function [ret, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa
     n_freq = st_aux.n_block; 
 
     % for amplitude data
-    len_amp = n_freq * 2;
-    amp_data16 = swapbytes(typecast(uint8(raw_data(1:len_amp)),'uint32'));
+    len_amp = n_freq;
+    amp_data16 = swapbytes(typecast(uint8(raw_data(1:len_amp*4)),'uint32'));
     amp_data = hf_minifloat_FP16(amp_data16) * st_ctl.level_bias_pssr2;
 
     auto.n_freq = n_freq;
     auto.freq = 1:n_freq;                       % block No.
     auto.amp_i  = amp_data(1:n_freq);           % rms amplitude of I waveform
-    auto.amp_q  = amp_data(n_freq+1:n_freq*2);  % rms amplitude of Q waveform
 
     % -------------------------------------------
     % raw waveform data
@@ -24,17 +23,14 @@ function [ret, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa
     sample_rate = [296000 148000 74000 37000];
 
     fs   = sample_rate(st_hfa.decimation+1);  % sampling rate of decimated waveform [Hz]
-    block_sel = st_aux.send_reg;     % number of feed frames in one block
-    n_frame = st_aux.n_lag;      % number of block in one packet
-
-    ns   = 128;                 % number of data sample in one frame (fixed)
-    num_sampl = n_frame * ns;      % number of data sample
+    block_sel = st_aux.rfi_param1;     % number of feed frames in one block
+    num_sampl = double(st_aux.rfi_param2) * 2048 / 16;      % number of data sample
 
     % conversion factor from ADC value to enginnering value
     cw = 1.46/2^20;             % ADC value to Volt
 
     % waveform data
-    rdata = swapbytes(typecast(uint8(raw_data(len_amp+1:len)),'int16'));
+    rdata = swapbytes(typecast(uint8(raw_data(len_amp*4+1:len)),'int16'));
     rdata = reshape(typecast(int32(rdata),'uint32'), 8, []);
 
     % decode waveform data
