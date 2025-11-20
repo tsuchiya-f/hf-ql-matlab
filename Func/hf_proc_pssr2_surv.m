@@ -16,7 +16,7 @@ function [ret, auto] = hf_proc_pssr2_surv(st_ctl, st_aux, st_hfa, raw_data)
 
     % for survey data
     len=length(raw_data);
-    len32 = n_time*n_freq*4 + 2*n_freq*4;
+    len32 = n_time*n_freq*4 + n_freq*4;
     
     % interpretaion of data (4-Byte float or 12-bit MiniFloat)
     fprintf("Data Len: %d, Expexted Len:%d\n", len, len32);
@@ -28,15 +28,14 @@ function [ret, auto] = hf_proc_pssr2_surv(st_ctl, st_aux, st_hfa, raw_data)
         % convert 16-bit minifloat to 4-Byte float
         rdata16 = swapbytes(typecast(uint8(raw_data(1:len)),'uint32'));
         rdata = hf_minifloat_FP16(rdata16);
-        rdata(1:n_freq*2) = rdata(1:n_freq*2) * st_ctl.level_bias_pssr2;
-        sdata = reshape(rdata(n_freq*2+1:n_freq*2+n_time*n_freq), n_time, n_freq, []);
+        rdata(1:n_freq) = rdata(1:n_freq) * st_ctl.level_bias_pssr2;
+        sdata = reshape(rdata(n_freq+1:n_freq+n_time*n_freq), n_time, n_freq, []);
     else
         fprintf("***** ERROR : invalid data length %d (%d expected)\n", len, len32);
         pause
     end
     
     auto.amp_i  = rdata(1:n_freq);              % rms amplitude of I waveform
-    auto.amp_q  = rdata(n_freq+1:n_freq*2);     % rms amplitude of Q waveform
     auto.auto   = sdata;                        % Auto-correlation coefficient
     auto.n_time = n_time;
     auto.n_freq = n_freq;

@@ -48,7 +48,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
     % Default title
     if ~isfield(st_ctl, 'title'); st_ctl.title = 'HF test'; end
     % Default timeout [sec]
-    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 70; end
+    if ~isfield(st_ctl, 'timeout'); st_ctl.timeout = 3000; end
 
     % Default conversion factor
     if ~isfield(st_ctl, 'cf')
@@ -104,6 +104,13 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
         %-----------------------------------
         wait_time = st_ctl.timeout; %[sec]
         if ql == 1
+
+            % check the latest input from keyboard
+            % if press 'q' on the figure, program is terminated.
+            if strcmp(get(hf,'currentcharacter'),'q')
+                break
+            end
+
             % Wait until the data is received
             % --- only for QL ---
             if st_ctl.r.BytesAvailable == 0
@@ -115,6 +122,7 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
             else
                 tic;
             end
+
         end
 
         %-----------------------------------
@@ -156,12 +164,6 @@ function [st_ctl] = hf_ccsds_ql(ql, st_ctl)
         else
             % --- for QL ---
             pause(0.01);
-        end
-
-        % check the latest input from keyboard
-        % if press 'q' on the figure, program is terminated.
-        if strcmp(get(hf,'currentcharacter'),'q')
-            break
         end
         
     end

@@ -37,7 +37,7 @@ function  [ret, spec] = hf_proc_pssr1_rich(st_ctl, st_aux, st_hfa, raw_data)
         data12 = swapbytes(typecast(raw_data8(1:len_12),'uint32'));
         data = hf_minifloat16(data12) * st_ctl.level_bias;
     else
-        fprintf("***** ERROR : invalid data length\n");
+        fprintf("***** ERROR : invalid data length:%d  expected: %d or %d\n", numel(raw_data), len_total, len_total_12);
         pause
     end
 

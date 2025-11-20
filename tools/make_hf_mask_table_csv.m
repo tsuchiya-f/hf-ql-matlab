@@ -9,8 +9,10 @@ function [err] = make_hf_mask_table_csv(file_in)
 %------------------------------------------------------------
 %f_start = 80.0;     % [kHz]
 %f_end   = 44924.0;  % [kHz]
-f_start = 20.0;     % [kHz]
-f_end   = 44864.0;  % [kHz]
+%f_start = 20.0;     % [kHz]
+%f_end   = 44864.0;  % [kHz]
+f_start = 19.5;     % [kHz]
+f_end   = 44789.5;  % [kHz]
 df      = 2.3125;   % band width [kHz]
 %------------------------------------------------------------
 % table size
@@ -20,18 +22,22 @@ n_ent = nf/8;               % [Bytes]
 freq_s_def = f_start + (0:nf-1)*df;
 freq_e_def = f_start + (1:nf)*df;
 
-[file_path,name,ext] = fileparts(file_in);
-csv_file = [name '.' ext];
-
 % mask table (log output)
-filename = [file_path filesep 'freq_mask_table_def.txt'];
+filename = 'freq_mask_table_def.txt';
 fprintf("%s\n",filename);
 fid = fopen(filename,'w');
 fprintf(fid,"   start[kHz] stop[kHz]\n");
 for i=1:nf
-    fprintf(fid, "%3d  %8.2f  %8.2f\n", i, freq_s_def(i), freq_e_def(i));
+    fprintf(fid, "%3d  %10.4f  %10.4f\n", i, freq_s_def(i), freq_e_def(i));
 end
 fclose(fid);
+
+if exist("file_in","var") == 0
+    return;
+end
+
+[file_path,name,ext] = fileparts(file_in);
+csv_file = [name '.' ext];
 
 % output file name
 file_out=[file_path filesep 'HF_Table_Mask.t'];

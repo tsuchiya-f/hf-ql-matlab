@@ -119,12 +119,12 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
         case st_ctl.sid_pssr2_s   % PSSR2, survey data
             fprintf('SID:%02x PSSR2 (survey data)\n', st_rpw.sid);
             st_ctl.label = ['HF Config 9: PSSR2 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-            if st_aux.rfi_param0 ~= 255
-                [~, auto] = hf_proc_pssr2_surv_v2(st_ctl, st_aux, st_hfa, raw_data);
-                ret = hf_plot_autocorr_surv_v2(st_rpw, st_ctl, auto);
-            else
+            if st_aux.rfi_param0 == 0
                 [~, auto] = hf_proc_pssr2_surv(st_ctl, st_aux, st_hfa, raw_data);
                 ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
+            else
+                [~, auto] = hf_proc_pssr2_surv_v2(st_ctl, st_aux, st_hfa, raw_data);
+                ret = hf_plot_autocorr_surv_v2(st_rpw, st_ctl, auto);
             end
             ret = hf_rpt_add_figure(st_ctl);
 

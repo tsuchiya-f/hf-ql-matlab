@@ -8,7 +8,8 @@ function f = hf_get_freq_bw(st_aux, st_hfa)
         case 3;  bw = 37.0;
      end
     % Effective bandwidth (75%) [kHz]
-    bw_eff = bw * 0.75; 
+    bw_eff = bw * 0.625; 
+%    bw_eff = bw * 0.75; 
 
     f = [];
     switch st_aux.sweep_table_id

@@ -13,7 +13,6 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa, sid)
 %    st_ctl.sid_pssr1_r = 0x65;
 %    st_ctl.sid_pssr2_r = 0x66;
 %    st_ctl.sid_pssr3_r = 0x67;
-% 
 
      % Bandwidth [kHz]
      switch st_hfa.decimation
@@ -22,14 +21,16 @@ function f = hf_get_freq_table(ver, st_aux, st_hfa, sid)
         case 2;  bw = 74.0;
         case 3;  bw = 37.0;
      end
-    % Effective bandwidth (75%) [kHz]
-    bw_eff = bw * 0.75; 
+    % Effective bandwidth [kHz]
+    bw_r =  0.625;
+    %bw_r =  0.75;
+    bw_eff = bw * bw_r; 
 
     f = [];
     switch sid
-        case {0x65, 0x45}
-            sdiv = double(int16((st_hfa.snum+1)/4*3));
-            if sid == 0x45
+        case {0x65, 0x45}  % PSSR1
+            sdiv = double(int16((st_hfa.snum+1)*bw_r));
+            if sid == 0x45 % PSSR1 survey
                sdiv = sdiv/double(st_aux.rfi_param2*256 + st_aux.rfi_param3);
             end
             % band 0
