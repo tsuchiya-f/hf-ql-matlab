@@ -38,15 +38,18 @@ function ret = hf_print_aux(sid, st_aux, st_ctl)
             fprintf('RFI rejection     %d\n', st_aux.rfi_rej_sw);
             fprintf('Pol sep threshold %d\n', st_aux.pol_sep_th);
             fprintf('Pol sep select    %d\n', st_aux.pol_sel);
-%            fprintf('OVF status X/Y/Z  %d/%d/%d\n', st_aux.ovf_stat_x,st_aux.ovf_stat_y,st_aux.ovf_stat_z);
             fprintf('RFI param 0/1/2/3 %d/%d/%d/%d\n', st_aux.rfi_param0, st_aux.rfi_param1, st_aux.rfi_param2, st_aux.rfi_param3);
             fprintf('Num block         %d\n', st_aux.n_block);
+            % Table version
+            fprintf('Table Ver(Ferq/Mask) 0x%04x/0x%04x\n', st_aux.ver_tab_freq, st_aux.ver_tab_mask);
                             
         case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}
             fprintf('FFT window        %d\n', st_aux.fft_win);
             fprintf('RFI rejection     %d\n', st_aux.rfi_rej_sw);
             fprintf('Number of lag     %d\n', st_aux.n_lag);
             fprintf('RFI param 0/1/2/3 %d/%d/%d/%d\n', st_aux.rfi_param0, st_aux.rfi_param1, st_aux.rfi_param2, st_aux.rfi_param3);
+            % Table version
+            fprintf('Table Ver(Ferq/Mask) 0x%04x/0x%04x\n', st_aux.ver_tab_freq, st_aux.ver_tab_mask);
         
         case {st_ctl.sid_pssr3_s,  st_ctl.sid_pssr3_r}
             fprintf('Number of block   %d\n', st_aux.n_block);

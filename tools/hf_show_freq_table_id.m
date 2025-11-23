@@ -108,7 +108,7 @@ function f = hf_show_freq_table_id(sweep_table_id)
 
     if ver ~= 0
 
-        f = hf_get_freq_table(ver, st_aux, st_hfa);
+        f = hf_get_freq_table(ver, st_aux, st_hfa, 0x43);
         bw = hf_get_freq_bw(st_aux, st_hfa);
 
         filename = 'freq_sweep_table_id' + string(sweep_table_id) + '_v'+ string(ver) +'.txt';

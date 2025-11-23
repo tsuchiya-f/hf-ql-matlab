@@ -53,9 +53,6 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.rfi_rej_sw  = bitshift(bitand(aux(5),0x10),-4);
             st.pol_sep_th  = bitand(aux(5),0x0f);
             st.pol_sel     = bitshift(bitand(aux(6),0xc0),-6);
-%            st.ovf_stat_x  = bitshift(bitand(aux(6),0x30),-4);
-%            st.ovf_stat_y  = bitshift(bitand(aux(6),0x0c),-2);
-%            st.ovf_stat_z  = bitand(aux(6),0x03);
             st.rfi_param0  = aux(7);
             st.rfi_param1  = aux(8);
             st.rfi_param2  = aux(9);
@@ -70,6 +67,10 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.temp_rwi_b  = value * 2.0 - 200.0;
             value = double(uint16(aux(16)));
             st.temp_hf  = value - 55.0;
+
+            % Get table version
+            st.ver_tab_freq = uint32(aux(17))*256 + uint32(aux(18));
+            st.ver_tab_mask = uint32(aux(19))*256 + uint32(aux(20));
 
         case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}
             % Unique ID
@@ -109,6 +110,10 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.temp_rwi_b  = value * 2.0 - 200.0;
             value = double(uint16(aux(16)));
             st.temp_hf  = value - 55.0;
+
+            % Get table version
+            st.ver_tab_freq = uint32(aux(17))*256 + uint32(aux(18));
+            st.ver_tab_mask = uint32(aux(19))*256 + uint32(aux(20));
             
             st.n_block = 1;
 
