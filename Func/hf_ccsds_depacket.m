@@ -130,7 +130,7 @@ function [st_ctl, st_rpw, st_aux, st_hfa, st_time, rdata, data_sz, err] = hf_ccs
             end
 
             % add pre-uploaded sweep table info
-            if  st_rpw.sid ~= st_ctl.sid_pssr3_s && st_rpw.sid ~= st_ctl.sid_pssr3_r
+            if  st_rpw.sid ~= st_ctl.sid_pssr3_s &&  st_rpw.sid ~= st_ctl.sid_pssr3_s_raw  && st_rpw.sid ~= st_ctl.sid_pssr3_r
                 st_hfa = hf_add_freq_table(st_aux.sweep_table_id, st_hfa);
             end
 

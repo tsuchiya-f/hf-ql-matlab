@@ -128,18 +128,24 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
             end
             ret = hf_rpt_add_figure(st_ctl);
 
-        case st_ctl.sid_pssr3_s   % PSSR3, survey data
+        case st_ctl.sid_pssr3_s   % PSSR3, survey data (auto-corr data, param0=0)
             fprintf('SID:%02x PSSR3 (survey data)\n', st_rpw.sid);
             if st_ctl.ver > 1
                 st_ctl.label = ['HF Config 10: PSSR3 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-                if st_aux.rfi_param0 ==0
-                    [~, auto] = hf_proc_pssr3_surv(st_ctl, st_aux, st_hfa, raw_data);
-                    ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
-                else
-                    [~, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa, raw_data);
-%                    ret = hf_plot_waveform_power(st_ctl, wave, spec);
-                    ret = hf_plot_pssr3_surv_raw(st_ctl, auto, wave, spec);
-                end
+                [~, auto] = hf_proc_pssr3_surv(st_ctl, st_aux, st_hfa, raw_data);
+                ret = hf_plot_autocorr(st_rpw, st_ctl, auto);
+                ret = hf_rpt_add_figure(st_ctl);
+            else
+                fprintf('---skip\n');
+            end
+
+        case st_ctl.sid_pssr3_s_raw   % PSSR3, survey data (raw data, param0=1)
+            fprintf('SID:%02x PSSR3 (survey data)\n', st_rpw.sid);
+            if st_ctl.ver > 1
+                st_ctl.label = ['HF Config 10: PSSR3 (survey data) / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
+                [~, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa, raw_data);
+%                ret = hf_plot_waveform_power(st_ctl, wave, spec);
+                ret = hf_plot_pssr3_surv_raw(st_ctl, auto, wave, spec);
                 ret = hf_rpt_add_figure(st_ctl);
             else
                 fprintf('---skip\n');
@@ -184,16 +190,16 @@ function ret = hf_plot_data(st_ctl, st_rpw, st_aux, st_hfa, st_time, raw_data)
                 fprintf('---skip\n');
             end
 
-        case sid_pssr3_r_v1  % PSSR3, rich data V1
-            fprintf('SID:%02x PSSR3_v1 (rich data)\n', st_rpw.sid);
-            if st_ctl.ver > 1
-                st_ctl.label = ['HF Config 10: PSSR3 (rich data) V1 / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
-                [~, wave, spec] = hf_proc_pssr3_rich(st_ctl, st_aux, st_hfa, raw_data);
-                ret = hf_plot_waveform_power(st_ctl, wave, spec);
-                ret = hf_rpt_add_figure(st_ctl);
-            else
-                fprintf('---skip\n');
-            end
+%        case sid_pssr3_r_v1  % PSSR3, rich data V1
+%            fprintf('SID:%02x PSSR3_v1 (rich data)\n', st_rpw.sid);
+%            if st_ctl.ver > 1
+%                st_ctl.label = ['HF Config 10: PSSR3 (rich data) V1 / Time elapsed : ' num2str(st_time.cuc_time_elapse,'%f')];
+%                [~, wave, spec] = hf_proc_pssr3_rich(st_ctl, st_aux, st_hfa, raw_data);
+%                ret = hf_plot_waveform_power(st_ctl, wave, spec);
+%                ret = hf_rpt_add_figure(st_ctl);
+%            else
+%                fprintf('---skip\n');
+%            end
 
         otherwise
             fprintf('***Error - SID:%02x\n', st_rpw.sid);
