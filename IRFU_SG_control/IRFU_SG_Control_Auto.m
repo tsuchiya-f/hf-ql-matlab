@@ -2,7 +2,7 @@
 %fclose(t); clear all;
 
 % set interval [sec]
-interval=30;
+interval=40;
 freq_def = 1.5;
 amp_def = 10;
 amp_set = [1 2 5 10 20 50 100 200 500];

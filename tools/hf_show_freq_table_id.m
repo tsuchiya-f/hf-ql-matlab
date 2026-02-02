@@ -68,7 +68,7 @@ function f = hf_show_freq_table_id(sweep_table_id)
 
         case 0
         % radio full
-        ver = 2;
+        ver = 3;
         sid = 3;
         st_hfa.n_band = 5;
         st_hfa.decimation   = 0;

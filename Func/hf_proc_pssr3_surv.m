@@ -23,7 +23,7 @@ function [ret, auto] = hf_proc_pssr3_surv(st_ctl, st_aux, st_hfa, raw_data)
     auto.auto   = sdata;
     auto.n_time = n_time;
     auto.n_freq = n_freq;
-    auto.freq = 1:n_freq;                       % block No.
+    auto.f = 1:n_freq;                          % block No.
     auto.amp_i  = rdata(1:n_freq);              % rms amplitude of I waveform
 
 end

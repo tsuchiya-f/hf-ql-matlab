@@ -39,12 +39,12 @@ function [ret, auto] = hf_proc_pssr2_surv_v2(st_ctl, st_aux, st_hfa, raw_data)
 
     % frequency
     sid = 0x46;
-    auto.freq = hf_get_freq_table(0, st_aux, st_hfa, sid);
+    auto.f = hf_get_freq_table(0, st_aux, st_hfa, sid);
     if st_aux.rfi_param0 == 1
-        auto.freq_selected = auto.freq(st_aux.rfi_param1+1);
+        auto.freq_selected = auto.f(st_aux.rfi_param1+1);
     else
         [~, imax] = max(auto.amp_i);
-        auto.freq_selected = auto.freq(imax);
+        auto.freq_selected = auto.f(imax);
     end
     
 end

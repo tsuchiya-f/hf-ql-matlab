@@ -38,7 +38,19 @@ function ret = hf_store_save_data(sid, st_ctl, st_aux, st_time, spec)
             [filepath,name,ext] = fileparts(st_ctl.wfile);
             file_save = append(filepath, filesep, name, '_SID', string(dec2hex(sid)), '_rich.mat');    
             save(file_save, '-v7.3', 'freq','x','y','z')
+
+        case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_s_single}
+            freq = spec.f;
+            x =spec.amp_i;
+            [filepath,name,ext] = fileparts(st_ctl.wfile);
+            file_save = append(filepath, filesep, name, '_SID', string(dec2hex(sid)), '_surv.mat');    
+            save(file_save, '-v7.3', 'freq','x')
+
     end
+
+    if sid == st_ctl.sid_pssr2_s;  return; end
+    if sid == st_ctl.sid_pssr2_s_single;  return; end
+    if sid == st_ctl.sid_pssr2_r;  return; end
 
     if sid == st_ctl.sid_pssr1_s;  return; end
     if sid == st_ctl.sid_pssr1_r;  return; end

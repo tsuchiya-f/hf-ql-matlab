@@ -2,16 +2,16 @@
 %clear all;
 
 % set interval [sec]
-%interval=40;
+interval=40;
 %interval=1;
-interval=3;
+%interval=3;
 amp_set=10.0;
 %freq_set = linspace(0.0195,45.0,500);
 %freq_set = linspace(0.0195,0.3895,100);
 %freq_set = [0.02 0.05 0.1 0.2 0.5 1.1 1.8 2.1 3.1 5.1 10.1 15.1 20.1 25.1 30.1 35.1 40.1 44.1]; % for RAW, Radio Full
-freq_set = [0.02 0.1 0.5 1.1 1.8]; % for Radio Burst
+%freq_set = [0.02 0.1 0.5 1.1 1.8]; % for Radio Burst
 %freq_set = [1.1 1.2 1.4 1.6 1.8]; % for PSSR1
-%freq_set = [0.5 0.7 0.9 1.5 1.8 2.3 2.7 3.3 3.7 10.5 12.5 14.5 16.5 18.5 20.5 22.5];   % for PSSR2 CFG9
+freq_set = [0.5 0.7 0.9 1.5 1.8 2.3 2.7 3.3 3.7 10.5 12.5 14.5 16.5 18.5 20.5 22.5];   % for PSSR2 CFG9
 %freq_set = [0.31 0.51 0.71 0.91 1.11 1.51 1.91 2.31 2.71 3.11 10.51 12.51 14.51 16.51 18.51 20.51];    % for PSSR2 CFG11
 %freq_set = [1.75 1.8 1.85]; % for PSSR3q
 % set freqneucy(MHz), amplitude(3-ch, mVpp), and phase (3-ch, degree)

@@ -13,7 +13,7 @@ function [err] = make_hf_mask_table_csv(file_in)
 %f_end   = 44864.0;  % [kHz]
 f_start = 19.5;     % [kHz]
 f_end   = 44789.5;  % [kHz]
-df      = 2.3125;   % band width [kHz]
+df      = 2.3125;   % band width [kHz] (=296kHz/128)
 %------------------------------------------------------------
 % table size
 nf = (f_end-f_start)/df;    % [bits]

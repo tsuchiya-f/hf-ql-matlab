@@ -14,7 +14,7 @@ function [ret, auto, wave, spec] = hf_proc_pssr3_surv_raw(st_ctl, st_aux, st_hfa
     amp_data = hf_minifloat_FP16(amp_data16) * st_ctl.level_bias_pssr2;
 
     auto.n_freq = n_freq;
-    auto.freq = 1:n_freq;                       % block No.
+    auto.f = 1:n_freq;                          % block No.
     auto.amp_i  = amp_data(1:n_freq);           % rms amplitude of I waveform
 
     % -------------------------------------------

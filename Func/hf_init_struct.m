@@ -30,6 +30,7 @@ function    [st_ctl] = hf_init_struct(st_ctl)
     st_ctl.sid_pssr2_s = 0x46;
     st_ctl.sid_pssr3_s = 0x47;
     st_ctl.sid_pssr3_s_raw = 0x48;
+    st_ctl.sid_pssr2_s_single = 0x49;
     st_ctl.sid_burst_r = 0x74;
     st_ctl.sid_pssr1_r = 0x75;
     st_ctl.sid_pssr2_r = 0x76;

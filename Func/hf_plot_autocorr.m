@@ -48,8 +48,8 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
     switch st_rpw.sid
         case {st_ctl.sid_pssr2_s}
             nexttile(n_fig+1);
-            nf = numel(auto.freq);
-            semilogy(auto.freq,auto.amp_i,'-o');
+            nf = numel(auto.f);
+            semilogy(auto.f,auto.amp_i,'-o');
             title  ( 'Amplitude' );
             xlabel ('Frequency');
             ylabel ('Auto-Corr');
@@ -57,8 +57,8 @@ function ret = hf_plot_autocorr(st_rpw, st_ctl, auto)
 
         case {st_ctl.sid_pssr3_s}
             nexttile(n_fig+1);
-            nf = numel(auto.freq);
-            semilogy(auto.freq,auto.amp_i,'-o');
+            nf = numel(auto.f);
+            semilogy(auto.f,auto.amp_i,'-o');
             title  ( 'Amplitude' );
             xlabel ('Block No.');
             ylabel ('Auto-Corr');

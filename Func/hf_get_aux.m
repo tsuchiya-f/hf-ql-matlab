@@ -10,6 +10,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
 %    st_ctl.sid_pssr2_s = 0x46;
 %    st_ctl.sid_pssr3_s = 0x47;
 %    st_ctl.sid_pssr3_s_raw = 0x48;
+%    st_ctl.sid_pssr2_s_single = 0x49;
 %    st_ctl.sid_burst_r = 0x64;
 %    st_ctl.sid_pssr1_r = 0x65;
 %    st_ctl.sid_pssr2_r = 0x66;
@@ -73,7 +74,7 @@ function [st] = hf_get_aux(aux, sid, st_ctl)
             st.ver_tab_freq = uint32(aux(17))*256 + uint32(aux(18));
             st.ver_tab_mask = uint32(aux(19))*256 + uint32(aux(20));
 
-        case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_r}
+        case {st_ctl.sid_pssr2_s, st_ctl.sid_pssr2_s_single, st_ctl.sid_pssr2_r}
             % Unique ID
             st.unique_id = uint32(aux(1))*256 + uint32(aux(2));
             % HF header size

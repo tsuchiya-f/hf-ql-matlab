@@ -4,13 +4,13 @@ function f = hf_show_freq_table(sid)
 
         case 2
         % RAW
-        ver = 2;
+        ver = 3;
         st_aux.sweep_table_id = 0x1f;
         st_hfa.n_band = 1;
-        st_hfa.decimation   = 0;
-        st_hfa.band0_startf = 191;
-        st_hfa.band0_stopf  = 45111;
-        st_hfa.band0_step   = 202;
+        st_hfa.decimation   = 1;
+        st_hfa.band0_startf = 112;
+        st_hfa.band0_stopf  = 44882;
+        st_hfa.band0_step   = 242;
         st_hfa.band0_sdiv   = 1;
 
         case 3

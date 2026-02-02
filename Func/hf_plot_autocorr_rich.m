@@ -14,7 +14,7 @@ function ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto)
     % Plot stream (x, y, and z) 
     for i=1:i_loop
         nexttile;
-        intitle = sprintf('Ch:%d %7.1f kHz', i, auto.freq(i));
+        intitle = sprintf('Ch:%d %7.1f kHz', i, auto.f(i));
         %plot(auto.t(2:n), auto.auto(2:n,i), '-');
         plot(auto.t(1:n), auto.auto(1:n,i), '-');
         title  ( intitle );
@@ -29,7 +29,7 @@ function ret = hf_plot_autocorr_rich(st_rpw, st_ctl, auto)
     ylabel ('Amplitude');
     legend('Amp I')
     [dmax,imax] = max(auto.amp_i);
-    p_freq = auto.freq(imax);
+    p_freq = auto.f(imax);
     title(['Peak at　' num2str(p_freq/1000,'%0.3f') 'MHz [' num2str(dmax') ']']);
 
 end

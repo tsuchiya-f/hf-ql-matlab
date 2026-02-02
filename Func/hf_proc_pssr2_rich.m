@@ -41,6 +41,6 @@ function [ret, auto] = hf_proc_pssr2_rich(st_ctl, st_aux, st_hfa, raw_data)
     auto.auto   = sdata;                          % Auto-correlation coefficient
     auto.n_time = n_time;                         % number of time step
     auto.n_freq = n_freq;                         % number of srequency step
-    auto.freq = freq;                             % frequency
+    auto.f = freq;                                % frequency
 
 end
